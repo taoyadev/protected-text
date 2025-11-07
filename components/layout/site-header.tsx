@@ -22,6 +22,9 @@ export function SiteHeader() {
           <Link href="#faq" className="hover:text-white">
             FAQ
           </Link>
+          <Link href="/pro" className="hover:text-white">
+            Roadmap
+          </Link>
         </nav>
         <div className="flex items-center gap-4">
           <div className="hidden md:block">

@@ -378,6 +378,9 @@ export default function HomePage() {
           <p className="mt-2">
             Questions? <a href="mailto:hello@protected-text.com" className="text-primary-400 hover:text-primary-300">hello@protected-text.com</a>
           </p>
+          <p className="mt-2">
+            <a href="/pro" className="text-primary-400 hover:text-primary-300">Request Features & Vote on Roadmap</a>
+          </p>
           <p className="mt-4 text-xs text-white/40">
             Protected Text is open source. Check the code on GitHub.
           </p>
