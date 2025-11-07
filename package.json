@@ -1,0 +1,62 @@
+{
+  "name": "protected-text",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write .",
+    "analyze": "ANALYZE=true next build"
+  },
+  "dependencies": {
+    "@ducanh2912/next-pwa": "^10.2.8",
+    "@monaco-editor/react": "^4.6.3",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tiptap/extension-code-block-lowlight": "^2.4.0",
+    "@tiptap/extension-placeholder": "^2.4.0",
+    "@tiptap/react": "^2.4.0",
+    "@tiptap/starter-kit": "^2.4.0",
+    "@vercel/kv": "^1.0.1",
+    "clsx": "^2.1.1",
+    "ioredis": "^5.8.2",
+    "lucide-react": "^0.464.0",
+    "nanoid": "^5.0.7",
+    "next": "15.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^10.1.0",
+    "rehype-sanitize": "^6.0.0",
+    "remark-gfm": "^4.0.1",
+    "sonner": "^1.5.0",
+    "tailwind-merge": "^2.4.0",
+    "zod": "^3.23.8",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.0",
+    "@types/node": "^20.12.12",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitest/coverage-v8": "^1.6.0",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^9.5.0",
+    "eslint-config-next": "15.0.0",
+    "postcss": "^8.4.38",
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "tailwindcss": "^3.4.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18.18"
+  }
+}

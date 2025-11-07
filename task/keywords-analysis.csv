@@ -1,0 +1,22 @@
+Keyword,Search Volume,Difficulty,User Intent,Priority,Notes
+protected text,12000,0,Core Product,🔴 Critical,Main brand keyword
+protected text pro,1200,N/A,Paid Upgrade,🔴 Critical,Shows willingness to pay
+protected text login,50,90,Returning User,🟡 Medium,User retention signal
+password protected text file,30,0,File Protection,🟡 Medium,Adjacent use case
+protected text notepad,10,N/A,Core Feature,🟢 Low,Feature keyword
+my protected text,10,N/A,Personal Use,🟢 Low,User behavior
+protected text online,10,N/A,Web Access,🟢 Low,Platform clarification
+protected text alternative,30,N/A,Competitor Research,🟡 Medium,Users seeking alternatives - OPPORTUNITY
+protected text review,10,N/A,Due Diligence,🟢 Low,Trust building needed
+protected text download,10,N/A,Offline Access,🟢 Low,Feature request signal
+protected text app,10,N/A,Mobile App,🟡 Medium,Mobile strategy needed
+protected text 1,10,N/A,Unclear Intent,⚪ Skip,Ignore
+protected pro text,10,N/A,Unclear Intent,⚪ Skip,Ignore
+copy text from protected pdf,40,2,Wrong Intent,⚫ Convert,Educational content opportunity
+copy text from protected website,20,N/A,Wrong Intent,⚫ Convert,Educational content opportunity
+how to copy text from protected website,40,N/A,Wrong Intent,⚫ Convert,Blog post opportunity
+copy text from protected website online,30,58,Wrong Intent,⚫ Convert,Tool comparison content
+how to copy text from a protected pdf,20,0,Wrong Intent,⚫ Convert,FAQ content
+copy text from password protected pdf,10,2,Wrong Intent,⚫ Convert,Feature differentiation
+extract text from protected pdf,10,N/A,Wrong Intent,⚫ Convert,Content marketing
+how to extract text from protected pdf,10,N/A,Wrong Intent,⚫ Convert,SEO blog post
