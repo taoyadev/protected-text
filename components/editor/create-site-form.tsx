@@ -34,7 +34,7 @@ export function CreateSiteForm() {
     startTransition(() => {
       // For English, use root path; for others, use /{locale}
       const path = locale === 'en' ? `/${normalized}` : `/${locale}/${normalized}`;
-      router.push(path);
+      router.push(path as any);
     });
   };
 
