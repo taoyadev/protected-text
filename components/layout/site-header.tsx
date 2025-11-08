@@ -16,7 +16,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-20 border-b border-white/10 bg-slate-950/90 backdrop-blur-xl shadow-lg shadow-black/10">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
-        <Link href={homeLink} className="group flex items-center gap-3 text-white transition-all duration-300 hover:scale-105">
+        <Link href={homeLink as any} className="group flex items-center gap-3 text-white transition-all duration-300 hover:scale-105">
           <div className="rounded-lg bg-primary-500/10 p-2 ring-1 ring-primary-400/30 group-hover:bg-primary-500/20 group-hover:ring-primary-400/50 transition-all duration-300">
             <Shield className="h-5 w-5 text-primary-400 group-hover:text-primary-300" />
           </div>
@@ -32,7 +32,7 @@ export function SiteHeader() {
           <Link href="#faq" className="hover:text-white transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-400 after:transition-all after:duration-300 hover:after:w-full">
             {t('common.navigation.faq')}
           </Link>
-          <Link href={proLink} className="hover:text-white transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-400 after:transition-all after:duration-300 hover:after:w-full">
+          <Link href={proLink as any} className="hover:text-white transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary-400 after:transition-all after:duration-300 hover:after:w-full">
             {t('common.navigation.roadmap')}
           </Link>
         </nav>
