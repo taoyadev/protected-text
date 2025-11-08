@@ -13,7 +13,7 @@ export function MarkdownPreview({ content }: Props) {
   const { t } = useTranslation();
 
   return (
-    <div className="prose prose-invert prose-sm max-w-none rounded-3xl border border-white/10 bg-slate-950/70 p-6 shadow-inner shadow-black/40 min-h-[60vh] overflow-auto">
+    <div className="prose dark:prose-invert prose-sm max-w-none rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 p-6 shadow-inner shadow-black/5 dark:shadow-black/40 min-h-[60vh] overflow-auto">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeSanitize]}
@@ -24,9 +24,9 @@ export function MarkdownPreview({ content }: Props) {
           code: ({ className, children, ...props }: any) => {
             const isInline = !className || !className.includes('language-');
             return isInline ? (
-              <code className="rounded bg-white/10 px-1.5 py-0.5 text-primary-300" {...props}>{children}</code>
+              <code className="rounded bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 text-primary-300" {...props}>{children}</code>
             ) : (
-              <code className="block rounded-lg bg-white/5 p-4 overflow-x-auto" {...props}>{children}</code>
+              <code className="block rounded-lg bg-gray-50 dark:bg-white/5 p-4 overflow-x-auto" {...props}>{children}</code>
             );
           },
         }}

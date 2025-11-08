@@ -17,8 +17,13 @@ export const metadata: Metadata = {
     'Free encrypted notepad. Your password never leaves your device. No ads, no tracking, no BS. Just works.',
   metadataBase: new URL('https://protected-text.com'),
   icons: {
-    icon: '/icon.svg',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml', sizes: 'any' },
+      { url: '/favicon.ico' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
+  manifest: '/manifest.json',
   openGraph: {
     title: 'Protected Text',
     description: 'Encrypted notes. Nobody can read them. Not even us.',
@@ -34,13 +39,16 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0f172a',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
-      <body className="min-h-screen bg-slate-950 text-slate-50">
+      <body className="min-h-screen">
         <Providers>
           {children}
           <Toaster richColors position="top-center" />

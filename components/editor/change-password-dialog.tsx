@@ -61,18 +61,18 @@ export function ChangePasswordDialog({ open, onClose, onConfirm }: Props) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-slate-900 p-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 dark:bg-black/70 backdrop-blur-sm">
+      <div className="w-full max-w-md rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900 p-6 shadow-2xl">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-white">{t('dialogs.changePassword.title')}</h2>
-          <button onClick={handleClose} className="text-white/70 hover:text-white">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('dialogs.changePassword.title')}</h2>
+          <button onClick={handleClose} className="text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white">
             <X className="h-5 w-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="mb-2 block text-sm text-white/70">{t('dialogs.changePassword.currentPasswordLabel')}</label>
+            <label className="mb-2 block text-sm text-gray-600 dark:text-white/70">{t('dialogs.changePassword.currentPasswordLabel')}</label>
             <Input
               type="password"
               value={oldPassword}
@@ -84,7 +84,7 @@ export function ChangePasswordDialog({ open, onClose, onConfirm }: Props) {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-white/70">{t('dialogs.changePassword.newPasswordLabel')}</label>
+            <label className="mb-2 block text-sm text-gray-600 dark:text-white/70">{t('dialogs.changePassword.newPasswordLabel')}</label>
             <Input
               type="password"
               value={newPassword}
@@ -95,7 +95,7 @@ export function ChangePasswordDialog({ open, onClose, onConfirm }: Props) {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-white/70">{t('dialogs.changePassword.confirmNewPasswordLabel')}</label>
+            <label className="mb-2 block text-sm text-gray-600 dark:text-white/70">{t('dialogs.changePassword.confirmNewPasswordLabel')}</label>
             <Input
               type="password"
               value={confirmPassword}

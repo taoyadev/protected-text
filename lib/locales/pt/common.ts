@@ -20,6 +20,9 @@ export const common = {
     restore: 'Restaurar',
     clear: 'Limpar',
     sending: 'Enviando...',
+    add: 'Adicionar',
+    createNewTab: 'Nova aba',
+    closeTab: 'Fechar aba',
   },
 
   // Estados
@@ -29,6 +32,7 @@ export const common = {
     notSavedYet: 'Ainda não salvo',
     unsavedChanges: 'Alterações não salvas',
     noChangesToSave: 'Nenhuma alteração para salvar',
+    noTabsOpen: 'Nenhuma aba aberta',
   },
 
   // Relacionado ao tempo
@@ -69,5 +73,10 @@ export const common = {
     optional: 'opcional',
     required: '*',
     characters: 'caracteres',
+  },
+
+  // Placeholders
+  placeholders: {
+    enterSiteName: 'Digite o nome do site…',
   },
 };

@@ -48,9 +48,9 @@ export function CreateSiteForm() {
     <form
       id="create-note"
       onSubmit={handleSubmit}
-      className="group flex flex-col gap-4 rounded-3xl border-2 border-primary-500/30 bg-gradient-to-br from-slate-800/90 via-slate-900/90 to-slate-950/90 p-6 text-left shadow-2xl shadow-primary-500/20 backdrop-blur-xl hover:border-primary-400/50 hover:shadow-primary-500/30 transition-all duration-500 ring-1 ring-primary-400/20"
+      className="group flex flex-col gap-4 rounded-3xl border-2 border-primary-500/30 bg-gradient-to-br from-gray-50/90 via-gray-100/90 to-white/90 dark:from-slate-800/90 dark:via-slate-900/90 dark:to-slate-950/90 p-6 text-left shadow-2xl shadow-primary-500/20 backdrop-blur-xl hover:border-primary-400/50 hover:shadow-primary-500/30 transition-all duration-500 ring-1 ring-primary-400/20"
     >
-      <label className="text-sm font-bold text-white flex items-center gap-2" htmlFor="site-name">
+      <label className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2" htmlFor="site-name">
         <Sparkles className="h-4 w-4 text-primary-300" />
         {t('landing.createSiteForm.label')}
       </label>
@@ -69,8 +69,8 @@ export function CreateSiteForm() {
           {t('landing.createSiteForm.submitButton')}
         </Button>
       </div>
-      <div className="flex items-center justify-between gap-4 text-xs text-white/80">
-        <p className="font-mono text-white/70">{t('landing.createSiteForm.urlPrefix')}<span className="text-primary-300 font-semibold">{t('landing.createSiteForm.urlPlaceholder')}</span></p>
+      <div className="flex items-center justify-between gap-4 text-xs text-gray-700 dark:text-white/80">
+        <p className="font-mono text-gray-600 dark:text-white/70">{t('landing.createSiteForm.urlPrefix')}<span className="text-primary-300 font-semibold">{t('landing.createSiteForm.urlPlaceholder')}</span></p>
         <button
           type="button"
           onClick={handleRandom}

@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { EncryptedEditor } from '@/components/editor/encrypted-editor';
+import { TabsManager } from '@/components/editor/tabs-manager';
 import { isSiteNameValid } from '@/lib/site';
 import { getT, type Locale } from '@/lib/i18n';
+import { SiteHeader } from '@/components/layout/site-header';
 
 interface Props {
   params: Promise<{ locale: string; siteName: string }>;
@@ -26,8 +27,9 @@ export default async function SitePage({ params }: Props) {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-4xl flex-col gap-6 px-6 py-12">
-      <EncryptedEditor siteName={siteName} />
-    </main>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+      <SiteHeader />
+      <TabsManager initialSiteName={siteName} />
+    </div>
   );
 }

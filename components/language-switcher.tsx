@@ -30,7 +30,7 @@ export function LanguageSwitcher() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+        className="flex items-center gap-2 rounded-full border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-1.5 text-sm font-medium text-gray-800 dark:text-white/70 transition-colors hover:bg-gray-100 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white hover:border-gray-400 dark:hover:border-white/20"
         aria-label="Change language"
       >
         <Globe className="h-4 w-4" />
@@ -40,15 +40,15 @@ export function LanguageSwitcher() {
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 top-full z-50 mt-2 w-40 rounded-xl border border-white/10 bg-slate-900 p-2 shadow-xl">
+          <div className="absolute right-0 top-full z-50 mt-2 w-40 rounded-xl border-2 border-gray-300 dark:border-white/10 bg-white dark:bg-slate-900 p-2 shadow-xl shadow-black/10 dark:shadow-black/50">
             {locales.map((lang) => (
               <button
                 key={lang}
                 onClick={() => handleLanguageChange(lang)}
-                className={`w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+                className={`w-full rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
                   locale === lang
                     ? 'bg-primary-500 text-white'
-                    : 'text-white/70 hover:bg-white/5 hover:text-white'
+                    : 'text-gray-700 dark:text-white/70 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'
                 }`}
               >
                 {languages[lang]}

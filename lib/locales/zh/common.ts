@@ -20,6 +20,9 @@ export const common = {
     restore: '恢复',
     clear: '清除',
     sending: '发送中...',
+    add: '添加',
+    createNewTab: '新标签页',
+    closeTab: '关闭标签页',
   },
 
   // 状态
@@ -29,6 +32,7 @@ export const common = {
     notSavedYet: '尚未保存',
     unsavedChanges: '未保存的更改',
     noChangesToSave: '没有需要保存的更改',
+    noTabsOpen: '没有打开的标签页',
   },
 
   // 时间相关
@@ -69,5 +73,10 @@ export const common = {
     optional: '可选',
     required: '*',
     characters: '字符',
+  },
+
+  // 占位符
+  placeholders: {
+    enterSiteName: '输入站点名称…',
   },
 };

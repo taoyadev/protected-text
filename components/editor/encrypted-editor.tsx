@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef, useMemo } from 'react';
+import { useTheme } from 'next-themes';
 import { toast } from 'sonner';
 import { Download, Link2, ShieldCheck, Key, Trash2, RefreshCw, Type, Upload, Search, Eye, Edit3, History, Sun, Moon } from 'lucide-react';
 import { PasswordGate } from '@/components/editor/password-gate';
@@ -41,19 +42,16 @@ export function EncryptedEditor({ siteName }: Props) {
   const [showSearch, setShowSearch] = useState(false);
   const [showMarkdownPreview, setShowMarkdownPreview] = useState(false);
   const [showVersionHistory, setShowVersionHistory] = useState(false);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const debouncedContent = useDebounce(content, 1500);
 
-  // Load theme preference
+  // Hydration protection
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle('light', savedTheme === 'light');
-    }
+    setMounted(true);
   }, []);
 
   // Word and character count
@@ -325,14 +323,6 @@ export function EncryptedEditor({ siteName }: Props) {
     }
   }, [status, isDirty, showSearch]);
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    document.documentElement.classList.toggle('light', newTheme === 'light');
-    toast.success(newTheme === 'light' ? t('editor.theme.switchedToLight') : t('editor.theme.switchedToDark'));
-  };
-
   const handleRestoreVersion = async (version: any) => {
     try {
       const decrypted = await decryptContent(version, password);
@@ -348,7 +338,7 @@ export function EncryptedEditor({ siteName }: Props) {
 
   if (status === 'loading') {
     return (
-      <div className="flex min-h-[60vh] items-center justify-center text-white/70">
+      <div className="flex min-h-[60vh] items-center justify-center text-gray-600 dark:text-white/70">
         {t('common.states.loadingNote')}
       </div>
     );
@@ -365,21 +355,33 @@ export function EncryptedEditor({ siteName }: Props) {
   return (
     <div className="space-y-6">
       {/* Top toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/20 bg-gradient-to-r from-slate-900/60 via-slate-900/50 to-slate-900/60 px-6 py-4 text-sm text-white/70 shadow-xl shadow-black/20 backdrop-blur-xl">
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-gray-200 dark:border-white/20 bg-gradient-to-r from-gray-50 via-white to-gray-50 dark:from-slate-900/60 dark:via-slate-900/50 dark:to-slate-900/60 px-6 py-4 text-sm text-gray-600 dark:text-white/70 shadow-xl shadow-black/10 dark:shadow-black/20 backdrop-blur-xl">
         <div className="flex items-center gap-3">
           <div className="rounded-lg bg-primary-500/10 p-2 ring-1 ring-primary-400/20">
             <ShieldCheck className="h-4 w-4 text-primary-400" />
           </div>
           <p className="flex items-center gap-2">
-            <span className="text-white/60">{t('editor.toolbar.site')}</span>
-            <span className="font-bold text-white bg-gradient-to-r from-primary-300 to-indigo-300 bg-clip-text text-transparent">/{siteName}</span>
+            <span className="text-gray-500 dark:text-white/60">{t('editor.toolbar.site')}</span>
+            <span className="font-bold text-gray-900 dark:text-white bg-gradient-to-r from-primary-300 to-indigo-300 bg-clip-text text-transparent">/{siteName}</span>
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <p className="text-xs hidden md:block">{isSaving ? t('common.actions.saving') : `${t('editor.toolbar.lastSaved')} ${formattedTimestamp}`}</p>
-          <Button type="button" size="sm" variant="ghost" onClick={toggleTheme} title={theme === 'dark' ? t('editor.toolbar.switchToLightMode') : t('editor.toolbar.switchToDarkMode')}>
-            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </Button>
+          {mounted && (
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              onClick={() => {
+                const newTheme = theme === 'dark' ? 'light' : 'dark';
+                setTheme(newTheme);
+                toast.success(newTheme === 'light' ? t('editor.theme.switchedToLight') : t('editor.theme.switchedToDark'));
+              }}
+              title={theme === 'dark' ? t('editor.toolbar.switchToLightMode') : t('editor.toolbar.switchToDarkMode')}
+            >
+              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </Button>
+          )}
           <Button type="button" size="sm" variant="ghost" onClick={() => setShowMarkdownPreview(!showMarkdownPreview)} title={t('editor.toolbar.toggleMarkdownPreview')}>
             {showMarkdownPreview ? <Edit3 className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </Button>
@@ -412,7 +414,7 @@ export function EncryptedEditor({ siteName }: Props) {
 
       {/* Search bar */}
       {showSearch && (
-        <div className="rounded-2xl border border-primary-500/40 bg-gradient-to-r from-slate-900/80 to-slate-950/80 px-6 py-4 shadow-lg shadow-primary-900/20 backdrop-blur-xl animate-fade-in-down">
+        <div className="rounded-2xl border border-primary-400/30 dark:border-primary-500/40 bg-gradient-to-r from-gray-50 to-white dark:from-slate-900/80 dark:to-slate-950/80 px-6 py-4 shadow-lg shadow-primary-500/10 dark:shadow-primary-900/20 backdrop-blur-xl animate-fade-in-down">
           <div className="flex items-center gap-3">
             <div className="rounded-lg bg-primary-500/10 p-2 ring-1 ring-primary-400/20">
               <Search className="h-4 w-4 text-primary-400" />
@@ -422,13 +424,13 @@ export function EncryptedEditor({ siteName }: Props) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t('editor.search.placeholder')}
-              className="flex-1 bg-transparent text-sm text-white placeholder:text-white/50 focus:outline-none"
+              className="flex-1 bg-transparent text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-white/50 focus:outline-none"
               autoFocus
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="px-3 py-1.5 text-xs font-medium text-primary-300 hover:text-primary-200 rounded-lg bg-primary-500/10 hover:bg-primary-500/20 transition-all duration-200"
+                className="px-3 py-1.5 text-xs font-medium text-primary-600 dark:text-primary-300 hover:text-primary-500 dark:hover:text-primary-200 rounded-lg bg-primary-500/10 hover:bg-primary-500/20 transition-all duration-200"
               >
                 {t('common.actions.clear')}
               </button>
@@ -455,28 +457,28 @@ export function EncryptedEditor({ siteName }: Props) {
           value={content}
           onChange={(event) => handleChange(event.target.value)}
           placeholder={t('editor.editor.placeholder')}
-          className="min-h-[60vh] resize-none rounded-3xl border border-white/20 bg-gradient-to-br from-slate-950/90 via-slate-950/80 to-slate-900/90 text-base leading-relaxed shadow-2xl shadow-black/40 backdrop-blur-sm focus:border-primary-400/40 focus:ring-2 focus:ring-primary-400/20 transition-all duration-300"
+          className="min-h-[60vh] resize-none rounded-3xl border border-gray-200 dark:border-white/20 bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-slate-950/90 dark:via-slate-950/80 dark:to-slate-900/90 text-base leading-relaxed text-gray-900 dark:text-white shadow-2xl shadow-black/10 dark:shadow-black/40 backdrop-blur-sm focus:border-primary-400/40 focus:ring-2 focus:ring-primary-400/20 transition-all duration-300"
         />
       )}
 
       {/* Stats bar */}
-      <div className="flex items-center justify-between rounded-2xl border border-white/20 bg-gradient-to-r from-slate-900/60 via-slate-900/50 to-slate-900/60 px-6 py-3 text-xs text-white/60 shadow-lg shadow-black/20 backdrop-blur-xl">
+      <div className="flex items-center justify-between rounded-2xl border border-gray-200 dark:border-white/20 bg-gradient-to-r from-gray-50 via-white to-gray-50 dark:from-slate-900/60 dark:via-slate-900/50 dark:to-slate-900/60 px-6 py-3 text-xs text-gray-500 dark:text-white/60 shadow-lg shadow-black/10 dark:shadow-black/20 backdrop-blur-xl">
         <div className="flex items-center gap-6">
           <span className="flex items-center gap-2 font-medium">
             <Type className="h-3.5 w-3.5 text-primary-400" />
-            <span className="text-white">{stats.words}</span> {t('editor.stats.words')}
+            <span className="text-gray-900 dark:text-white">{stats.words}</span> {t('editor.stats.words')}
           </span>
           <span className="flex items-center gap-1">
-            <span className="text-white">{stats.chars}</span> {t('editor.stats.characters')}
+            <span className="text-gray-900 dark:text-white">{stats.chars}</span> {t('editor.stats.characters')}
           </span>
           <span className="flex items-center gap-1">
-            <span className="text-white">{stats.lines}</span> {t('editor.stats.lines')}
+            <span className="text-gray-900 dark:text-white">{stats.lines}</span> {t('editor.stats.lines')}
           </span>
         </div>
         <div>
           {isDirty && (
-            <span className="flex items-center gap-2 text-yellow-400 font-medium animate-pulse">
-              <span className="h-2 w-2 rounded-full bg-yellow-400" />
+            <span className="flex items-center gap-2 text-yellow-500 dark:text-yellow-400 font-medium animate-pulse">
+              <span className="h-2 w-2 rounded-full bg-yellow-500 dark:bg-yellow-400" />
               {t('editor.stats.unsavedChanges')}
             </span>
           )}

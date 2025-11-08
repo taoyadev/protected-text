@@ -20,6 +20,9 @@ export const common = {
     restore: '復元',
     clear: 'クリア',
     sending: '送信中...',
+    add: '追加',
+    createNewTab: '新しいタブ',
+    closeTab: 'タブを閉じる',
   },
 
   // 状態
@@ -29,6 +32,7 @@ export const common = {
     notSavedYet: 'まだ保存されていません',
     unsavedChanges: '未保存の変更',
     noChangesToSave: '保存する変更はありません',
+    noTabsOpen: 'タブが開いていません',
   },
 
   // 時間関連
@@ -69,5 +73,10 @@ export const common = {
     optional: '任意',
     required: '*',
     characters: '文字',
+  },
+
+  // プレースホルダー
+  placeholders: {
+    enterSiteName: 'サイト名を入力…',
   },
 };

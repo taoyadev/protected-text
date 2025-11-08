@@ -20,6 +20,9 @@ export const common = {
     restore: 'Восстановить',
     clear: 'Очистить',
     sending: 'Отправка...',
+    add: 'Добавить',
+    createNewTab: 'Новая вкладка',
+    closeTab: 'Закрыть вкладку',
   },
 
   // Состояния
@@ -29,6 +32,7 @@ export const common = {
     notSavedYet: 'Еще не сохранено',
     unsavedChanges: 'Несохраненные изменения',
     noChangesToSave: 'Нет изменений для сохранения',
+    noTabsOpen: 'Нет открытых вкладок',
   },
 
   // Связанное со временем
@@ -69,5 +73,10 @@ export const common = {
     optional: 'необязательно',
     required: '*',
     characters: 'символов',
+  },
+
+  // Заполнители
+  placeholders: {
+    enterSiteName: 'Введите имя сайта…',
   },
 };

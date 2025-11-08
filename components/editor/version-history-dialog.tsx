@@ -64,24 +64,24 @@ export function VersionHistoryDialog({ open, siteName, onClose, onRestore }: Pro
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
-      <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-slate-900 p-6 shadow-2xl max-h-[80vh] overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 dark:bg-black/70 backdrop-blur-sm">
+      <div className="w-full max-w-2xl rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900 p-6 shadow-2xl max-h-[80vh] overflow-hidden flex flex-col">
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <History className="h-5 w-5 text-primary-400" />
-            <h2 className="text-xl font-semibold text-white">{t('dialogs.versionHistory.title')}</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('dialogs.versionHistory.title')}</h2>
           </div>
-          <button onClick={onClose} className="text-white/70 hover:text-white">
+          <button onClick={onClose} className="text-gray-600 dark:text-white/70 hover:text-gray-900 dark:hover:text-white">
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {loading ? (
-          <div className="flex items-center justify-center py-12 text-white/70">
+          <div className="flex items-center justify-center py-12 text-gray-600 dark:text-white/70">
             {t('dialogs.versionHistory.loading')}
           </div>
         ) : versions.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 text-white/50">
+          <div className="flex flex-col items-center justify-center py-12 text-gray-500 dark:text-white/50">
             <History className="mb-3 h-12 w-12 opacity-30" />
             <p>{t('dialogs.versionHistory.noVersions')}</p>
           </div>
@@ -90,13 +90,13 @@ export function VersionHistoryDialog({ open, siteName, onClose, onRestore }: Pro
             {versions.map((version, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between rounded-xl border border-white/10 bg-slate-800/40 p-4 hover:bg-slate-800/60 transition-colors"
+                className="flex items-center justify-between rounded-xl border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-slate-800/40 p-4 hover:bg-gray-200 dark:hover:bg-slate-800/60 transition-colors"
               >
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-white">
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">
                     {t('dialogs.versionHistory.versionNumber')} {versions.length - index}
                   </p>
-                  <p className="text-xs text-white/50">
+                  <p className="text-xs text-gray-500 dark:text-white/50">
                     {formatDate(new Date(version.timestamp), locale, {
                       year: 'numeric',
                       month: 'long',

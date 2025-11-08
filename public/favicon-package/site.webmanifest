@@ -1,14 +1,12 @@
 {
-  "name": "Protected Text",
-  "short_name": "ProtectedText",
+  "name": "Your Application Name",
+  "short_name": "App",
+  "description": "Application description",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#4f46e5",
-  "description": "Zero-knowledge encrypted notes with Markdown and code blocks.",
-  "lang": "en",
-  "dir": "ltr",
-  "categories": ["productivity", "utilities"],
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "/favicon.svg",
@@ -28,5 +26,10 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "categories": [
+    "productivity"
+  ],
+  "lang": "en",
+  "dir": "ltr"
 }
