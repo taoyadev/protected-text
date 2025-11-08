@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { getPasswordScore } from '@/lib/password';
 import { Lock } from 'lucide-react';
+import { useTranslation } from '@/lib/i18n-provider';
 
 interface PasswordGateProps {
   type: 'create' | 'unlock';
@@ -14,6 +15,7 @@ interface PasswordGateProps {
 }
 
 export function PasswordGate({ type, loading, error, onSubmit }: PasswordGateProps) {
+  const { t } = useTranslation();
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [localError, setLocalError] = useState<string | null>(null);
@@ -21,7 +23,7 @@ export function PasswordGate({ type, loading, error, onSubmit }: PasswordGatePro
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (type === 'create' && password !== confirm) {
-      setLocalError('Passwords do not match');
+      setLocalError(t('errors.password.passwordsDoNotMatch'));
       return;
     }
 
@@ -32,20 +34,22 @@ export function PasswordGate({ type, loading, error, onSubmit }: PasswordGatePro
   const score = getPasswordScore(password);
 
   return (
-    <div className="mx-auto flex max-w-md flex-col gap-4 rounded-3xl border border-white/10 bg-slate-950/80 p-8 text-left shadow-2xl">
-      <div className="flex items-center gap-3">
-        <Lock className="h-5 w-5 text-primary-300" />
+    <div className="mx-auto flex max-w-md flex-col gap-6 rounded-3xl border border-white/20 bg-gradient-to-br from-slate-950/90 via-slate-900/80 to-slate-950/90 p-10 text-left shadow-2xl shadow-black/40 backdrop-blur-xl animate-fade-in-up">
+      <div className="flex items-center gap-4">
+        <div className="rounded-xl bg-primary-500/10 p-3 ring-2 ring-primary-400/30 shadow-lg shadow-primary-900/20">
+          <Lock className="h-6 w-6 text-primary-400" />
+        </div>
         <div>
-          <p className="text-sm uppercase tracking-widest text-white/60">
-            {type === 'create' ? 'Create password' : 'Unlock note'}
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-primary-300/90">
+            {type === 'create' ? t('dialogs.passwordGate.createPassword') : t('dialogs.passwordGate.unlockNote')}
           </p>
-          <p className="text-base text-white/80">Passwords never leave your device.</p>
+          <p className="mt-1 text-base text-white/80">{t('dialogs.passwordGate.passwordsNeverLeave')}</p>
         </div>
       </div>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="password" className="text-sm text-white/70">
-            Password
+            {t('dialogs.passwordGate.passwordLabel')}
           </label>
           <Input
             id="password"
@@ -67,7 +71,7 @@ export function PasswordGate({ type, loading, error, onSubmit }: PasswordGatePro
         {type === 'create' && (
           <div>
             <label htmlFor="confirm" className="text-sm text-white/70">
-              Confirm password
+              {t('dialogs.passwordGate.confirmPasswordLabel')}
             </label>
             <Input
               id="confirm"
@@ -82,7 +86,7 @@ export function PasswordGate({ type, loading, error, onSubmit }: PasswordGatePro
         )}
         {(error || localError) && <p className="text-sm text-red-300">{error || localError}</p>}
         <Button type="submit" isLoading={loading} className="w-full">
-          {type === 'create' ? 'Start writing' : 'Unlock' }
+          {type === 'create' ? t('dialogs.passwordGate.startWriting') : t('dialogs.passwordGate.unlock') }
         </Button>
       </form>
     </div>

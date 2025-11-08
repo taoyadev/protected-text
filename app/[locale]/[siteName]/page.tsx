@@ -2,15 +2,19 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { EncryptedEditor } from '@/components/editor/encrypted-editor';
 import { isSiteNameValid } from '@/lib/site';
+import { getT, type Locale } from '@/lib/i18n';
 
 interface Props {
-  params: Promise<{ siteName: string }>;
+  params: Promise<{ locale: string; siteName: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { siteName } = await params;
+  const { locale, siteName } = await params;
+  const t = getT(locale as Locale);
+
   return {
-    title: `${siteName} – Protected Text`,
+    title: `${siteName} – ${t('common.brand.protectedText')}`,
+    description: t('metadata.root.description'),
   };
 }
 

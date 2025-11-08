@@ -15,10 +15,10 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variantStyles: Record<Variant, string> = {
-  primary: 'bg-primary-500 text-white hover:bg-primary-400 shadow-lg shadow-primary-900/40',
+  primary: 'bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:from-primary-500 hover:to-primary-400 shadow-xl shadow-primary-500/40 hover:shadow-2xl hover:shadow-primary-500/60 hover:-translate-y-0.5 active:translate-y-0 ring-2 ring-primary-400/30 hover:ring-primary-400/50',
   secondary:
-    'bg-white/10 text-white hover:bg-white/20 border border-white/10 shadow-lg shadow-black/30 backdrop-blur',
-  ghost: 'bg-transparent text-white hover:bg-white/10',
+    'bg-white/10 text-white hover:bg-white/20 border-2 border-white/30 shadow-lg shadow-black/30 backdrop-blur-md hover:border-white/40 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0',
+  ghost: 'bg-transparent text-white hover:bg-white/10 hover:backdrop-blur-sm',
 };
 
 const sizeStyles: Record<Size, string> = {

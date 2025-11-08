@@ -5,6 +5,7 @@ import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
+import { useTranslation } from '@/lib/i18n-provider';
 
 interface Props {
   open: boolean;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export function ChangePasswordDialog({ open, onClose, onConfirm }: Props) {
+  const { t } = useTranslation();
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -24,17 +26,17 @@ export function ChangePasswordDialog({ open, onClose, onConfirm }: Props) {
     e.preventDefault();
 
     if (!oldPassword || !newPassword || !confirmPassword) {
-      toast.error('All fields are required');
+      toast.error(t('toasts.error.allFieldsRequired'));
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      toast.error('New passwords do not match');
+      toast.error(t('toasts.error.newPasswordsDoNotMatch'));
       return;
     }
 
     if (newPassword.length < 4) {
-      toast.error('New password must be at least 4 characters');
+      toast.error(t('toasts.error.newPasswordTooShort'));
       return;
     }
 
@@ -45,7 +47,7 @@ export function ChangePasswordDialog({ open, onClose, onConfirm }: Props) {
       setNewPassword('');
       setConfirmPassword('');
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to change password');
+      toast.error(err instanceof Error ? err.message : t('toasts.error.failedToChangePassword'));
     } finally {
       setIsLoading(false);
     }
@@ -62,7 +64,7 @@ export function ChangePasswordDialog({ open, onClose, onConfirm }: Props) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
       <div className="w-full max-w-md rounded-2xl border border-white/10 bg-slate-900 p-6 shadow-2xl">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-white">Change Password</h2>
+          <h2 className="text-xl font-semibold text-white">{t('dialogs.changePassword.title')}</h2>
           <button onClick={handleClose} className="text-white/70 hover:text-white">
             <X className="h-5 w-5" />
           </button>
@@ -70,45 +72,45 @@ export function ChangePasswordDialog({ open, onClose, onConfirm }: Props) {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="mb-2 block text-sm text-white/70">Current Password</label>
+            <label className="mb-2 block text-sm text-white/70">{t('dialogs.changePassword.currentPasswordLabel')}</label>
             <Input
               type="password"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
-              placeholder="Enter current password"
+              placeholder={t('dialogs.changePassword.currentPasswordPlaceholder')}
               autoFocus
               disabled={isLoading}
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-white/70">New Password</label>
+            <label className="mb-2 block text-sm text-white/70">{t('dialogs.changePassword.newPasswordLabel')}</label>
             <Input
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Enter new password"
+              placeholder={t('dialogs.changePassword.newPasswordPlaceholder')}
               disabled={isLoading}
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-white/70">Confirm New Password</label>
+            <label className="mb-2 block text-sm text-white/70">{t('dialogs.changePassword.confirmNewPasswordLabel')}</label>
             <Input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Re-enter new password"
+              placeholder={t('dialogs.changePassword.confirmNewPasswordPlaceholder')}
               disabled={isLoading}
             />
           </div>
 
           <div className="flex gap-3 pt-2">
             <Button type="button" variant="ghost" onClick={handleClose} className="flex-1" disabled={isLoading}>
-              Cancel
+              {t('dialogs.changePassword.cancel')}
             </Button>
             <Button type="submit" className="flex-1" isLoading={isLoading}>
-              Change Password
+              {t('dialogs.changePassword.changePasswordButton')}
             </Button>
           </div>
         </form>

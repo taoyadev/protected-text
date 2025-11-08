@@ -5,6 +5,7 @@ import { AlertTriangle, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
+import { useTranslation } from '@/lib/i18n-provider';
 
 interface Props {
   open: boolean;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 export function DeleteNoteDialog({ open, siteName, onClose, onConfirm }: Props) {
+  const { t } = useTranslation();
   const [confirmText, setConfirmText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,7 +25,7 @@ export function DeleteNoteDialog({ open, siteName, onClose, onConfirm }: Props) 
     e.preventDefault();
 
     if (confirmText !== siteName) {
-      toast.error(`Please type "${siteName}" to confirm`);
+      toast.error(t('toasts.error.pleaseTypeToConfirm', { siteName }));
       return;
     }
 
@@ -31,8 +33,8 @@ export function DeleteNoteDialog({ open, siteName, onClose, onConfirm }: Props) 
     try {
       await onConfirm();
       setConfirmText('');
-    } catch (err) {
-      toast.error('Failed to delete note');
+    } catch {
+      toast.error(t('toasts.error.failedToDeleteNote'));
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +51,7 @@ export function DeleteNoteDialog({ open, siteName, onClose, onConfirm }: Props) 
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-6 w-6 text-red-400" />
-            <h2 className="text-xl font-semibold text-white">Delete Note</h2>
+            <h2 className="text-xl font-semibold text-white">{t('dialogs.deleteNote.title')}</h2>
           </div>
           <button onClick={handleClose} className="text-white/70 hover:text-white">
             <X className="h-5 w-5" />
@@ -57,10 +59,14 @@ export function DeleteNoteDialog({ open, siteName, onClose, onConfirm }: Props) 
         </div>
 
         <div className="mb-6 space-y-2 text-sm text-white/70">
-          <p>This will <strong className="text-red-400">permanently delete</strong> your note.</p>
-          <p>This action <strong className="text-white">cannot be undone</strong>. No backups, no recovery.</p>
+          <p dangerouslySetInnerHTML={{
+            __html: t('dialogs.deleteNote.warning1').replace(/\*\*(.+?)\*\*/g, '<strong class="text-red-400">$1</strong>')
+          }} />
+          <p dangerouslySetInnerHTML={{
+            __html: t('dialogs.deleteNote.warning2').replace(/\*\*(.+?)\*\*/g, '<strong class="text-white">$1</strong>')
+          }} />
           <p className="mt-4">
-            Type <span className="font-mono font-semibold text-white">{siteName}</span> to confirm:
+            {t('dialogs.deleteNote.confirmPrompt')} <span className="font-mono font-semibold text-white">{siteName}</span> {t('dialogs.deleteNote.confirmPromptSuffix')}
           </p>
         </div>
 
@@ -77,7 +83,7 @@ export function DeleteNoteDialog({ open, siteName, onClose, onConfirm }: Props) 
 
           <div className="flex gap-3">
             <Button type="button" variant="ghost" onClick={handleClose} className="flex-1" disabled={isLoading}>
-              Cancel
+              {t('dialogs.deleteNote.cancel')}
             </Button>
             <Button
               type="submit"
@@ -85,7 +91,7 @@ export function DeleteNoteDialog({ open, siteName, onClose, onConfirm }: Props) 
               isLoading={isLoading}
               disabled={confirmText !== siteName}
             >
-              Delete Forever
+              {t('dialogs.deleteNote.deleteForever')}
             </Button>
           </div>
         </form>

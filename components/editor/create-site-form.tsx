@@ -6,27 +6,35 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { normalizeSiteName, isSiteNameValid, generateSiteNameHint } from '@/lib/site';
 import { Sparkles, Wand2 } from 'lucide-react';
+import { useTranslation } from '@/lib/i18n-provider';
 
 export function CreateSiteForm() {
   const router = useRouter();
+  const { locale, t } = useTranslation();
   const [value, setValue] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [placeholder, setPlaceholder] = useState('my-secure-note');
 
-  const placeholder = useMemo(() => generateSiteNameHint(), []);
+  // Generate random placeholder on client side to avoid hydration mismatch
+  useEffect(() => {
+    setPlaceholder(generateSiteNameHint());
+  }, []);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const normalized = normalizeSiteName(value);
 
     if (!isSiteNameValid(normalized)) {
-      setError('Use 3-32 lowercase letters, numbers or dashes.');
+      setError(t('errors.validation.siteNameInvalid'));
       return;
     }
 
     setError(null);
     startTransition(() => {
-      router.push(`/${normalized}`);
+      // For English, use root path; for others, use /{locale}
+      const path = locale === 'en' ? `/${normalized}` : `/${locale}/${normalized}`;
+      router.push(path);
     });
   };
 
@@ -40,10 +48,11 @@ export function CreateSiteForm() {
     <form
       id="create-note"
       onSubmit={handleSubmit}
-      className="flex flex-col gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 text-left shadow-xl shadow-black/30 backdrop-blur"
+      className="group flex flex-col gap-4 rounded-3xl border-2 border-primary-500/30 bg-gradient-to-br from-slate-800/90 via-slate-900/90 to-slate-950/90 p-6 text-left shadow-2xl shadow-primary-500/20 backdrop-blur-xl hover:border-primary-400/50 hover:shadow-primary-500/30 transition-all duration-500 ring-1 ring-primary-400/20"
     >
-      <label className="text-sm font-medium text-white/80" htmlFor="site-name">
-        Choose a private URL
+      <label className="text-sm font-bold text-white flex items-center gap-2" htmlFor="site-name">
+        <Sparkles className="h-4 w-4 text-primary-300" />
+        {t('landing.createSiteForm.label')}
       </label>
       <div className="flex flex-col gap-3 sm:flex-row">
         <Input
@@ -55,19 +64,20 @@ export function CreateSiteForm() {
           autoComplete="off"
           className="flex-1 text-base"
         />
-        <Button type="submit" isLoading={isPending} className="whitespace-nowrap px-6">
+        <Button type="submit" isLoading={isPending} className="whitespace-nowrap px-8 font-semibold">
           <Sparkles className="h-4 w-4" />
-          Secure my note
+          {t('landing.createSiteForm.submitButton')}
         </Button>
       </div>
-      <div className="flex items-center justify-between gap-4 text-xs text-white/60">
-        <p>URL lives at protected-text.com/[your-url]</p>
+      <div className="flex items-center justify-between gap-4 text-xs text-white/80">
+        <p className="font-mono text-white/70">{t('landing.createSiteForm.urlPrefix')}<span className="text-primary-300 font-semibold">{t('landing.createSiteForm.urlPlaceholder')}</span></p>
         <button
           type="button"
           onClick={handleRandom}
-          className="inline-flex items-center gap-1 font-medium text-primary-300 hover:text-primary-200"
+          className="inline-flex items-center gap-1.5 font-bold text-primary-300 hover:text-primary-200 transition-colors duration-200 group/btn"
         >
-          <Wand2 className="h-3.5 w-3.5" /> Surprise me
+          <Wand2 className="h-3.5 w-3.5 group-hover/btn:rotate-12 transition-transform duration-300" />
+          {t('landing.createSiteForm.randomButton')}
         </button>
       </div>
       {error && <p className="text-sm text-red-300">{error}</p>}

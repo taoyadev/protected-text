@@ -20,7 +20,7 @@ export async function deriveKey(password: string, salt: Uint8Array) {
   return crypto.subtle.deriveKey(
     {
       name: 'PBKDF2',
-      salt,
+      salt: salt as BufferSource,
       iterations: ITERATIONS,
       hash: 'SHA-256',
     },
@@ -39,8 +39,8 @@ export async function encryptContent(content: string, password: string): Promise
 
   return {
     encrypted: arrayBufferToBase64(encrypted),
-    iv: arrayBufferToBase64(iv.buffer),
-    salt: arrayBufferToBase64(salt.buffer),
+    iv: arrayBufferToBase64(iv.buffer as ArrayBuffer),
+    salt: arrayBufferToBase64(salt.buffer as ArrayBuffer),
     version: 1,
   };
 }

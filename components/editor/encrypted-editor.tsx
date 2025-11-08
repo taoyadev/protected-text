@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { toast } from 'sonner';
 import { Download, Link2, ShieldCheck, Key, Trash2, RefreshCw, Type, Upload, Search, Eye, Edit3, History, Sun, Moon } from 'lucide-react';
 import { PasswordGate } from '@/components/editor/password-gate';
@@ -13,6 +13,8 @@ import { ChangePasswordDialog } from '@/components/editor/change-password-dialog
 import { DeleteNoteDialog } from '@/components/editor/delete-note-dialog';
 import { MarkdownPreview } from '@/components/editor/markdown-preview';
 import { VersionHistoryDialog } from '@/components/editor/version-history-dialog';
+import { useTranslation } from '@/lib/i18n-provider';
+import { formatTime } from '@/lib/i18n';
 
 interface Props {
   siteName: string;
@@ -21,6 +23,7 @@ interface Props {
 type Status = 'loading' | 'locked' | 'ready';
 
 export function EncryptedEditor({ siteName }: Props) {
+  const { locale, t } = useTranslation();
   const [status, setStatus] = useState<Status>('loading');
   const [mode, setMode] = useState<'create' | 'unlock'>('create');
   const [payload, setPayload] = useState<EncryptedPayload | null>(null);
@@ -73,7 +76,7 @@ export function EncryptedEditor({ siteName }: Props) {
         }
       } catch (err) {
         console.error(err);
-        toast.error('Unable to reach the server.');
+        toast.error(t('errors.network.unableToReachServer'));
       } finally {
         setStatus('locked');
         setInitializing(false);
@@ -97,8 +100,8 @@ export function EncryptedEditor({ siteName }: Props) {
         return;
       } catch (err) {
         console.error(err);
-        setError('Incorrect password.');
-        toast.error('Incorrect password');
+        setError(t('errors.password.incorrectPassword'));
+        toast.error(t('errors.password.incorrectPassword'));
         return;
       }
     }
@@ -129,7 +132,7 @@ export function EncryptedEditor({ siteName }: Props) {
         }
       } catch (err) {
         console.error(err);
-        toast.error('Failed to save note');
+        toast.error(t('toasts.error.failedToSaveNote'));
       } finally {
         if (!cancelled) setIsSaving(false);
       }
@@ -147,9 +150,9 @@ export function EncryptedEditor({ siteName }: Props) {
   };
 
   const formattedTimestamp = useMemo(() => {
-    if (!lastSaved) return 'Not saved yet';
-    return new Date(lastSaved).toLocaleTimeString();
-  }, [lastSaved]);
+    if (!lastSaved) return t('common.states.notSavedYet');
+    return formatTime(new Date(lastSaved), locale);
+  }, [lastSaved, locale, t]);
 
   const handleExport = () => {
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
@@ -166,15 +169,15 @@ export function EncryptedEditor({ siteName }: Props) {
   const handleShare = async () => {
     const url = `${window.location.origin}/${siteName}`;
     if (!navigator?.clipboard) {
-      toast.error('Clipboard unavailable');
+      toast.error(t('errors.network.clipboardUnavailable'));
       return;
     }
     await navigator.clipboard.writeText(url);
-    toast.success('Share link copied');
+    toast.success(t('toasts.success.shareLinkCopied'));
   };
 
   const handleReload = async () => {
-    if (isDirty && !confirm('You have unsaved changes. Reload anyway?')) {
+    if (isDirty && !confirm(t('errors.confirmations.unsavedChangesReloadAnyway'))) {
       return;
     }
 
@@ -186,13 +189,13 @@ export function EncryptedEditor({ siteName }: Props) {
         setContent(decrypted);
         setPayload(response.payload);
         setIsDirty(false);
-        toast.success('Note reloaded from server');
+        toast.success(t('toasts.success.noteReloadedFromServer'));
       } else {
-        toast.error('No note found on server');
+        toast.error(t('errors.network.noNoteFoundOnServer'));
       }
     } catch (err) {
       console.error(err);
-      toast.error('Failed to reload note');
+      toast.error(t('errors.network.failedToReloadNote'));
     } finally {
       setIsReloading(false);
     }
@@ -215,25 +218,25 @@ export function EncryptedEditor({ siteName }: Props) {
 
       setPassword(newPassword);
       setPayload(encrypted);
-      toast.success('Password changed successfully');
+      toast.success(t('toasts.success.passwordChangedSuccessfully'));
       setShowChangePassword(false);
     } catch (err) {
       console.error(err);
-      throw new Error('Incorrect old password');
+      throw new Error(t('errors.password.incorrectOldPassword'));
     }
   };
 
   const handleDelete = async () => {
     try {
       await deleteNote(siteName);
-      toast.success('Note deleted');
+      toast.success(t('toasts.success.noteDeleted'));
       // Redirect to home after a short delay
       setTimeout(() => {
         window.location.href = '/';
       }, 1500);
     } catch (err) {
       console.error(err);
-      toast.error('Failed to delete note');
+      toast.error(t('errors.network.failedToDeleteNote'));
     }
   };
 
@@ -250,7 +253,7 @@ export function EncryptedEditor({ siteName }: Props) {
       const text = event.target?.result as string;
       setContent(text);
       setIsDirty(true);
-      toast.success('File imported successfully');
+      toast.success(t('toasts.success.fileImportedSuccessfully'));
     };
     reader.readAsText(file);
     // Reset input
@@ -259,7 +262,7 @@ export function EncryptedEditor({ siteName }: Props) {
 
   const handleManualSave = async () => {
     if (!isDirty) {
-      toast.info('No changes to save');
+      toast.info(t('toasts.info.noChangesToSave'));
       return;
     }
     try {
@@ -272,10 +275,10 @@ export function EncryptedEditor({ siteName }: Props) {
       });
       setLastSaved(Date.now());
       setIsDirty(false);
-      toast.success('Saved!');
+      toast.success(t('toasts.success.saved'));
     } catch (err) {
       console.error(err);
-      toast.error('Failed to save');
+      toast.error(t('toasts.error.failedToSave'));
     } finally {
       setIsSaving(false);
     }
@@ -322,18 +325,12 @@ export function EncryptedEditor({ siteName }: Props) {
     }
   }, [status, isDirty, showSearch]);
 
-  // Highlight search results
-  const highlightedContent = useMemo(() => {
-    if (!searchQuery || !content) return content;
-    return content; // We'll use browser's native find for now
-  }, [content, searchQuery]);
-
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
     document.documentElement.classList.toggle('light', newTheme === 'light');
-    toast.success(`Switched to ${newTheme} mode`);
+    toast.success(newTheme === 'light' ? t('editor.theme.switchedToLight') : t('editor.theme.switchedToDark'));
   };
 
   const handleRestoreVersion = async (version: any) => {
@@ -342,17 +339,17 @@ export function EncryptedEditor({ siteName }: Props) {
       setContent(decrypted);
       setPayload(version);
       setIsDirty(true);
-      toast.success('Version restored. Save to confirm.');
+      toast.success(t('toasts.success.versionRestoredSaveToConfirm'));
     } catch (err) {
       console.error(err);
-      throw new Error('Failed to decrypt version');
+      throw new Error(t('errors.password.failedToDecryptVersion'));
     }
   };
 
   if (status === 'loading') {
     return (
       <div className="flex min-h-[60vh] items-center justify-center text-white/70">
-        Loading note…
+        {t('common.states.loadingNote')}
       </div>
     );
   }
@@ -366,45 +363,48 @@ export function EncryptedEditor({ siteName }: Props) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Top toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/10 bg-slate-900/40 px-4 py-3 text-sm text-white/70">
-        <div className="flex items-center gap-2">
-          <ShieldCheck className="h-4 w-4 text-primary-300" />
-          <p>
-            Site <span className="font-semibold text-white">/{siteName}</span>
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/20 bg-gradient-to-r from-slate-900/60 via-slate-900/50 to-slate-900/60 px-6 py-4 text-sm text-white/70 shadow-xl shadow-black/20 backdrop-blur-xl">
+        <div className="flex items-center gap-3">
+          <div className="rounded-lg bg-primary-500/10 p-2 ring-1 ring-primary-400/20">
+            <ShieldCheck className="h-4 w-4 text-primary-400" />
+          </div>
+          <p className="flex items-center gap-2">
+            <span className="text-white/60">{t('editor.toolbar.site')}</span>
+            <span className="font-bold text-white bg-gradient-to-r from-primary-300 to-indigo-300 bg-clip-text text-transparent">/{siteName}</span>
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <p className="text-xs hidden md:block">{isSaving ? 'Saving…' : `Last saved ${formattedTimestamp}`}</p>
-          <Button type="button" size="sm" variant="ghost" onClick={toggleTheme} title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+          <p className="text-xs hidden md:block">{isSaving ? t('common.actions.saving') : `${t('editor.toolbar.lastSaved')} ${formattedTimestamp}`}</p>
+          <Button type="button" size="sm" variant="ghost" onClick={toggleTheme} title={theme === 'dark' ? t('editor.toolbar.switchToLightMode') : t('editor.toolbar.switchToDarkMode')}>
             {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={() => setShowMarkdownPreview(!showMarkdownPreview)} title="Toggle Markdown Preview">
+          <Button type="button" size="sm" variant="ghost" onClick={() => setShowMarkdownPreview(!showMarkdownPreview)} title={t('editor.toolbar.toggleMarkdownPreview')}>
             {showMarkdownPreview ? <Edit3 className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={() => setShowSearch(!showSearch)} title="Search (Ctrl+F)">
+          <Button type="button" size="sm" variant="ghost" onClick={() => setShowSearch(!showSearch)} title={t('editor.toolbar.search')}>
             <Search className="h-4 w-4" />
           </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={() => setShowVersionHistory(true)} title="Version History">
+          <Button type="button" size="sm" variant="ghost" onClick={() => setShowVersionHistory(true)} title={t('editor.toolbar.versionHistory')}>
             <History className="h-4 w-4" />
           </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={handleReload} disabled={isReloading} title="Reload">
+          <Button type="button" size="sm" variant="ghost" onClick={handleReload} disabled={isReloading} title={t('editor.toolbar.reload')}>
             <RefreshCw className={`h-4 w-4 ${isReloading ? 'animate-spin' : ''}`} />
           </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={handleImport} title="Import (Ctrl+I)">
+          <Button type="button" size="sm" variant="ghost" onClick={handleImport} title={t('editor.toolbar.import')}>
             <Upload className="h-4 w-4" />
           </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={handleExport} title="Export (Ctrl+E)">
+          <Button type="button" size="sm" variant="ghost" onClick={handleExport} title={t('editor.toolbar.export')}>
             <Download className="h-4 w-4" />
           </Button>
-          <Button type="button" size="sm" variant="secondary" onClick={handleShare} title="Share">
+          <Button type="button" size="sm" variant="secondary" onClick={handleShare} title={t('common.actions.share')}>
             <Link2 className="h-4 w-4" />
           </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={() => setShowChangePassword(true)} title="Change Password (Ctrl+K)">
+          <Button type="button" size="sm" variant="ghost" onClick={() => setShowChangePassword(true)} title={t('editor.toolbar.changePassword')}>
             <Key className="h-4 w-4" />
           </Button>
-          <Button type="button" size="sm" variant="ghost" className="text-red-400 hover:text-red-300" onClick={() => setShowDeleteDialog(true)} title="Delete">
+          <Button type="button" size="sm" variant="ghost" className="text-red-400 hover:text-red-300" onClick={() => setShowDeleteDialog(true)} title={t('common.actions.delete')}>
             <Trash2 className="h-4 w-4" />
           </Button>
         </div>
@@ -412,23 +412,25 @@ export function EncryptedEditor({ siteName }: Props) {
 
       {/* Search bar */}
       {showSearch && (
-        <div className="rounded-2xl border border-primary-500/30 bg-slate-900/60 px-4 py-3">
-          <div className="flex items-center gap-2">
-            <Search className="h-4 w-4 text-white/50" />
+        <div className="rounded-2xl border border-primary-500/40 bg-gradient-to-r from-slate-900/80 to-slate-950/80 px-6 py-4 shadow-lg shadow-primary-900/20 backdrop-blur-xl animate-fade-in-down">
+          <div className="flex items-center gap-3">
+            <div className="rounded-lg bg-primary-500/10 p-2 ring-1 ring-primary-400/20">
+              <Search className="h-4 w-4 text-primary-400" />
+            </div>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search in note... (Press Esc to close)"
-              className="flex-1 bg-transparent text-sm text-white placeholder:text-white/40 focus:outline-none"
+              placeholder={t('editor.search.placeholder')}
+              className="flex-1 bg-transparent text-sm text-white placeholder:text-white/50 focus:outline-none"
               autoFocus
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="text-xs text-white/50 hover:text-white"
+                className="px-3 py-1.5 text-xs font-medium text-primary-300 hover:text-primary-200 rounded-lg bg-primary-500/10 hover:bg-primary-500/20 transition-all duration-200"
               >
-                Clear
+                {t('common.actions.clear')}
               </button>
             )}
           </div>
@@ -452,22 +454,32 @@ export function EncryptedEditor({ siteName }: Props) {
           ref={textareaRef}
           value={content}
           onChange={(event) => handleChange(event.target.value)}
-          placeholder="Start typing… Password never leaves this browser tab."
-          className="min-h-[60vh] resize-none rounded-3xl border border-white/10 bg-slate-950/70 text-base leading-relaxed shadow-inner shadow-black/40"
+          placeholder={t('editor.editor.placeholder')}
+          className="min-h-[60vh] resize-none rounded-3xl border border-white/20 bg-gradient-to-br from-slate-950/90 via-slate-950/80 to-slate-900/90 text-base leading-relaxed shadow-2xl shadow-black/40 backdrop-blur-sm focus:border-primary-400/40 focus:ring-2 focus:ring-primary-400/20 transition-all duration-300"
         />
       )}
 
       {/* Stats bar */}
-      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-900/40 px-4 py-2 text-xs text-white/50">
-        <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1">
-            <Type className="h-3 w-3" /> {stats.words} words
+      <div className="flex items-center justify-between rounded-2xl border border-white/20 bg-gradient-to-r from-slate-900/60 via-slate-900/50 to-slate-900/60 px-6 py-3 text-xs text-white/60 shadow-lg shadow-black/20 backdrop-blur-xl">
+        <div className="flex items-center gap-6">
+          <span className="flex items-center gap-2 font-medium">
+            <Type className="h-3.5 w-3.5 text-primary-400" />
+            <span className="text-white">{stats.words}</span> {t('editor.stats.words')}
           </span>
-          <span>{stats.chars} characters</span>
-          <span>{stats.lines} lines</span>
+          <span className="flex items-center gap-1">
+            <span className="text-white">{stats.chars}</span> {t('editor.stats.characters')}
+          </span>
+          <span className="flex items-center gap-1">
+            <span className="text-white">{stats.lines}</span> {t('editor.stats.lines')}
+          </span>
         </div>
         <div>
-          {isDirty && <span className="text-yellow-400">● Unsaved changes</span>}
+          {isDirty && (
+            <span className="flex items-center gap-2 text-yellow-400 font-medium animate-pulse">
+              <span className="h-2 w-2 rounded-full bg-yellow-400" />
+              {t('editor.stats.unsavedChanges')}
+            </span>
+          )}
         </div>
       </div>
 

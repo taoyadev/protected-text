@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { X, History } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import { useTranslation } from '@/lib/i18n-provider';
+import { formatDate } from '@/lib/i18n';
 
 interface Version {
   encrypted: string;
@@ -22,6 +24,7 @@ interface Props {
 }
 
 export function VersionHistoryDialog({ open, siteName, onClose, onRestore }: Props) {
+  const { locale, t } = useTranslation();
   const [versions, setVersions] = useState<Version[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -41,9 +44,8 @@ export function VersionHistoryDialog({ open, siteName, onClose, onRestore }: Pro
       });
       const data = await response.json();
       setVersions(data.versions || []);
-    } catch (err) {
-      console.error(err);
-      toast.error('Failed to load version history');
+    } catch {
+      toast.error(t('toasts.error.failedToLoadVersionHistory'));
     } finally {
       setLoading(false);
     }
@@ -52,10 +54,10 @@ export function VersionHistoryDialog({ open, siteName, onClose, onRestore }: Pro
   const handleRestore = async (version: Version) => {
     try {
       await onRestore(version);
-      toast.success('Version restored');
+      toast.success(t('toasts.success.versionRestored'));
       onClose();
-    } catch (err) {
-      toast.error('Failed to restore version');
+    } catch {
+      toast.error(t('toasts.error.failedToRestoreVersion'));
     }
   };
 
@@ -67,7 +69,7 @@ export function VersionHistoryDialog({ open, siteName, onClose, onRestore }: Pro
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <History className="h-5 w-5 text-primary-400" />
-            <h2 className="text-xl font-semibold text-white">Version History</h2>
+            <h2 className="text-xl font-semibold text-white">{t('dialogs.versionHistory.title')}</h2>
           </div>
           <button onClick={onClose} className="text-white/70 hover:text-white">
             <X className="h-5 w-5" />
@@ -76,12 +78,12 @@ export function VersionHistoryDialog({ open, siteName, onClose, onRestore }: Pro
 
         {loading ? (
           <div className="flex items-center justify-center py-12 text-white/70">
-            Loading versions...
+            {t('dialogs.versionHistory.loading')}
           </div>
         ) : versions.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-white/50">
             <History className="mb-3 h-12 w-12 opacity-30" />
-            <p>No version history available yet</p>
+            <p>{t('dialogs.versionHistory.noVersions')}</p>
           </div>
         ) : (
           <div className="flex-1 overflow-y-auto space-y-2">
@@ -92,10 +94,16 @@ export function VersionHistoryDialog({ open, siteName, onClose, onRestore }: Pro
               >
                 <div className="flex-1">
                   <p className="text-sm font-medium text-white">
-                    Version {versions.length - index}
+                    {t('dialogs.versionHistory.versionNumber')} {versions.length - index}
                   </p>
                   <p className="text-xs text-white/50">
-                    {new Date(version.timestamp).toLocaleString()} · {version.size} characters
+                    {formatDate(new Date(version.timestamp), locale, {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })} · {version.size} {t('dialogs.versionHistory.charactersLabel')}
                   </p>
                 </div>
                 <Button
@@ -104,7 +112,7 @@ export function VersionHistoryDialog({ open, siteName, onClose, onRestore }: Pro
                   variant="secondary"
                   onClick={() => handleRestore(version)}
                 >
-                  Restore
+                  {t('dialogs.versionHistory.restore')}
                 </Button>
               </div>
             ))}

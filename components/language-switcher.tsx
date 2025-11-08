@@ -1,35 +1,29 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { Globe } from 'lucide-react';
-import { languages, type Language } from '@/lib/i18n';
+import { languages, locales, type Locale } from '@/lib/i18n';
+import { useTranslation } from '@/lib/i18n-provider';
 
 export function LanguageSwitcher() {
-  const [currentLang, setCurrentLang] = useState<Language>('en');
+  const { locale } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
-  useEffect(() => {
-    // Get language from localStorage or browser
-    const saved = localStorage.getItem('language') as Language;
-    if (saved && saved in languages) {
-      setCurrentLang(saved);
-      document.documentElement.lang = saved;
-    } else {
-      // Detect browser language
-      const browserLang = navigator.language.split('-')[0] as Language;
-      const lang = browserLang in languages ? browserLang : 'en';
-      setCurrentLang(lang);
-      document.documentElement.lang = lang;
-    }
-  }, []);
-
-  const handleLanguageChange = (lang: Language) => {
-    setCurrentLang(lang);
-    localStorage.setItem('language', lang);
-    document.documentElement.lang = lang;
+  const handleLanguageChange = (newLocale: Locale) => {
     setIsOpen(false);
-    // Reload to apply translations
-    window.location.reload();
+
+    // Remove current locale from pathname
+    const pathWithoutLocale = pathname.replace(/^\/(zh|es|fr|de|ja|pt|ru)/, '') || '/';
+
+    // For English, use root path; for others, use /{locale}
+    const newPath = newLocale === 'en'
+      ? pathWithoutLocale
+      : `/${newLocale}${pathWithoutLocale}`;
+
+    router.push(newPath as any);
   };
 
   return (
@@ -40,19 +34,19 @@ export function LanguageSwitcher() {
         aria-label="Change language"
       >
         <Globe className="h-4 w-4" />
-        <span>{languages[currentLang]}</span>
+        <span>{languages[locale]}</span>
       </button>
 
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
           <div className="absolute right-0 top-full z-50 mt-2 w-40 rounded-xl border border-white/10 bg-slate-900 p-2 shadow-xl">
-            {(Object.keys(languages) as Language[]).map((lang) => (
+            {locales.map((lang) => (
               <button
                 key={lang}
                 onClick={() => handleLanguageChange(lang)}
                 className={`w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ${
-                  currentLang === lang
+                  locale === lang
                     ? 'bg-primary-500 text-white'
                     : 'text-white/70 hover:bg-white/5 hover:text-white'
                 }`}

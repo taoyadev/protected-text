@@ -9,7 +9,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ className, ...p
   <input
     ref={ref}
     className={twMerge(
-      'w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/40 focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-400/40',
+      'w-full rounded-xl border-2 border-white/30 bg-slate-800/60 backdrop-blur-sm px-4 py-3 text-sm font-medium text-white placeholder:text-white/60 shadow-inner shadow-black/30 transition-all duration-300 focus:border-primary-400/70 focus:bg-slate-800/80 focus:outline-none focus:ring-2 focus:ring-primary-400/40 focus:shadow-lg focus:shadow-primary-900/30 hover:border-white/40 hover:bg-slate-800/70',
       className
     )}
     {...props}
