@@ -18,7 +18,7 @@
     "@ducanh2912/next-pwa": "^10.2.8",
     "@radix-ui/react-slot": "^1.0.2",
     "@tailwindcss/typography": "^0.5.19",
-    "@vercel/kv": "^1.0.1",
+    "@vercel/kv": "^3.0.0",
     "clsx": "^2.1.1",
     "ioredis": "^5.8.2",
     "lucide-react": "^0.464.0",
