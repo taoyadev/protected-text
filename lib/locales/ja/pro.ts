@@ -17,11 +17,13 @@ export const pro = {
     sectionLabel: 'Protected Text PRO機能',
     customDomains: {
       title: 'カスタムドメイン',
-      description: 'protectedtext.com/yoursiteの代わりにnotes.yourcompany.comのような独自のドメインを使用',
+      description:
+        'protectedtext.com/yoursiteの代わりにnotes.yourcompany.comのような独自のドメインを使用',
     },
     teamSharing: {
       title: 'チーム共有',
-      description: '暗号化されたノートをチームと共有します。全員が独自のパスワードを取得します。',
+      description:
+        '暗号化されたノートをチームと共有します。全員が独自のパスワードを取得します。',
     },
     apiAccess: {
       title: 'APIアクセス',
@@ -29,7 +31,8 @@ export const pro = {
     },
     fileAttachments: {
       title: 'ファイル添付',
-      description: '暗号化されたファイル、画像、ドキュメントをノートにアップロードします。',
+      description:
+        '暗号化されたファイル、画像、ドキュメントをノートにアップロードします。',
     },
     unlimitedRetention: {
       title: '無制限保持',
@@ -53,7 +56,8 @@ export const pro = {
   // フィードバックフォーム
   feedbackForm: {
     title: 'カスタムProtected Text PRO機能をリクエスト',
-    subtitle: 'Protected Text PROについてのご意見、提案、機能リクエストを以下で共有してください。',
+    subtitle:
+      'Protected Text PROについてのご意見、提案、機能リクエストを以下で共有してください。',
     messageLabel: 'あなたのメッセージ',
     messagePlaceholder: '見たいものを教えてください...',
     messageRequired: '*',

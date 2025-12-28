@@ -6,7 +6,8 @@ export const metadata = {
   // Métadonnées de la mise en page racine
   root: {
     title: 'Protected Text – Notes Chiffrées qui Fonctionnent Vraiment',
-    description: 'Bloc-notes chiffré gratuit. Votre mot de passe ne quitte jamais votre appareil. Pas de publicités, pas de suivi, pas de conneries. Ça marche, c\'est tout.',
+    description:
+      "Bloc-notes chiffré gratuit. Votre mot de passe ne quitte jamais votre appareil. Pas de publicités, pas de suivi, pas de conneries. Ça marche, c'est tout.",
     siteName: 'Protected Text',
 
     // Open Graph
@@ -26,13 +27,13 @@ export const metadata = {
   // Page 404
   notFound: {
     title: 'Page non trouvée',
-    description: 'La note que vous recherchez n\'existe pas ou a expiré.',
-    goHome: 'Retour à l\'accueil',
+    description: "La note que vous recherchez n'existe pas ou a expiré.",
+    goHome: "Retour à l'accueil",
   },
 
   // Spécifique à l'application
   app: {
-    launchApp: 'Lancer l\'App',
+    launchApp: "Lancer l'App",
   },
 
   // Accessibilité

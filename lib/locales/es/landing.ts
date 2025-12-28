@@ -69,23 +69,29 @@ export const landing = {
 
     realTalk: {
       heading: 'Hablando en serio: Los números no mienten',
-      stat1: '**36 mil millones de registros de datos** expuestos en solo 4 meses (enero-abril 2024)',
+      stat1:
+        '**36 mil millones de registros de datos** expuestos en solo 4 meses (enero-abril 2024)',
       stat2: 'Promedio de **758,288 registros violados por día** en 2024',
-      stat3: 'Seis mega-violaciones en 2024, cada una expuso **más de 100 millones de registros**',
-      stat4: 'El mercado de encriptación está explotando: de **$16.7 mil millones en 2024 a $60.7 mil millones en 2033**',
-      source: 'Fuentes: Reporte de Violaciones de Datos 2024 de HIPAA Journal, Statista, Estadísticas de Seguridad 2024 de SecureFrame',
+      stat3:
+        'Seis mega-violaciones en 2024, cada una expuso **más de 100 millones de registros**',
+      stat4:
+        'El mercado de encriptación está explotando: de **$16.7 mil millones en 2024 a $60.7 mil millones en 2033**',
+      source:
+        'Fuentes: Reporte de Violaciones de Datos 2024 de HIPAA Journal, Statista, Estadísticas de Seguridad 2024 de SecureFrame',
     },
 
     zeroKnowledge: {
       badge: 'Arquitectura de Conocimiento Cero = Seguridad sin Confianza',
-      tagline: 'No tienes que confiar en nosotros. No tienes que confiar en nadie. Las matemáticas te protegen, no las promesas.',
+      tagline:
+        'No tienes que confiar en nosotros. No tienes que confiar en nadie. Las matemáticas te protegen, no las promesas.',
     },
   },
 
   // Sección de seguridad
   security: {
     title: '¿Por qué confiar en esto? (No solo me creas)',
-    subtitle: 'La seguridad es realmente bastante simple cuando no la complicas. Así es exactamente como lo hacemos:',
+    subtitle:
+      'La seguridad es realmente bastante simple cuando no la complicas. Así es exactamente como lo hacemos:',
 
     items: {
       passwordNeverLeaves: {
@@ -121,22 +127,27 @@ export const landing = {
       specs: {
         aes256: {
           title: 'AES-256-GCM',
-          description: 'Mismo estándar usado por la NSA para documentos Top Secret. Adoptado por NIST en 2001. Aún sin romper.',
+          description:
+            'Mismo estándar usado por la NSA para documentos Top Secret. Adoptado por NIST en 2001. Aún sin romper.',
         },
         pbkdf2: {
           title: 'PBKDF2 (310k iteraciones)',
-          description: 'OWASP recomienda 100k. Hacemos 310k para hacer los ataques de fuerza bruta exponencialmente más difíciles.',
+          description:
+            'OWASP recomienda 100k. Hacemos 310k para hacer los ataques de fuerza bruta exponencialmente más difíciles.',
         },
         uniqueSaltIV: {
           title: 'Salt e IV únicos por guardado',
-          description: 'Nueva aleatoriedad criptográfica cada vez. Sin reutilización, sin predictibilidad.',
+          description:
+            'Nueva aleatoriedad criptográfica cada vez. Sin reutilización, sin predictibilidad.',
         },
         webCrypto: {
           title: 'Web Crypto API',
-          description: 'Implementación nativa del navegador. Sin bibliotecas de terceros sospechosas.',
+          description:
+            'Implementación nativa del navegador. Sin bibliotecas de terceros sospechosas.',
         },
       },
-      verifyNote: '¿Quieres verificar? El código es de código abierto. Compruébalo tú mismo en GitHub.',
+      verifyNote:
+        '¿Quieres verificar? El código es de código abierto. Compruébalo tú mismo en GitHub.',
     },
   },
 
@@ -156,7 +167,8 @@ export const landing = {
   // Características
   features: {
     title: 'Características de Protected Text',
-    subtitle: 'Todo lo que necesitas. Nada que no necesites. Sin niveles premium.',
+    subtitle:
+      'Todo lo que necesitas. Nada que no necesites. Sin niveles premium.',
     list: [
       'Encriptación AES-256-GCM',
       'No requiere registro',
@@ -238,7 +250,8 @@ export const landing = {
       protectedTextPro: {
         q: '¿Qué es Protected Text Pro?',
         a: '**Lo estamos construyendo basándonos en tus comentarios.** Protected Text siempre será gratis, pero estamos explorando características Pro para usuarios avanzados—cosas como dominios personalizados, cargas de archivos más grandes, historial de versiones extendido y herramientas de gestión de equipos.',
-        linkText: 'Vota por características y ayuda a dar forma a la hoja de ruta →',
+        linkText:
+          'Vota por características y ayuda a dar forma a la hoja de ruta →',
       },
     },
   },
@@ -246,13 +259,15 @@ export const landing = {
   // Pie de página
   footer: {
     about: {
-      description: 'Notas encriptadas de conocimiento cero. Tu contraseña nunca sale de tu dispositivo. Gratis para siempre, sin rastreo, sin tonterías.',
+      description:
+        'Notas encriptadas de conocimiento cero. Tu contraseña nunca sale de tu dispositivo. Gratis para siempre, sin rastreo, sin tonterías.',
       starOnGithub: 'Dar estrella en GitHub',
       openSourceOnGithub: 'Código abierto en GitHub',
     },
     security: {
       title: '¿Encontraste un problema de seguridad?',
-      description: 'Por favor, repórtalo responsablemente por email. Nos tomamos la seguridad en serio.',
+      description:
+        'Por favor, repórtalo responsablemente por email. Nos tomamos la seguridad en serio.',
     },
     contact: {
       email: 'hello@protected-text.com',

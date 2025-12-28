@@ -12,9 +12,11 @@ export const toasts = {
     fileImportedSuccessfully: 'Datei erfolgreich importiert',
     saved: 'Gespeichert!',
     versionRestored: 'Version wiederhergestellt',
-    versionRestoredSaveToConfirm: 'Version wiederhergestellt. Speichern zum Bestätigen.',
+    versionRestoredSaveToConfirm:
+      'Version wiederhergestellt. Speichern zum Bestätigen.',
     voteRecorded: 'Stimme aufgezeichnet! Danke für Ihr Feedback.',
     thankYouForFeedback: 'Vielen Dank für Ihr Feedback!',
+    contentCopied: 'Inhalt in die Zwischenablage kopiert',
   },
 
   // Informationsmeldungen

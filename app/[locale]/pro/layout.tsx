@@ -6,7 +6,11 @@ interface Props {
   children: React.ReactNode;
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
   const { locale } = await params;
   const t = getT(locale as Locale);
 
@@ -16,9 +20,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: t('pro.header.title'),
     description: t('pro.header.subtitle'),
     alternates: {
-      canonical: `/${locale}/pro`,
+      canonical: `https://protected-text.com/${locale}/pro`,
       languages: Object.fromEntries(
-        alternates.map(({ locale: lang, href }) => [lang, `https://protected-text.com${href}`])
+        alternates.map(({ locale: lang, href }) => [
+          lang,
+          `https://protected-text.com${href}`,
+        ]),
       ),
     },
     openGraph: {
@@ -30,9 +37,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       type: 'website',
       images: [
         {
-          url: '/og-pro.png',
+          url: 'https://protected-text.com/og.svg',
           width: 1200,
           height: 630,
+          type: 'image/svg+xml',
           alt: t('pro.header.title'),
         },
       ],
@@ -43,7 +51,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: t('pro.header.subtitle'),
       creator: '@protectedtext',
       site: '@protectedtext',
-      images: ['/og-pro.png'],
+      images: ['https://protected-text.com/og.svg'],
     },
     robots: {
       index: true,

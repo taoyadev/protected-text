@@ -8,33 +8,34 @@ export const editor = {
     site: 'Site',
     saving: 'Enregistrement…',
     lastSaved: 'Dernier enregistrement',
-    switchToLightMode: 'Passer au mode clair',
-    switchToDarkMode: 'Passer au mode sombre',
-    toggleMarkdownPreview: 'Basculer l\'Aperçu Markdown',
+    switchToLightMode: 'Passer en mode clair',
+    switchToDarkMode: 'Passer en mode sombre',
+    toggleMarkdownPreview: 'Aperçu Markdown',
     search: 'Rechercher (Ctrl+F)',
-    versionHistory: 'Historique des Versions',
+    versionHistory: 'Historique des versions',
     reload: 'Recharger',
     import: 'Importer (Ctrl+I)',
     export: 'Exporter (Ctrl+E)',
     share: 'Partager',
-    changePassword: 'Changer le Mot de Passe (Ctrl+K)',
+    changePassword: 'Changer le mot de passe (Ctrl+K)',
     delete: 'Supprimer',
   },
 
   // Recherche
   search: {
-    placeholder: 'Rechercher dans la note... (Appuyez sur Échap pour fermer)',
+    placeholder: 'Rechercher dans la note... (Appuyez sur Esc pour fermer)',
     clear: 'Effacer',
   },
 
   // Éditeur
   editor: {
-    placeholder: 'Commencez à taper… Le mot de passe ne quitte jamais cet onglet du navigateur.',
+    placeholder:
+      'Commencez à écrire… Le mot de passe ne quitte jamais cet onglet du navigateur.',
   },
 
   // Aperçu Markdown
   markdownPreview: {
-    emptyPlaceholder: '*Commencez à taper pour voir l\'aperçu...*',
+    emptyPlaceholder: "*Commencez à écrire pour voir l'aperçu...*",
   },
 
   // Statistiques
@@ -48,7 +49,7 @@ export const editor = {
   // Force du mot de passe
   passwordStrength: {
     weak: 'Faible',
-    fair: 'Acceptable',
+    fair: 'Moyen',
     okay: 'Correct',
     good: 'Bon',
     strong: 'Fort',
@@ -56,12 +57,32 @@ export const editor = {
 
   // Changement de thème
   theme: {
-    switchedToLight: 'Passé au mode clair',
-    switchedToDark: 'Passé au mode sombre',
+    switchedToLight: 'Passé en mode clair',
+    switchedToDark: 'Passé en mode sombre',
   },
 
   // Importation de fichier
   fileImport: {
     acceptedFormats: '.txt,.md,.text',
+  },
+
+  // Keyboard shortcuts
+  shortcuts: {
+    title: 'Raccourcis Clavier',
+    description: 'Appuyez sur ? pour ouvrir ce dialogue',
+    save: 'Enregistrer la note',
+    search: 'Rechercher dans la note',
+    closeDialogs: 'Fermer les dialogues',
+    showShortcuts: 'Afficher les raccourcis clavier',
+    export: 'Exporter la note',
+    import: 'Importer un fichier',
+    changePassword: 'Changer le mot de passe',
+  },
+
+  // Autosave status
+  autosave: {
+    allChangesSaved: 'Toutes les modifications sont enregistrées',
+    saving: 'Enregistrement...',
+    unsavedChanges: 'Modifications non enregistrées',
   },
 };

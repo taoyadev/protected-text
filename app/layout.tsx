@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from 'next';
+import { headers } from 'next/headers';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import { Providers } from '@/components/shared/providers';
+import { StructuredData } from '@/components/seo/structured-data';
+import { locales, defaultLocale, type Locale } from '@/lib/i18n';
 import './globals.css';
 import { Toaster } from 'sonner';
 
@@ -8,11 +11,11 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const jetbrains = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
-  variable: '--font-jetbrains'
+  variable: '--font-jetbrains',
 });
 
 export const metadata: Metadata = {
-  title: 'Protected Text – Encrypted Notes That Actually Work',
+  title: 'Protected Text - Encrypted Notes That Actually Work',
   description:
     'Free encrypted notepad. Your password never leaves your device. No ads, no tracking, no BS. Just works.',
   metadataBase: new URL('https://protected-text.com'),
@@ -29,7 +32,9 @@ export const metadata: Metadata = {
     description: 'Encrypted notes. Nobody can read them. Not even us.',
     url: 'https://protected-text.com',
     siteName: 'Protected Text',
-    images: [{ url: '/og.png', width: 1200, height: 630 }],
+    images: [
+      { url: '/og.svg', width: 1200, height: 630, type: 'image/svg+xml' },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -45,10 +50,37 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+/**
+ * Extract locale from URL path
+ */
+function getLocaleFromPath(pathname: string): Locale {
+  const segments = pathname.split('/').filter(Boolean);
+  const firstSegment = segments[0];
+  if (firstSegment && locales.includes(firstSegment as Locale)) {
+    return firstSegment as Locale;
+  }
+  return defaultLocale;
+}
+
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  // Get locale from URL path via headers
+  const headersList = await headers();
+  const pathname =
+    headersList.get('x-pathname') || headersList.get('x-invoke-path') || '/';
+  const locale = getLocaleFromPath(pathname);
+
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={`${inter.variable} ${jetbrains.variable}`}
+      suppressHydrationWarning
+    >
       <body className="min-h-screen">
+        <StructuredData />
         <Providers>
           {children}
           <Toaster richColors position="top-center" />

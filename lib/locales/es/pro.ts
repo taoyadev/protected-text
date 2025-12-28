@@ -17,19 +17,23 @@ export const pro = {
     sectionLabel: 'Características de Protected Text PRO',
     customDomains: {
       title: 'Dominios Personalizados',
-      description: 'Usa tu propio dominio como notes.tuempresa.com en lugar de protectedtext.com/tusitio',
+      description:
+        'Usa tu propio dominio como notes.tuempresa.com en lugar de protectedtext.com/tusitio',
     },
     teamSharing: {
       title: 'Compartir en Equipo',
-      description: 'Comparte notas encriptadas con tu equipo. Todos obtienen su propia contraseña.',
+      description:
+        'Comparte notas encriptadas con tu equipo. Todos obtienen su propia contraseña.',
     },
     apiAccess: {
       title: 'Acceso API',
-      description: 'Integra con tus aplicaciones. Lee/escribe notas programáticamente.',
+      description:
+        'Integra con tus aplicaciones. Lee/escribe notas programáticamente.',
     },
     fileAttachments: {
       title: 'Archivos Adjuntos',
-      description: 'Sube archivos encriptados, imágenes y documentos a tus notas.',
+      description:
+        'Sube archivos encriptados, imágenes y documentos a tus notas.',
     },
     unlimitedRetention: {
       title: 'Retención Ilimitada',
@@ -53,7 +57,8 @@ export const pro = {
   // Formulario de comentarios
   feedbackForm: {
     title: 'Solicitar Características Personalizadas de Protected Text PRO',
-    subtitle: 'Comparte tus pensamientos, sugerencias o solicitudes de características para Protected Text PRO a continuación.',
+    subtitle:
+      'Comparte tus pensamientos, sugerencias o solicitudes de características para Protected Text PRO a continuación.',
     messageLabel: 'Tu Mensaje',
     messagePlaceholder: 'Dinos qué te gustaría ver...',
     messageRequired: '*',

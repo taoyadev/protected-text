@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Development Commands
 
 ### Essential
+
 ```bash
 npm install          # Install dependencies (Node >= 18.18 required)
 npm run dev          # Start Next.js dev server (http://localhost:3000)
@@ -17,12 +18,14 @@ npm run format       # Format code with Prettier
 ```
 
 ### Testing Individual Files
+
 ```bash
 npx vitest run tests/site.test.ts          # Run single test file
 npx vitest run tests/site.test.ts -t "slug" # Run tests matching pattern
 ```
 
 ### Analysis
+
 ```bash
 npm run analyze      # Build with bundle analyzer
 ```
@@ -83,15 +86,19 @@ app/
 ## Key Patterns
 
 ### Crypto Helpers
+
 All encryption/decryption lives in `lib/crypto.ts`. Functions are pure and testable:
+
 - `encryptContent(content, password)` → `{ encrypted, iv, salt, version }`
 - `decryptContent(payload, password)` → plaintext string
 - Base64 encoding/decoding for wire transport
 
 ### API Client
+
 `lib/api.ts` exports `loadEncryptedNote`, `saveEncryptedNote`, `checkSiteExists` wrappers around fetch calls. Always returns `{ payload, exists }` or throws.
 
 ### Testing
+
 - Vitest setup in `vitest.config.ts` with `@` alias and jsdom environment
 - `tests/site.test.ts` covers slug normalization/validation
 - When adding crypto tests, mock Web Crypto API via `vitest.setup.ts`

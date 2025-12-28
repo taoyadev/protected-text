@@ -30,14 +30,19 @@ export function middleware(request: NextRequest) {
 
   // Check if pathname has a non-English locale
   const pathnameHasNonEnLocale = locales
-    .filter(locale => locale !== 'en')
-    .some((locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`);
+    .filter((locale) => locale !== 'en')
+    .some(
+      (locale) =>
+        pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
+    );
 
   // If pathname has a valid non-English locale, let it through
   if (pathnameHasNonEnLocale) {
     const locale = pathname.split('/')[1];
     if (isValidLocale(locale)) {
       const response = NextResponse.next();
+      // Set x-pathname header for locale detection in layout
+      response.headers.set('x-pathname', pathname);
       response.cookies.set('NEXT_LOCALE', locale, {
         maxAge: 60 * 60 * 24 * 365, // 1 year
         path: '/',
@@ -53,6 +58,8 @@ export function middleware(request: NextRequest) {
 
   // Use rewrite instead of redirect to keep the URL clean
   const response = NextResponse.rewrite(url);
+  // Set x-pathname header for locale detection in layout (using /en prefix)
+  response.headers.set('x-pathname', url.pathname);
   response.cookies.set('NEXT_LOCALE', 'en', {
     maxAge: 60 * 60 * 24 * 365,
     path: '/',

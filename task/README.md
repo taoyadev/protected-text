@@ -8,6 +8,7 @@
 ## 🎯 项目愿景
 
 打造比 ProtectedText.com 更现代、更强大的加密笔记平台：
+
 - ✅ **零知识架构** - 服务器永远看不到你的数据
 - ✅ **现代化UI** - 2025年的设计标准
 - ✅ **开发者友好** - Markdown + 代码高亮
@@ -16,6 +17,7 @@
 ## 📊 市场验证
 
 基于真实搜索数据（Ahrefs）：
+
 ```
 核心关键词:     12,000 月搜索量
 付费版需求:     1,200 月搜索量
@@ -28,6 +30,7 @@
 ## 🚀 快速开始
 
 ### 技术栈
+
 ```typescript
 前端:    Next.js 15 + TypeScript + Tailwind
 编辑器:  Monaco Editor + Tiptap
@@ -37,6 +40,7 @@
 ```
 
 ### 本地开发
+
 ```bash
 # 1. 创建项目
 npx create-next-app@latest protected-text \
@@ -61,6 +65,7 @@ npm run dev
 ```
 
 ### 环境变量
+
 ```env
 # .env.local
 KV_URL=your_vercel_kv_url
@@ -101,6 +106,7 @@ protected-text/
 ## 🔒 安全架构
 
 ### 零知识加密流程
+
 ```typescript
 // 1. 用户输入密码
 const password = userInput;
@@ -121,6 +127,7 @@ await kv.set(siteName, {
 ```
 
 ### 安全特性
+
 - ✅ AES-256-GCM 加密
 - ✅ PBKDF2 密钥派生 (100,000 iterations)
 - ✅ 随机 salt 和 IV
@@ -131,6 +138,7 @@ await kv.set(siteName, {
 ## 🎨 核心功能
 
 ### MVP (Week 1-2)
+
 - [x] URL路由系统 (`/mysecret`)
 - [x] 客户端加密/解密
 - [x] 实时自动保存
@@ -139,6 +147,7 @@ await kv.set(siteName, {
 - [x] 导出功能 (.txt)
 
 ### 增强功能 (Week 3-4)
+
 - [ ] Markdown 支持
 - [ ] 代码高亮 (50+ 语言)
 - [ ] 版本历史 (免费3个)
@@ -147,6 +156,7 @@ await kv.set(siteName, {
 - [ ] 字数统计
 
 ### Pro 功能 (Week 5-6)
+
 - [ ] 用户认证 (NextAuth)
 - [ ] Stripe 订阅
 - [ ] 无限版本历史
@@ -156,19 +166,20 @@ await kv.set(siteName, {
 
 ## 💰 商业模式
 
-| 功能 | Free | Pro ($4.99/月) |
-|------|------|----------------|
-| 存储大小 | 100KB/站点 | 10MB/站点 |
-| 版本历史 | 3个 | 无限 |
-| 站点数量 | 无限 | 无限 |
-| 数据保留 | 90天无访问删除 | 永久 |
-| Markdown | ✅ | ✅ |
-| 代码高亮 | ✅ | ✅ |
-| 自定义域名 | ❌ | ✅ |
-| API访问 | ❌ | ✅ |
-| 优先支持 | ❌ | ✅ |
+| 功能       | Free           | Pro ($4.99/月) |
+| ---------- | -------------- | -------------- |
+| 存储大小   | 100KB/站点     | 10MB/站点      |
+| 版本历史   | 3个            | 无限           |
+| 站点数量   | 无限           | 无限           |
+| 数据保留   | 90天无访问删除 | 永久           |
+| Markdown   | ✅             | ✅             |
+| 代码高亮   | ✅             | ✅             |
+| 自定义域名 | ❌             | ✅             |
+| API访问    | ❌             | ✅             |
+| 优先支持   | ❌             | ✅             |
 
 **定价依据**:
+
 - Notion: $8/月 (太重)
 - Evernote: $7.99/月 (太复杂)
 - 我们: $4.99/月 (轻量化优势)
@@ -176,6 +187,7 @@ await kv.set(siteName, {
 ## 📈 增长策略
 
 ### SEO优化
+
 1. **目标关键词**:
    - "protected text" (12K/月)
    - "protected text pro" (1.2K/月)
@@ -187,15 +199,17 @@ await kv.set(siteName, {
    - 对比: "Protected Text vs 竞品"
 
 3. **产品内增长**:
+
    ```typescript
    // 分享链接底部
-   "📝 Create your own at protected-text.app"
+   '📝 Create your own at protected-text.app';
 
    // 导出文件
-   "Exported from Protected Text - Encrypted Notes"
+   'Exported from Protected Text - Encrypted Notes';
    ```
 
 ### 病毒式传播
+
 - Chrome 扩展 (右键 → 保存到 Protected Text)
 - VS Code 扩展 (同步代码片段)
 - API 集成 (CI/CD 密钥管理)
@@ -205,10 +219,11 @@ await kv.set(siteName, {
 ### 核心代码示例
 
 #### 加密工具 (`lib/crypto.ts`)
+
 ```typescript
 export async function encrypt(
   plaintext: string,
-  password: string
+  password: string,
 ): Promise<EncryptedData> {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
@@ -218,7 +233,7 @@ export async function encrypt(
   const encrypted = await crypto.subtle.encrypt(
     { name: 'AES-GCM', iv },
     key,
-    new TextEncoder().encode(plaintext)
+    new TextEncoder().encode(plaintext),
   );
 
   return {
@@ -230,6 +245,7 @@ export async function encrypt(
 ```
 
 #### 编辑器组件 (`components/Editor.tsx`)
+
 ```typescript
 'use client';
 
@@ -259,6 +275,7 @@ export function Editor({ siteName }: { siteName: string }) {
 ```
 
 ### API 路由 (`app/api/save/route.ts`)
+
 ```typescript
 import { kv } from '@vercel/kv';
 import { rateLimit } from '@/lib/rate-limit';
@@ -287,6 +304,7 @@ export async function POST(req: Request) {
 ## 📊 成功指标 (KPIs)
 
 ### 6个月目标
+
 ```
 用户指标:
 ├─ 月活跃用户: 50,000
@@ -307,21 +325,25 @@ export async function POST(req: Request) {
 ## 🔄 开发路线图
 
 ### Phase 1: MVP (2周) ✅
+
 - 基础加密笔记
 - URL路由
 - 自动保存
 
 ### Phase 2: 增强 (2周) 🚧
+
 - Markdown + 代码
 - 版本历史
 - 分享功能
 
 ### Phase 3: 商业化 (2周) 📅
+
 - 用户系统
 - Stripe集成
 - Pro功能
 
 ### Phase 4: 增长 (持续) 📅
+
 - SEO优化
 - 内容营销
 - API文档
@@ -329,6 +351,7 @@ export async function POST(req: Request) {
 ## 🤝 贡献指南
 
 欢迎贡献！请遵循：
+
 1. Fork 项目
 2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
 3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)

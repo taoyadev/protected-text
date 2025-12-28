@@ -17,19 +17,23 @@ export const pro = {
     sectionLabel: 'Функции Protected Text PRO',
     customDomains: {
       title: 'Пользовательские домены',
-      description: 'Используйте свой собственный домен, например notes.yourcompany.com, вместо protectedtext.com/yoursite',
+      description:
+        'Используйте свой собственный домен, например notes.yourcompany.com, вместо protectedtext.com/yoursite',
     },
     teamSharing: {
       title: 'Командный доступ',
-      description: 'Делитесь зашифрованными заметками с вашей командой. Каждый получает свой собственный пароль.',
+      description:
+        'Делитесь зашифрованными заметками с вашей командой. Каждый получает свой собственный пароль.',
     },
     apiAccess: {
       title: 'Доступ к API',
-      description: 'Интегрируйтесь с вашими приложениями. Читайте/записывайте заметки программно.',
+      description:
+        'Интегрируйтесь с вашими приложениями. Читайте/записывайте заметки программно.',
     },
     fileAttachments: {
       title: 'Вложения файлов',
-      description: 'Загружайте зашифрованные файлы, изображения и документы в ваши заметки.',
+      description:
+        'Загружайте зашифрованные файлы, изображения и документы в ваши заметки.',
     },
     unlimitedRetention: {
       title: 'Неограниченное хранение',
@@ -53,7 +57,8 @@ export const pro = {
   // Форма обратной связи
   feedbackForm: {
     title: 'Запросить пользовательские функции Protected Text PRO',
-    subtitle: 'Поделитесь своими мыслями, предложениями или запросами функций для Protected Text PRO ниже.',
+    subtitle:
+      'Поделитесь своими мыслями, предложениями или запросами функций для Protected Text PRO ниже.',
     messageLabel: 'Ваше сообщение',
     messagePlaceholder: 'Расскажите нам, что вы хотели бы увидеть...',
     messageRequired: '*',

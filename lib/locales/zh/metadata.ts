@@ -6,7 +6,8 @@ export const metadata = {
   // 根布局元数据
   root: {
     title: 'Protected Text – 真正有效的加密笔记',
-    description: '免费加密记事本。您的密码永不离开您的设备。没有广告，没有跟踪，没有废话。就是好用。',
+    description:
+      '免费加密记事本。您的密码永不离开您的设备。没有广告，没有跟踪，没有废话。就是好用。',
     siteName: 'Protected Text',
 
     // Open Graph

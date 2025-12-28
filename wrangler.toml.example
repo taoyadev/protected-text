@@ -1,0 +1,78 @@
+# Cloudflare Workers Configuration Template
+# Copy this file to wrangler.toml and fill in your values
+# NEVER commit wrangler.toml with real database IDs
+
+name = "cloudnote-d1"
+main = "src/index.js"
+compatibility_date = "2025-12-26"
+
+# ============================================================
+# Assets Configuration
+# ============================================================
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# ============================================================
+# D1 Database Configuration
+# ============================================================
+# Create database: wrangler d1 create cloudnote-db
+# Then replace the database_id below
+[[d1_databases]]
+binding = "DB"
+database_name = "cloudnote-db"
+database_id = "YOUR_DATABASE_ID_HERE"
+migrations_dir = "migrations"
+
+# ============================================================
+# Environment Variables
+# ============================================================
+[vars]
+ENVIRONMENT = "development"
+# Optional CORS configuration:
+# CORS_ALLOW_ORIGINS = "https://your-frontend.example.com"
+
+# ============================================================
+# Staging Environment
+# ============================================================
+[env.staging]
+name = "cloudnote-d1-staging"
+vars = { ENVIRONMENT = "staging" }
+
+[[env.staging.d1_databases]]
+binding = "DB"
+database_name = "cloudnote-db-staging"
+database_id = "YOUR_STAGING_DATABASE_ID_HERE"
+migrations_dir = "migrations"
+
+# ============================================================
+# Production Environment
+# ============================================================
+[env.production]
+name = "cloudnote-d1-production"
+vars = { ENVIRONMENT = "production" }
+# Custom domain (optional):
+# routes = [
+#   { pattern = "api.yourdomain.com", custom_domain = true }
+# ]
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "cloudnote-db-production"
+database_id = "YOUR_PRODUCTION_DATABASE_ID_HERE"
+migrations_dir = "migrations"
+
+# ============================================================
+# Deployment Notes
+# ============================================================
+# Local development:
+#   wrangler dev
+#
+# Deploy to staging:
+#   wrangler deploy --env staging
+#
+# Deploy to production:
+#   wrangler deploy --env production
+#
+# Run migrations:
+#   wrangler d1 migrations apply cloudnote-db --remote

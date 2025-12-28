@@ -5,6 +5,7 @@
 ## 🎯 设计原则
 
 ### 1. 极简主义
+
 ```
 Less is more
 - 移除所有非必要元素
@@ -13,6 +14,7 @@ Less is more
 ```
 
 ### 2. 以内容为中心
+
 ```
 Content First
 - 编辑器占据90%屏幕
@@ -21,6 +23,7 @@ Content First
 ```
 
 ### 3. 性能优先
+
 ```
 Speed Matters
 - 即时反馈
@@ -29,6 +32,7 @@ Speed Matters
 ```
 
 ### 4. 可访问性
+
 ```
 A11y First
 - WCAG AA标准
@@ -41,11 +45,12 @@ A11y First
 ## 🎨 颜色系统
 
 ### 品牌色
+
 ```css
 /* Primary - 深蓝色 (专业、安全、信任) */
---primary-50:  #eff6ff;
+--primary-50: #eff6ff;
 --primary-100: #dbeafe;
---primary-500: #3b82f6;  /* 主要使用 */
+--primary-500: #3b82f6; /* 主要使用 */
 --primary-600: #2563eb;
 --primary-700: #1d4ed8;
 
@@ -60,8 +65,9 @@ A11y First
 ```
 
 ### 中性色 (浅色模式)
+
 ```css
---gray-50:  #f9fafb;
+--gray-50: #f9fafb;
 --gray-100: #f3f4f6;
 --gray-200: #e5e7eb;
 --gray-300: #d1d5db;
@@ -74,6 +80,7 @@ A11y First
 ```
 
 ### 深色模式
+
 ```css
 /* 背景 */
 --dark-bg: #0a0a0a;
@@ -87,6 +94,7 @@ A11y First
 ```
 
 ### 语义色彩
+
 ```css
 /* 背景 */
 --background: white;
@@ -116,15 +124,16 @@ A11y First
 ## 📐 间距系统
 
 ### Spacing Scale (基于4px)
+
 ```css
---spacing-0:  0px;
---spacing-1:  4px;
---spacing-2:  8px;
---spacing-3:  12px;
---spacing-4:  16px;
---spacing-5:  20px;
---spacing-6:  24px;
---spacing-8:  32px;
+--spacing-0: 0px;
+--spacing-1: 4px;
+--spacing-2: 8px;
+--spacing-3: 12px;
+--spacing-4: 16px;
+--spacing-5: 20px;
+--spacing-6: 24px;
+--spacing-8: 32px;
 --spacing-10: 40px;
 --spacing-12: 48px;
 --spacing-16: 64px;
@@ -132,6 +141,7 @@ A11y First
 ```
 
 ### 应用示例
+
 ```css
 /* Padding */
 .button {
@@ -154,48 +164,54 @@ A11y First
 ## 🔤 字体系统
 
 ### 字体族
+
 ```css
 /* 主字体 - Sans Serif */
---font-sans: 'Inter', -apple-system, BlinkMacSystemFont,
-             'Segoe UI', 'Helvetica', 'Arial', sans-serif;
+--font-sans:
+  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica', 'Arial',
+  sans-serif;
 
 /* 等宽字体 - 编辑器/代码 */
---font-mono: 'Jetbrains Mono', 'Fira Code', 'Monaco',
-             'Consolas', 'Courier New', monospace;
+--font-mono:
+  'Jetbrains Mono', 'Fira Code', 'Monaco', 'Consolas', 'Courier New', monospace;
 
 /* 衬线字体 - 可选 */
 --font-serif: 'Georgia', 'Times New Roman', serif;
 ```
 
 ### 字体大小
+
 ```css
---text-xs:   12px;  /* 0.75rem */
---text-sm:   14px;  /* 0.875rem */
---text-base: 16px;  /* 1rem */
---text-lg:   18px;  /* 1.125rem */
---text-xl:   20px;  /* 1.25rem */
---text-2xl:  24px;  /* 1.5rem */
---text-3xl:  30px;  /* 1.875rem */
---text-4xl:  36px;  /* 2.25rem */
---text-5xl:  48px;  /* 3rem */
+--text-xs: 12px; /* 0.75rem */
+--text-sm: 14px; /* 0.875rem */
+--text-base: 16px; /* 1rem */
+--text-lg: 18px; /* 1.125rem */
+--text-xl: 20px; /* 1.25rem */
+--text-2xl: 24px; /* 1.5rem */
+--text-3xl: 30px; /* 1.875rem */
+--text-4xl: 36px; /* 2.25rem */
+--text-5xl: 48px; /* 3rem */
 ```
 
 ### 字重
+
 ```css
---font-normal:    400;
---font-medium:    500;
---font-semibold:  600;
---font-bold:      700;
+--font-normal: 400;
+--font-medium: 500;
+--font-semibold: 600;
+--font-bold: 700;
 ```
 
 ### 行高
+
 ```css
---leading-tight:  1.25;
+--leading-tight: 1.25;
 --leading-normal: 1.5;
 --leading-relaxed: 1.75;
 ```
 
 ### 字体应用
+
 ```css
 /* 标题 */
 h1 {
@@ -225,15 +241,16 @@ body {
 
 ```css
 --radius-none: 0px;
---radius-sm:   4px;
---radius-md:   6px;
---radius-lg:   8px;
---radius-xl:   12px;
---radius-2xl:  16px;
+--radius-sm: 4px;
+--radius-md: 6px;
+--radius-lg: 8px;
+--radius-xl: 12px;
+--radius-2xl: 16px;
 --radius-full: 9999px;
 ```
 
 ### 应用
+
 ```css
 /* 按钮 */
 .button {
@@ -260,16 +277,14 @@ body {
 --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 
 /* 普通阴影 */
---shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1),
-             0 2px 4px -2px rgb(0 0 0 / 0.1);
+--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 
 /* 明显阴影 */
---shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-             0 4px 6px -4px rgb(0 0 0 / 0.1);
+--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
 /* 强阴影 */
---shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1),
-             0 8px 10px -6px rgb(0 0 0 / 0.1);
+--shadow-xl:
+  0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 
 /* 焦点阴影 */
 --shadow-focus: 0 0 0 3px rgb(59 130 246 / 0.5);
@@ -282,6 +297,7 @@ body {
 ### 1. 按钮
 
 #### Primary Button
+
 ```css
 .button-primary {
   background: var(--primary-500);
@@ -304,6 +320,7 @@ body {
 ```
 
 #### Secondary Button
+
 ```css
 .button-secondary {
   background: white;
@@ -319,6 +336,7 @@ body {
 ```
 
 #### Ghost Button
+
 ```css
 .button-ghost {
   background: transparent;
@@ -473,25 +491,32 @@ body {
 ## 🎭 动画效果
 
 ### 过渡时间
+
 ```css
---transition-fast:   0.15s;
+--transition-fast: 0.15s;
 --transition-normal: 0.2s;
---transition-slow:   0.3s;
+--transition-slow: 0.3s;
 ```
 
 ### Easing
+
 ```css
---ease-in:     cubic-bezier(0.4, 0, 1, 1);
---ease-out:    cubic-bezier(0, 0, 0.2, 1);
+--ease-in: cubic-bezier(0.4, 0, 1, 1);
+--ease-out: cubic-bezier(0, 0, 0.2, 1);
 --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 ```
 
 ### 常用动画
+
 ```css
 /* 淡入 */
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* 滑入 */
@@ -508,7 +533,8 @@ body {
 
 /* 脉冲 */
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -518,8 +544,12 @@ body {
 
 /* 加载动画 */
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 ```
 
@@ -553,6 +583,7 @@ body {
 ```
 
 ### 响应式字体
+
 ```css
 /* 移动端 */
 body {
@@ -572,6 +603,7 @@ body {
 ## 🌗 深色模式
 
 ### 自动切换
+
 ```css
 @media (prefers-color-scheme: dark) {
   :root {
@@ -585,8 +617,9 @@ body {
 ```
 
 ### 手动切换
+
 ```html
-<html class="dark">
+<html class="dark"></html>
 ```
 
 ```css
@@ -603,6 +636,7 @@ body {
 ## ♿ 可访问性
 
 ### 焦点样式
+
 ```css
 *:focus-visible {
   outline: 2px solid var(--primary-500);
@@ -611,6 +645,7 @@ body {
 ```
 
 ### 屏幕阅读器
+
 ```html
 <!-- 隐藏但保留给屏幕阅读器 -->
 <span class="sr-only">Save note</span>
@@ -631,6 +666,7 @@ body {
 ```
 
 ### 键盘导航
+
 ```css
 /* Skip to content */
 .skip-link {
@@ -652,6 +688,7 @@ body {
 ## 🎨 实际页面示例
 
 ### 首页 (Landing)
+
 ```
 ┌──────────────────────────────────┐
 │  Protected Text         [Login]  │  ← Header
@@ -672,6 +709,7 @@ body {
 ```
 
 ### 编辑器页面
+
 ```
 ┌──────────────────────────────────┐
 │  mysecret  [⚙️]  [🌙]  [📤]      │  ← Toolbar (可隐藏)
@@ -689,6 +727,7 @@ body {
 ```
 
 ### 密码模态框
+
 ```
       ┌──────────────────┐
       │  Enter Password  │
@@ -712,6 +751,7 @@ body {
 ## 🎯 设计检查清单
 
 ### 视觉一致性
+
 - [ ] 使用统一的间距系统
 - [ ] 使用统一的圆角
 - [ ] 使用统一的阴影
@@ -719,6 +759,7 @@ body {
 - [ ] 使用统一的字体
 
 ### 交互反馈
+
 - [ ] 所有按钮有hover状态
 - [ ] 所有按钮有active状态
 - [ ] 加载时显示loading
@@ -726,12 +767,14 @@ body {
 - [ ] 错误时显示错误信息
 
 ### 性能
+
 - [ ] 动画60fps
 - [ ] 无布局抖动
 - [ ] 图片优化
 - [ ] 字体预加载
 
 ### 可访问性
+
 - [ ] 键盘可导航
 - [ ] 屏幕阅读器友好
 - [ ] 对比度符合WCAG AA
@@ -742,6 +785,7 @@ body {
 ## 🛠️ Figma设计资源
 
 ### 组件库
+
 ```
 - Buttons (Primary, Secondary, Ghost)
 - Inputs (Text, Password, Search)
@@ -753,6 +797,7 @@ body {
 ```
 
 ### 页面模板
+
 ```
 - Landing Page
 - Editor Page
@@ -761,6 +806,7 @@ body {
 ```
 
 ### 样式指南
+
 ```
 - Colors
 - Typography
@@ -774,6 +820,7 @@ body {
 ## 📦 实现工具
 
 ### Tailwind配置
+
 ```js
 // tailwind.config.js
 module.exports = {
@@ -783,18 +830,19 @@ module.exports = {
         primary: {
           50: '#eff6ff',
           // ...
-        }
+        },
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
-      }
-    }
-  }
-}
+      },
+    },
+  },
+};
 ```
 
 ### shadcn/ui组件
+
 ```bash
 npx shadcn-ui@latest add button
 npx shadcn-ui@latest add input

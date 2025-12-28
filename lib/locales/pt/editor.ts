@@ -1,5 +1,5 @@
 /**
- * Interface do editor - barra de ferramentas, marcadores de posição, estatísticas, atalhos de teclado
+ * Interface do editor - barra de ferramentas, espaços reservados, estatísticas, atalhos de teclado
  */
 
 export const editor = {
@@ -10,7 +10,7 @@ export const editor = {
     lastSaved: 'Último salvamento',
     switchToLightMode: 'Mudar para modo claro',
     switchToDarkMode: 'Mudar para modo escuro',
-    toggleMarkdownPreview: 'Alternar Visualização Markdown',
+    toggleMarkdownPreview: 'Alternar Visualização de Markdown',
     search: 'Buscar (Ctrl+F)',
     versionHistory: 'Histórico de Versões',
     reload: 'Recarregar',
@@ -32,7 +32,7 @@ export const editor = {
     placeholder: 'Comece a digitar… A senha nunca sai desta aba do navegador.',
   },
 
-  // Visualização Markdown
+  // Visualização de Markdown
   markdownPreview: {
     emptyPlaceholder: '*Comece a digitar para ver a visualização...*',
   },
@@ -49,19 +49,39 @@ export const editor = {
   passwordStrength: {
     weak: 'Fraca',
     fair: 'Razoável',
-    okay: 'Aceitável',
+    okay: 'Ok',
     good: 'Boa',
     strong: 'Forte',
   },
 
   // Mudança de tema
   theme: {
-    switchedToLight: 'Mudou para modo claro',
-    switchedToDark: 'Mudou para modo escuro',
+    switchedToLight: 'Mudado para modo claro',
+    switchedToDark: 'Mudado para modo escuro',
   },
 
   // Importação de arquivo
   fileImport: {
     acceptedFormats: '.txt,.md,.text',
+  },
+
+  // Keyboard shortcuts
+  shortcuts: {
+    title: 'Atalhos de Teclado',
+    description: 'Pressione ? para abrir este diálogo',
+    save: 'Salvar nota',
+    search: 'Buscar na nota',
+    closeDialogs: 'Fechar diálogos',
+    showShortcuts: 'Mostrar atalhos de teclado',
+    export: 'Exportar nota',
+    import: 'Importar arquivo',
+    changePassword: 'Alterar senha',
+  },
+
+  // Autosave status
+  autosave: {
+    allChangesSaved: 'Todas as alterações salvas',
+    saving: 'Salvando...',
+    unsavedChanges: 'Alterações não salvas',
   },
 };

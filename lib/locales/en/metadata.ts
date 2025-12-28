@@ -6,7 +6,8 @@ export const metadata = {
   // Root layout metadata
   root: {
     title: 'Protected Text – Encrypted Notes That Actually Work',
-    description: 'Free encrypted notepad. Your password never leaves your device. No ads, no tracking, no BS. Just works.',
+    description:
+      'Free encrypted notepad. Your password never leaves your device. No ads, no tracking, no BS. Just works.',
     siteName: 'Protected Text',
 
     // Open Graph

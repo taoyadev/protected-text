@@ -13,9 +13,11 @@ export const errors = {
     failedToLoadVersionHistory: 'Fehler beim Laden des Versionsverlaufs',
     failedToRestoreVersion: 'Fehler beim Wiederherstellen der Version',
     failedToRecordVote: 'Fehler beim Aufzeichnen der Stimme',
-    failedToRecordVotePleaseTryAgain: 'Fehler beim Aufzeichnen der Stimme. Bitte versuchen Sie es erneut.',
+    failedToRecordVotePleaseTryAgain:
+      'Fehler beim Aufzeichnen der Stimme. Bitte versuchen Sie es erneut.',
     failedToSubmitFeedback: 'Fehler beim Absenden des Feedbacks',
-    failedToSubmitFeedbackPleaseTryAgain: 'Fehler beim Absenden des Feedbacks. Bitte versuchen Sie es erneut.',
+    failedToSubmitFeedbackPleaseTryAgain:
+      'Fehler beim Absenden des Feedbacks. Bitte versuchen Sie es erneut.',
     clipboardUnavailable: 'Zwischenablage nicht verfügbar',
     noNoteFoundOnServer: 'Keine Notiz auf dem Server gefunden',
   },
@@ -34,7 +36,8 @@ export const errors = {
 
   // Validierungsfehler
   validation: {
-    siteNameInvalid: 'Verwenden Sie 3-32 Kleinbuchstaben, Zahlen oder Bindestriche.',
+    siteNameInvalid:
+      'Verwenden Sie 3-32 Kleinbuchstaben, Zahlen oder Bindestriche.',
     pleaseEnterMessage: 'Bitte geben Sie eine Nachricht ein',
     pleaseTypeToConfirm: 'Bitte geben Sie "{siteName}" zur Bestätigung ein',
   },
@@ -46,6 +49,7 @@ export const errors = {
 
   // Bestätigungsmeldungen
   confirmations: {
-    unsavedChangesReloadAnyway: 'Sie haben nicht gespeicherte Änderungen. Trotzdem neu laden?',
+    unsavedChangesReloadAnyway:
+      'Sie haben nicht gespeicherte Änderungen. Trotzdem neu laden?',
   },
 };

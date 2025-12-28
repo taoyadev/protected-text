@@ -5,12 +5,7 @@ import { Plus, X } from 'lucide-react';
 import { EncryptedEditor } from './encrypted-editor';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/lib/i18n-provider';
-
-interface Tab {
-  id: string;
-  siteName: string;
-  title: string;
-}
+import type { Tab } from '@/lib/types';
 
 interface Props {
   initialSiteName?: string;
@@ -32,7 +27,11 @@ export function TabsManager({ initialSiteName }: Props) {
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        if (parsed.tabs && Array.isArray(parsed.tabs) && parsed.tabs.length > 0) {
+        if (
+          parsed.tabs &&
+          Array.isArray(parsed.tabs) &&
+          parsed.tabs.length > 0
+        ) {
           setTabs(parsed.tabs);
           setActiveTabId(parsed.activeTabId || parsed.tabs[0].id);
           return;
@@ -68,7 +67,7 @@ export function TabsManager({ initialSiteName }: Props) {
     }
 
     // Check if tab already exists
-    const existingTab = tabs.find(t => t.siteName === siteName);
+    const existingTab = tabs.find((t) => t.siteName === siteName);
     if (existingTab) {
       setActiveTabId(existingTab.id);
       setShowNewTabInput(false);
@@ -91,8 +90,8 @@ export function TabsManager({ initialSiteName }: Props) {
   const closeTab = (tabId: string, e: React.MouseEvent) => {
     e.stopPropagation();
 
-    const tabIndex = tabs.findIndex(t => t.id === tabId);
-    const newTabs = tabs.filter(t => t.id !== tabId);
+    const tabIndex = tabs.findIndex((t) => t.id === tabId);
+    const newTabs = tabs.filter((t) => t.id !== tabId);
 
     if (newTabs.length === 0) {
       setTabs([]);
@@ -109,15 +108,17 @@ export function TabsManager({ initialSiteName }: Props) {
     }
   };
 
-  const activeTab = tabs.find(t => t.id === activeTabId);
+  const activeTab = tabs.find((t) => t.id === activeTabId);
 
   if (tabs.length === 0) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center space-y-4">
-          <p className="text-gray-600 dark:text-white/70">{t('common.states.noTabsOpen')}</p>
+        <div className="space-y-4 text-center">
+          <p className="text-gray-600 dark:text-white/70">
+            {t('common.states.noTabsOpen')}
+          </p>
           <Button onClick={() => setShowNewTabInput(true)}>
-            <Plus className="h-4 w-4 mr-2" />
+            <Plus className="mr-2 h-4 w-4" />
             {t('common.actions.createNewTab')}
           </Button>
         </div>
@@ -128,23 +129,23 @@ export function TabsManager({ initialSiteName }: Props) {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Tab Bar */}
-      <div className="sticky top-0 z-30 border-b border-gray-200 dark:border-white/10 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl shadow-lg">
+      <div className="sticky top-0 z-30 border-b border-gray-200 bg-white/95 shadow-lg backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="flex items-center gap-2 overflow-x-auto py-3 scrollbar-hide">
-            {tabs.map(tab => (
+          <div className="scrollbar-hide flex items-center gap-2 overflow-x-auto py-3">
+            {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTabId(tab.id)}
-                className={`group relative flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 min-w-[120px] max-w-[200px] ${
+                className={`group relative flex min-w-[120px] max-w-[200px] items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${
                   activeTabId === tab.id
-                    ? 'bg-primary-500/10 text-primary-600 dark:text-primary-400 ring-1 ring-primary-400/30'
-                    : 'text-gray-600 dark:text-white/70 hover:bg-gray-100 dark:hover:bg-white/5'
+                    ? 'bg-primary-500/10 text-primary-600 ring-1 ring-primary-400/30 dark:text-primary-400'
+                    : 'text-gray-600 hover:bg-gray-100 dark:text-white/70 dark:hover:bg-white/5'
                 }`}
               >
-                <span className="truncate flex-1">{tab.title}</span>
+                <span className="flex-1 truncate">{tab.title}</span>
                 <button
                   onClick={(e) => closeTab(tab.id, e)}
-                  className="rounded p-0.5 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
+                  className="rounded p-0.5 transition-colors hover:bg-gray-200 dark:hover:bg-white/10"
                   aria-label={t('common.actions.closeTab')}
                 >
                   <X className="h-3.5 w-3.5" />
@@ -169,7 +170,7 @@ export function TabsManager({ initialSiteName }: Props) {
                         }
                       }}
                       placeholder={t('common.placeholders.enterSiteName')}
-                      className="rounded-lg border border-gray-300 dark:border-white/20 bg-white dark:bg-slate-900 px-3 py-1.5 text-sm text-gray-900 dark:text-white focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-400/20 w-40"
+                      className="w-40 rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-900 focus:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-400/20 dark:border-white/20 dark:bg-slate-900 dark:text-white"
                       autoFocus
                     />
                     <Button size="sm" onClick={() => addNewTab(newTabName)}>
@@ -189,7 +190,7 @@ export function TabsManager({ initialSiteName }: Props) {
                 ) : (
                   <button
                     onClick={() => setShowNewTabInput(true)}
-                    className="rounded-lg p-2 text-gray-600 dark:text-white/70 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors"
+                    className="rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 dark:text-white/70 dark:hover:bg-white/5"
                     title={t('common.actions.createNewTab')}
                   >
                     <Plus className="h-4 w-4" />

@@ -13,9 +13,11 @@ export const errors = {
     failedToLoadVersionHistory: 'Failed to load version history',
     failedToRestoreVersion: 'Failed to restore version',
     failedToRecordVote: 'Failed to record vote',
-    failedToRecordVotePleaseTryAgain: 'Failed to record vote. Please try again.',
+    failedToRecordVotePleaseTryAgain:
+      'Failed to record vote. Please try again.',
     failedToSubmitFeedback: 'Failed to submit feedback',
-    failedToSubmitFeedbackPleaseTryAgain: 'Failed to submit feedback. Please try again.',
+    failedToSubmitFeedbackPleaseTryAgain:
+      'Failed to submit feedback. Please try again.',
     clipboardUnavailable: 'Clipboard unavailable',
     noNoteFoundOnServer: 'No note found on server',
   },

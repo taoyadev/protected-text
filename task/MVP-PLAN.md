@@ -16,6 +16,7 @@ Week 4: 正式发布
 ## 🎯 MVP功能范围
 
 ### ✅ 包含功能 (Must Have)
+
 ```
 1. 核心编辑器
    ✓ 纯文本编辑
@@ -44,6 +45,7 @@ Week 4: 正式发布
 ```
 
 ### ⏳ 暂不包含 (v1.1+)
+
 ```
 - Markdown渲染
 - 代码高亮
@@ -61,6 +63,7 @@ Week 4: 正式发布
 ### Day 1-2: 项目初始化 ⚙️
 
 #### 任务清单
+
 ```bash
 □ 创建Next.js项目
 □ 配置TypeScript + ESLint + Prettier
@@ -72,6 +75,7 @@ Week 4: 正式发布
 ```
 
 #### 具体命令
+
 ```bash
 # 1. 创建项目
 npx create-next-app@latest protected-text \
@@ -106,6 +110,7 @@ git commit -m "Initial commit: Project setup"
 ```
 
 #### 交付物
+
 - ✅ 可运行的Next.js应用
 - ✅ 配置好的开发环境
 - ✅ 基础UI组件库
@@ -115,6 +120,7 @@ git commit -m "Initial commit: Project setup"
 ### Day 3-4: 加密库实现 🔐
 
 #### 任务清单
+
 ```typescript
 □ 实现加密函数 (encrypt)
 □ 实现解密函数 (decrypt)
@@ -124,17 +130,18 @@ git commit -m "Initial commit: Project setup"
 ```
 
 #### 核心代码 (`lib/crypto.ts`)
+
 ```typescript
 export interface EncryptedData {
-  encrypted: string;  // Base64
-  salt: string;       // Base64
-  iv: string;         // Base64
+  encrypted: string; // Base64
+  salt: string; // Base64
+  iv: string; // Base64
 }
 
 // 加密
 export async function encrypt(
   plaintext: string,
-  password: string
+  password: string,
 ): Promise<EncryptedData> {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
@@ -144,7 +151,7 @@ export async function encrypt(
   const encrypted = await crypto.subtle.encrypt(
     { name: 'AES-GCM', iv },
     key,
-    new TextEncoder().encode(plaintext)
+    new TextEncoder().encode(plaintext),
   );
 
   return {
@@ -157,17 +164,17 @@ export async function encrypt(
 // 解密
 export async function decrypt(
   encryptedData: EncryptedData,
-  password: string
+  password: string,
 ): Promise<string> {
   const key = await deriveKey(
     password,
-    base64ToArrayBuffer(encryptedData.salt)
+    base64ToArrayBuffer(encryptedData.salt),
   );
 
   const decrypted = await crypto.subtle.decrypt(
     { name: 'AES-GCM', iv: base64ToArrayBuffer(encryptedData.iv) },
     key,
-    base64ToArrayBuffer(encryptedData.encrypted)
+    base64ToArrayBuffer(encryptedData.encrypted),
   );
 
   return new TextDecoder().decode(decrypted);
@@ -180,7 +187,7 @@ async function deriveKey(password: string, salt: Uint8Array) {
     new TextEncoder().encode(password),
     'PBKDF2',
     false,
-    ['deriveKey']
+    ['deriveKey'],
   );
 
   return crypto.subtle.deriveKey(
@@ -188,17 +195,18 @@ async function deriveKey(password: string, salt: Uint8Array) {
       name: 'PBKDF2',
       salt,
       iterations: 100000,
-      hash: 'SHA-256'
+      hash: 'SHA-256',
     },
     keyMaterial,
     { name: 'AES-GCM', length: 256 },
     false,
-    ['encrypt', 'decrypt']
+    ['encrypt', 'decrypt'],
   );
 }
 ```
 
 #### 测试 (`lib/crypto.test.ts`)
+
 ```typescript
 describe('Crypto', () => {
   test('encrypt and decrypt', async () => {
@@ -219,6 +227,7 @@ describe('Crypto', () => {
 ```
 
 #### 交付物
+
 - ✅ 完整的加密/解密库
 - ✅ 通过所有单元测试
 - ✅ 性能测试 (加密1KB < 50ms)
@@ -228,6 +237,7 @@ describe('Crypto', () => {
 ### Day 5-6: API路由实现 🌐
 
 #### 任务清单
+
 ```
 □ POST /api/save - 保存笔记
 □ GET /api/load - 加载笔记
@@ -238,6 +248,7 @@ describe('Crypto', () => {
 #### API设计
 
 ##### 1. 保存笔记 (`app/api/save/route.ts`)
+
 ```typescript
 // POST /api/save
 // Body: { siteName, encrypted, salt, iv }
@@ -250,25 +261,19 @@ export async function POST(req: Request) {
     if (!siteName || !encrypted || !salt || !iv) {
       return Response.json(
         { error: 'Missing required fields' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // 站点名称验证
     if (!/^[a-zA-Z0-9_-]{3,50}$/.test(siteName)) {
-      return Response.json(
-        { error: 'Invalid site name' },
-        { status: 400 }
-      );
+      return Response.json({ error: 'Invalid site name' }, { status: 400 });
     }
 
     // Rate limiting
     const ip = req.headers.get('x-forwarded-for') || 'unknown';
-    if (!await checkRateLimit(`save:${ip}`)) {
-      return Response.json(
-        { error: 'Too many requests' },
-        { status: 429 }
-      );
+    if (!(await checkRateLimit(`save:${ip}`))) {
+      return Response.json({ error: 'Too many requests' }, { status: 429 });
     }
 
     // 大小限制 (100KB)
@@ -276,7 +281,7 @@ export async function POST(req: Request) {
     if (size > 100 * 1024) {
       return Response.json(
         { error: 'Content too large (max 100KB)' },
-        { status: 413 }
+        { status: 413 },
       );
     }
 
@@ -295,15 +300,13 @@ export async function POST(req: Request) {
     return Response.json({ success: true });
   } catch (error) {
     console.error('Save error:', error);
-    return Response.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 ```
 
 ##### 2. 加载笔记 (`app/api/load/route.ts`)
+
 ```typescript
 // GET /api/load?site=xxx
 
@@ -313,43 +316,32 @@ export async function GET(req: Request) {
     const siteName = searchParams.get('site');
 
     if (!siteName) {
-      return Response.json(
-        { error: 'Missing site name' },
-        { status: 400 }
-      );
+      return Response.json({ error: 'Missing site name' }, { status: 400 });
     }
 
     // Rate limiting
     const ip = req.headers.get('x-forwarded-for') || 'unknown';
-    if (!await checkRateLimit(`load:${ip}`)) {
-      return Response.json(
-        { error: 'Too many requests' },
-        { status: 429 }
-      );
+    if (!(await checkRateLimit(`load:${ip}`))) {
+      return Response.json({ error: 'Too many requests' }, { status: 429 });
     }
 
     // 从KV加载
     const data = await kv.get(`site:${siteName}`);
 
     if (!data) {
-      return Response.json(
-        { error: 'Site not found' },
-        { status: 404 }
-      );
+      return Response.json({ error: 'Site not found' }, { status: 404 });
     }
 
     return Response.json(data);
   } catch (error) {
     console.error('Load error:', error);
-    return Response.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 ```
 
 ##### 3. 检查站点 (`app/api/check/route.ts`)
+
 ```typescript
 // GET /api/check?site=xxx
 // 返回站点是否存在，用于判断是创建还是解锁
@@ -369,6 +361,7 @@ export async function GET(req: Request) {
 ```
 
 #### 交付物
+
 - ✅ 3个API端点
 - ✅ 错误处理
 - ✅ Rate limiting
@@ -379,6 +372,7 @@ export async function GET(req: Request) {
 ### Day 7-8: 编辑器UI 📝
 
 #### 任务清单
+
 ```
 □ 创建编辑器组件
 □ 自动保存逻辑
@@ -388,6 +382,7 @@ export async function GET(req: Request) {
 ```
 
 #### 编辑器组件 (`components/Editor.tsx`)
+
 ```typescript
 'use client';
 
@@ -458,6 +453,7 @@ export function Editor({ siteName, initialContent, onSave }: EditorProps) {
 ```
 
 #### 状态栏 (`components/StatusBar.tsx`)
+
 ```typescript
 interface StatusBarProps {
   wordCount: number;
@@ -491,6 +487,7 @@ export function StatusBar({
 ```
 
 #### 交付物
+
 - ✅ 可用的编辑器
 - ✅ 自动保存
 - ✅ 状态反馈
@@ -500,6 +497,7 @@ export function StatusBar({
 ### Day 9-10: 密码模态框 🔑
 
 #### 任务清单
+
 ```
 □ 创建密码输入组件
 □ 首次访问 - 设置密码
@@ -509,6 +507,7 @@ export function StatusBar({
 ```
 
 #### 密码模态框 (`components/PasswordModal.tsx`)
+
 ```typescript
 'use client';
 
@@ -589,6 +588,7 @@ export function PasswordModal({
 ```
 
 #### 交付物
+
 - ✅ 密码输入界面
 - ✅ 创建/解锁模式
 - ✅ 错误提示
@@ -598,6 +598,7 @@ export function PasswordModal({
 ### Day 11-12: 页面整合 🎨
 
 #### 任务清单
+
 ```
 □ 首页 (Landing Page)
 □ 编辑器页面路由
@@ -607,6 +608,7 @@ export function PasswordModal({
 ```
 
 #### 编辑器页面 (`app/[sitename]/page.tsx`)
+
 ```typescript
 'use client';
 
@@ -691,6 +693,7 @@ export default function EditorPage() {
 ```
 
 #### 首页 (`app/page.tsx`)
+
 ```typescript
 'use client';
 
@@ -735,6 +738,7 @@ export default function HomePage() {
 ```
 
 #### 交付物
+
 - ✅ 完整的用户流程
 - ✅ 首页 → 设置密码 → 编辑 → 自动保存
 - ✅ 响应式设计
@@ -744,6 +748,7 @@ export default function HomePage() {
 ### Day 13-14: 测试 & 优化 🧪
 
 #### 任务清单
+
 ```
 □ 单元测试 (加密库)
 □ 集成测试 (API)
@@ -754,6 +759,7 @@ export default function HomePage() {
 ```
 
 #### 性能检查
+
 ```bash
 # Lighthouse测试
 npm run build
@@ -768,6 +774,7 @@ npm run start
 ```
 
 #### Bug修复
+
 ```
 □ 加密失败处理
 □ 网络错误重试
@@ -781,6 +788,7 @@ npm run start
 ## 📋 发布前检查清单
 
 ### 功能测试
+
 - [ ] 首次访问 - 创建新笔记
 - [ ] 设置密码
 - [ ] 输入内容
@@ -797,6 +805,7 @@ npm run start
 - [ ] 移动端访问
 
 ### 性能测试
+
 - [ ] 首屏加载 < 1.5s
 - [ ] TTI < 2s
 - [ ] 加密1KB < 50ms
@@ -804,6 +813,7 @@ npm run start
 - [ ] 保存响应 < 500ms
 
 ### 安全测试
+
 - [ ] 服务器看不到明文
 - [ ] 错误密码无法解密
 - [ ] XSS防护
@@ -811,6 +821,7 @@ npm run start
 - [ ] Rate limiting生效
 
 ### 兼容性测试
+
 - [ ] Chrome (latest)
 - [ ] Firefox (latest)
 - [ ] Safari (latest)
@@ -823,6 +834,7 @@ npm run start
 ## 🚀 部署计划
 
 ### 1. Vercel部署
+
 ```bash
 # 安装Vercel CLI
 npm i -g vercel
@@ -838,6 +850,7 @@ vercel --prod
 ```
 
 ### 2. 环境变量设置
+
 ```bash
 # Vercel Dashboard
 KV_URL=xxx
@@ -846,6 +859,7 @@ KV_REST_API_TOKEN=xxx
 ```
 
 ### 3. 域名设置
+
 ```
 - 添加域名: protected-text.app
 - 配置DNS
@@ -857,6 +871,7 @@ KV_REST_API_TOKEN=xxx
 ## 📊 MVP成功指标
 
 ### 第一周目标
+
 ```
 □ 10个测试用户
 □ 50个笔记创建
@@ -865,6 +880,7 @@ KV_REST_API_TOKEN=xxx
 ```
 
 ### 第一个月目标
+
 ```
 □ 1,000个独立访问
 □ 500个笔记创建
@@ -877,6 +893,7 @@ KV_REST_API_TOKEN=xxx
 ## 🎯 下一步 (v1.1)
 
 ### 计划功能
+
 1. Markdown支持
 2. 代码高亮
 3. 版本历史

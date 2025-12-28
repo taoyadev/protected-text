@@ -15,10 +15,12 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const variantStyles: Record<Variant, string> = {
-  primary: 'bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:from-primary-500 hover:to-primary-400 shadow-xl shadow-primary-500/40 hover:shadow-2xl hover:shadow-primary-500/60 hover:-translate-y-0.5 active:translate-y-0 ring-2 ring-primary-400/30 hover:ring-primary-400/50',
+  primary:
+    'bg-gradient-to-r from-primary-600 to-primary-500 text-white hover:from-primary-500 hover:to-primary-400 shadow-xl shadow-primary-500/40 hover:shadow-2xl hover:shadow-primary-500/60 hover:-translate-y-0.5 active:translate-y-0 ring-2 ring-primary-400/30 hover:ring-primary-400/50',
   secondary:
     'bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-white/20 border-2 border-gray-300 dark:border-white/30 shadow-lg shadow-black/10 dark:shadow-black/30 backdrop-blur-md hover:border-gray-400 dark:hover:border-white/40 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0',
-  ghost: 'bg-transparent text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 hover:backdrop-blur-sm',
+  ghost:
+    'bg-transparent text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 hover:backdrop-blur-sm',
 };
 
 const sizeStyles: Record<Size, string> = {
@@ -28,7 +30,19 @@ const sizeStyles: Record<Size, string> = {
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'primary', size = 'md', isLoading, children, disabled, asChild, ...props }, ref) => {
+  (
+    {
+      className,
+      variant = 'primary',
+      size = 'md',
+      isLoading,
+      children,
+      disabled,
+      asChild,
+      ...props
+    },
+    ref,
+  ) => {
     const Component = (asChild ? Slot : 'button') as ElementType;
 
     const content = (
@@ -44,10 +58,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <Component
         ref={ref}
         className={twMerge(
-          'inline-flex items-center justify-center rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950 disabled:cursor-not-allowed disabled:opacity-60 gap-2',
+          'inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white disabled:cursor-not-allowed disabled:opacity-60 dark:focus-visible:ring-offset-slate-950',
           variantStyles[variant],
           sizeStyles[size],
-          className
+          className,
         )}
         disabled={disabled || isLoading}
         {...props}
@@ -55,7 +69,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {asChild ? children : content}
       </Component>
     );
-  }
+  },
 );
 
 Button.displayName = 'Button';

@@ -59,7 +59,7 @@ body {
 }
 
 body {
-  @apply bg-white dark:bg-slate-950 text-gray-900 dark:text-slate-100 antialiased;
+  @apply bg-white text-gray-900 antialiased dark:bg-slate-950 dark:text-slate-100;
 }
 
 ::selection {
@@ -67,5 +67,5 @@ body {
 }
 
 .prose pre {
-  @apply bg-gray-100 dark:bg-slate-900 text-gray-900 dark:text-slate-100 rounded-lg;
+  @apply rounded-lg bg-gray-100 text-gray-900 dark:bg-slate-900 dark:text-slate-100;
 }

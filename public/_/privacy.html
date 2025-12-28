@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy — CloudNote D1</title>
+    <meta name="robots" content="index,follow" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; connect-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; font-src 'self'; manifest-src 'self'"
+    />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="stylesheet" href="/app.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="panel">
+        <div class="header">
+          <a class="brand" href="/">CloudNote D1</a>
+          <div class="slug-pill">Privacy</div>
+          <div class="header-actions">
+            <a class="btn" href="/_/security">Security</a>
+            <a class="btn" href="/">Home</a>
+          </div>
+        </div>
+        <div class="content">
+          <h1>Privacy</h1>
+          <p class="hint">
+            CloudNote D1 is designed as a zero-knowledge note app: content is
+            encrypted in your browser and stored as ciphertext in D1.
+          </p>
+
+          <h2>What we store</h2>
+          <ul>
+            <li><strong>Slug</strong> (the URL path) as the note identifier</li>
+            <li><strong>Encrypted content</strong> (Base64 ciphertext)</li>
+            <li><strong>Encryption parameters</strong> (IV + salt, Base64)</li>
+            <li>
+              <strong>Timestamps</strong> and <strong>size</strong> metadata
+            </li>
+            <li>
+              <strong>Version history</strong> (last 10 encrypted snapshots)
+            </li>
+          </ul>
+
+          <h2>What we do not store</h2>
+          <ul>
+            <li>Your password</li>
+            <li>Plaintext note content</li>
+          </ul>
+
+          <h2>Important note</h2>
+          <p class="hint">
+            If someone learns your slug, they can download the ciphertext. Use a
+            strong password to resist offline guessing.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

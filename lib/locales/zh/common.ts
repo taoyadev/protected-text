@@ -23,6 +23,9 @@ export const common = {
     add: '添加',
     createNewTab: '新标签页',
     closeTab: '关闭标签页',
+    showPassword: '显示密码',
+    hidePassword: '隐藏密码',
+    copyAll: '复制全部内容',
   },
 
   // 状态

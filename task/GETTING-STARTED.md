@@ -17,6 +17,7 @@
 ## ⚡ 快速启动 (3步骤)
 
 ### 1️⃣ 创建项目
+
 ```bash
 # 方法A: 使用create-next-app
 npx create-next-app@latest protected-text \
@@ -30,6 +31,7 @@ cd protected-text
 ```
 
 ### 2️⃣ 安装依赖
+
 ```bash
 # 核心依赖
 npm install @vercel/kv zustand clsx tailwind-merge
@@ -43,6 +45,7 @@ npx shadcn-ui@latest add button input textarea dialog
 ```
 
 ### 3️⃣ 启动开发服务器
+
 ```bash
 npm run dev
 # 访问 http://localhost:3000
@@ -55,6 +58,7 @@ npm run dev
 ### Redis安装 (本地KV存储)
 
 #### macOS
+
 ```bash
 # 使用Homebrew
 brew install redis
@@ -65,12 +69,14 @@ docker run -d -p 6379:6379 redis:alpine
 ```
 
 #### Windows
+
 ```bash
 # 使用Docker
 docker run -d -p 6379:6379 redis:alpine
 ```
 
 #### Linux
+
 ```bash
 sudo apt install redis-server
 sudo systemctl start redis
@@ -99,6 +105,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 ```
 
 生成NextAuth Secret:
+
 ```bash
 openssl rand -base64 32
 ```
@@ -108,6 +115,7 @@ openssl rand -base64 32
 ## 📁 项目结构搭建
 
 ### 创建基础目录
+
 ```bash
 mkdir -p app/api/{save,load,check}
 mkdir -p components/{editor,modals,ui,layout}
@@ -118,6 +126,7 @@ mkdir -p tests
 ```
 
 ### 目录说明
+
 ```
 protected-text/
 ├─ app/                 # Next.js App Router
@@ -145,7 +154,7 @@ export interface EncryptedData {
 
 export async function encrypt(
   plaintext: string,
-  password: string
+  password: string,
 ): Promise<EncryptedData> {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const iv = crypto.getRandomValues(new Uint8Array(12));
@@ -155,7 +164,7 @@ export async function encrypt(
   const encrypted = await crypto.subtle.encrypt(
     { name: 'AES-GCM', iv },
     key,
-    new TextEncoder().encode(plaintext)
+    new TextEncoder().encode(plaintext),
   );
 
   return {
@@ -167,17 +176,14 @@ export async function encrypt(
 
 export async function decrypt(
   data: EncryptedData,
-  password: string
+  password: string,
 ): Promise<string> {
-  const key = await deriveKey(
-    password,
-    base64ToArrayBuffer(data.salt)
-  );
+  const key = await deriveKey(password, base64ToArrayBuffer(data.salt));
 
   const decrypted = await crypto.subtle.decrypt(
     { name: 'AES-GCM', iv: base64ToArrayBuffer(data.iv) },
     key,
-    base64ToArrayBuffer(data.encrypted)
+    base64ToArrayBuffer(data.encrypted),
   );
 
   return new TextDecoder().decode(decrypted);
@@ -189,7 +195,7 @@ async function deriveKey(password: string, salt: Uint8Array) {
     new TextEncoder().encode(password),
     'PBKDF2',
     false,
-    ['deriveKey']
+    ['deriveKey'],
   );
 
   return crypto.subtle.deriveKey(
@@ -202,7 +208,7 @@ async function deriveKey(password: string, salt: Uint8Array) {
     keyMaterial,
     { name: 'AES-GCM', length: 256 },
     false,
-    ['encrypt', 'decrypt']
+    ['encrypt', 'decrypt'],
   );
 }
 
@@ -221,6 +227,7 @@ function base64ToArrayBuffer(base64: string): ArrayBuffer {
 ```
 
 ### 2. 测试加密功能
+
 ```bash
 # 创建测试文件
 touch lib/crypto.test.ts
@@ -234,6 +241,7 @@ npm run test
 ## 🌐 创建API路由
 
 ### 1. 保存API (`app/api/save/route.ts`)
+
 ```typescript
 import { kv } from '@vercel/kv';
 import { NextRequest } from 'next/server';
@@ -253,6 +261,7 @@ export async function POST(req: NextRequest) {
 ```
 
 ### 2. 加载API (`app/api/load/route.ts`)
+
 ```typescript
 import { kv } from '@vercel/kv';
 import { NextRequest } from 'next/server';
@@ -275,6 +284,7 @@ export async function GET(req: NextRequest) {
 ```
 
 ### 3. 检查API (`app/api/check/route.ts`)
+
 ```typescript
 import { kv } from '@vercel/kv';
 import { NextRequest } from 'next/server';
@@ -292,6 +302,7 @@ export async function GET(req: NextRequest) {
 ## 🎨 创建UI组件
 
 ### 1. 基础编辑器 (`components/editor/Editor.tsx`)
+
 ```typescript
 'use client';
 
@@ -312,6 +323,7 @@ export function Editor() {
 ```
 
 ### 2. 测试运行
+
 ```bash
 npm run dev
 # 访问 http://localhost:3000
@@ -322,6 +334,7 @@ npm run dev
 ## ✅ 开发检查清单
 
 ### Day 1
+
 - [ ] 项目初始化
 - [ ] 安装依赖
 - [ ] 配置环境变量
@@ -330,17 +343,20 @@ npm run dev
 - [ ] 加密库测试
 
 ### Day 2
+
 - [ ] API路由实现
 - [ ] Redis连接测试
 - [ ] API测试
 
 ### Day 3-4
+
 - [ ] 编辑器组件
 - [ ] 密码模态框
 - [ ] 自动保存逻辑
 - [ ] 状态栏
 
 ### Day 5
+
 - [ ] 首页设计
 - [ ] 编辑器页面路由
 - [ ] 深色模式
@@ -351,6 +367,7 @@ npm run dev
 ## 🧪 测试指南
 
 ### 运行测试
+
 ```bash
 # 单元测试
 npm run test
@@ -363,6 +380,7 @@ npm run test:coverage
 ```
 
 ### 手动测试流程
+
 ```
 1. 访问 /mysecret
 2. 输入密码 "test123"
@@ -379,6 +397,7 @@ npm run test:coverage
 ## 🚀 部署到Vercel
 
 ### 1. 连接GitHub
+
 ```bash
 git init
 git add .
@@ -388,6 +407,7 @@ git push -u origin main
 ```
 
 ### 2. 导入到Vercel
+
 ```
 1. 访问 vercel.com
 2. 点击 "Import Project"
@@ -397,6 +417,7 @@ git push -u origin main
 ```
 
 ### 3. 配置KV存储
+
 ```
 1. Vercel Dashboard → Storage
 2. Create → KV Database
@@ -409,12 +430,14 @@ git push -u origin main
 ## 📚 推荐资源
 
 ### 文档
+
 - [Next.js文档](https://nextjs.org/docs)
 - [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API)
 - [Vercel KV](https://vercel.com/docs/storage/vercel-kv)
 - [Tailwind CSS](https://tailwindcss.com/docs)
 
 ### 工具
+
 - [VS Code](https://code.visualstudio.com/)
 - [Figma](https://figma.com)
 - [Postman](https://postman.com) (API测试)
@@ -424,6 +447,7 @@ git push -u origin main
 ## 🤝 开发工作流
 
 ### Git工作流
+
 ```bash
 # 创建功能分支
 git checkout -b feature/editor
@@ -441,6 +465,7 @@ git push origin feature/editor
 ```
 
 ### 代码规范
+
 ```bash
 # 格式化代码
 npm run format
@@ -457,6 +482,7 @@ npm run type-check
 ## 🐛 常见问题
 
 ### Q: Redis连接失败
+
 ```bash
 # 检查Redis是否运行
 redis-cli ping
@@ -467,12 +493,14 @@ lsof -i :6379
 ```
 
 ### Q: 加密失败
+
 ```
 确保在客户端组件中使用 'use client'
 确保浏览器支持Web Crypto API
 ```
 
 ### Q: Vercel部署失败
+
 ```
 检查环境变量是否正确设置
 检查Node.js版本 (需要18+)
@@ -484,18 +512,21 @@ lsof -i :6379
 ## 💡 开发技巧
 
 ### 1. 使用React DevTools
+
 ```bash
 # 安装浏览器扩展
 Chrome: React Developer Tools
 ```
 
 ### 2. 使用Vercel CLI预览
+
 ```bash
 vercel dev
 # 本地使用Vercel环境
 ```
 
 ### 3. 热重载
+
 ```bash
 # Next.js自动热重载
 # 修改代码后自动刷新

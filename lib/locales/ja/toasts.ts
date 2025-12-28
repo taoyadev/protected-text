@@ -12,9 +12,11 @@ export const toasts = {
     fileImportedSuccessfully: 'ファイルをインポートしました',
     saved: '保存しました！',
     versionRestored: 'バージョンを復元しました',
-    versionRestoredSaveToConfirm: 'バージョンを復元しました。保存して確認してください。',
+    versionRestoredSaveToConfirm:
+      'バージョンを復元しました。保存して確認してください。',
     voteRecorded: '投票を記録しました！フィードバックありがとうございます。',
     thankYouForFeedback: 'フィードバックありがとうございます！',
+    contentCopied: '内容をクリップボードにコピーしました',
   },
 
   // 情報メッセージ

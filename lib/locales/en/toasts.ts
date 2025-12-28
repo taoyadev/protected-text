@@ -15,6 +15,7 @@ export const toasts = {
     versionRestoredSaveToConfirm: 'Version restored. Save to confirm.',
     voteRecorded: 'Vote recorded! Thanks for the feedback.',
     thankYouForFeedback: 'Thank you for your feedback!',
+    contentCopied: 'Content copied to clipboard',
   },
 
   // Info messages

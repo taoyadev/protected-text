@@ -28,3 +28,9 @@ public/workbox-*.js
 public/worker-*.js
 .vercel
 tsconfig.tsbuildinfo
+
+# Cloudflare
+.wrangler
+.dev.vars
+wrangler.toml
+.home/

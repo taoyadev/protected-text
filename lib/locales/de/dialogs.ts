@@ -31,7 +31,8 @@ export const dialogs = {
   deleteNote: {
     title: 'Notiz löschen',
     warning1: 'Dies wird Ihre Notiz **dauerhaft löschen**.',
-    warning2: 'Diese Aktion **kann nicht rückgängig gemacht werden**. Keine Backups, keine Wiederherstellung.',
+    warning2:
+      'Diese Aktion **kann nicht rückgängig gemacht werden**. Keine Backups, keine Wiederherstellung.',
     confirmPrompt: 'Geben Sie',
     confirmPromptSuffix: 'zur Bestätigung ein:',
     cancel: 'Abbrechen',

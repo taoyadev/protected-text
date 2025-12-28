@@ -1,5 +1,5 @@
 /**
- * エディタインターフェース - ツールバー、プレースホルダー、統計、キーボードショートカット
+ * エディターインターフェース - ツールバー、プレースホルダー、統計、キーボードショートカット
  */
 
 export const editor = {
@@ -11,30 +11,31 @@ export const editor = {
     switchToLightMode: 'ライトモードに切り替え',
     switchToDarkMode: 'ダークモードに切り替え',
     toggleMarkdownPreview: 'Markdownプレビューを切り替え',
-    search: '検索（Ctrl+F）',
+    search: '検索 (Ctrl+F)',
     versionHistory: 'バージョン履歴',
     reload: '再読み込み',
-    import: 'インポート（Ctrl+I）',
-    export: 'エクスポート（Ctrl+E）',
+    import: 'インポート (Ctrl+I)',
+    export: 'エクスポート (Ctrl+E)',
     share: '共有',
-    changePassword: 'パスワード変更（Ctrl+K）',
+    changePassword: 'パスワード変更 (Ctrl+K)',
     delete: '削除',
   },
 
   // 検索
   search: {
-    placeholder: 'ノート内を検索...（Escキーで閉じる）',
+    placeholder: 'ノート内を検索... (Escで閉じる)',
     clear: 'クリア',
   },
 
-  // エディタ
+  // エディター
   editor: {
-    placeholder: '入力を開始…パスワードはこのブラウザタブから決して離れません。',
+    placeholder:
+      '入力を開始… パスワードはこのブラウザタブから離れることはありません。',
   },
 
   // Markdownプレビュー
   markdownPreview: {
-    emptyPlaceholder: '*入力を開始してプレビューを表示...*',
+    emptyPlaceholder: '*入力を開始してプレビューを確認...*',
   },
 
   // 統計
@@ -63,5 +64,25 @@ export const editor = {
   // ファイルインポート
   fileImport: {
     acceptedFormats: '.txt,.md,.text',
+  },
+
+  // Keyboard shortcuts
+  shortcuts: {
+    title: 'キーボードショートカット',
+    description: '? を押してこのダイアログを開く',
+    save: 'ノートを保存',
+    search: 'ノート内を検索',
+    closeDialogs: 'ダイアログを閉じる',
+    showShortcuts: 'キーボードショートカットを表示',
+    export: 'ノートをエクスポート',
+    import: 'ファイルをインポート',
+    changePassword: 'パスワードを変更',
+  },
+
+  // Autosave status
+  autosave: {
+    allChangesSaved: 'すべての変更を保存しました',
+    saving: '保存中...',
+    unsavedChanges: '未保存の変更',
   },
 };

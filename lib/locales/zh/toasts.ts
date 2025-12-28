@@ -15,6 +15,7 @@ export const toasts = {
     versionRestoredSaveToConfirm: '版本已恢复。保存以确认。',
     voteRecorded: '投票已记录！感谢您的反馈。',
     thankYouForFeedback: '感谢您的反馈！',
+    contentCopied: '内容已复制到剪贴板',
   },
 
   // 信息消息

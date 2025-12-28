@@ -72,8 +72,10 @@ export const landing = {
       stat1: '仅在4个月内（2024年1月至4月）就暴露了**360亿条数据记录**',
       stat2: '2024年平均每天泄露**758,288条记录**',
       stat3: '2024年有六次大规模泄露事件，每次都暴露了**1亿条以上记录**',
-      stat4: '加密市场正在爆炸式增长：从**2024年的167亿美元增长到2033年的607亿美元**',
-      source: '来源：HIPAA Journal 2024数据泄露报告、Statista、SecureFrame 2024安全统计',
+      stat4:
+        '加密市场正在爆炸式增长：从**2024年的167亿美元增长到2033年的607亿美元**',
+      source:
+        '来源：HIPAA Journal 2024数据泄露报告、Statista、SecureFrame 2024安全统计',
     },
 
     zeroKnowledge: {
@@ -121,11 +123,13 @@ export const landing = {
       specs: {
         aes256: {
           title: 'AES-256-GCM',
-          description: 'NSA用于绝密文件的相同标准。NIST于2001年采用。至今未被破解。',
+          description:
+            'NSA用于绝密文件的相同标准。NIST于2001年采用。至今未被破解。',
         },
         pbkdf2: {
           title: 'PBKDF2（310k次迭代）',
-          description: 'OWASP建议100k次。我们做310k次，使暴力破解攻击指数级困难。',
+          description:
+            'OWASP建议100k次。我们做310k次，使暴力破解攻击指数级困难。',
         },
         uniqueSaltIV: {
           title: '每次保存唯一的盐值和IV',
@@ -246,7 +250,8 @@ export const landing = {
   // 页脚
   footer: {
     about: {
-      description: '零知识加密笔记。您的密码永不离开您的设备。永久免费，无跟踪，无废话。',
+      description:
+        '零知识加密笔记。您的密码永不离开您的设备。永久免费，无跟踪，无废话。',
       starOnGithub: '在GitHub上加星',
       openSourceOnGithub: '在GitHub上开源',
     },

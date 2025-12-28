@@ -31,7 +31,8 @@ export const dialogs = {
   deleteNote: {
     title: 'Supprimer la Note',
     warning1: 'Cela **supprimera définitivement** votre note.',
-    warning2: 'Cette action **ne peut pas être annulée**. Pas de sauvegardes, pas de récupération.',
+    warning2:
+      'Cette action **ne peut pas être annulée**. Pas de sauvegardes, pas de récupération.',
     confirmPrompt: 'Tapez',
     confirmPromptSuffix: 'pour confirmer :',
     cancel: 'Annuler',

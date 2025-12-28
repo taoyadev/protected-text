@@ -5,14 +5,17 @@
 export const metadata = {
   // Root-Layout-Metadaten
   root: {
-    title: 'Protected Text – Verschlüsselte Notizen, die tatsächlich funktionieren',
-    description: 'Kostenloser verschlüsselter Notizblock. Ihr Passwort verlässt niemals Ihr Gerät. Keine Werbung, kein Tracking, kein Unsinn. Es funktioniert einfach.',
+    title:
+      'Protected Text – Verschlüsselte Notizen, die tatsächlich funktionieren',
+    description:
+      'Kostenloser verschlüsselter Notizblock. Ihr Passwort verlässt niemals Ihr Gerät. Keine Werbung, kein Tracking, kein Unsinn. Es funktioniert einfach.',
     siteName: 'Protected Text',
 
     // Open Graph
     og: {
       title: 'Protected Text',
-      description: 'Verschlüsselte Notizen. Niemand kann sie lesen. Nicht einmal wir.',
+      description:
+        'Verschlüsselte Notizen. Niemand kann sie lesen. Nicht einmal wir.',
       siteName: 'Protected Text',
     },
 

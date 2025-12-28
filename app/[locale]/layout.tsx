@@ -8,7 +8,10 @@ interface LocaleLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: LocaleLayoutProps) {
   const { locale } = await params;
 
   // Validate locale - redirect to /en if invalid
@@ -16,9 +19,5 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     redirect('/en');
   }
 
-  return (
-    <I18nProvider locale={locale as Locale}>
-      {children}
-    </I18nProvider>
-  );
+  return <I18nProvider locale={locale as Locale}>{children}</I18nProvider>;
 }

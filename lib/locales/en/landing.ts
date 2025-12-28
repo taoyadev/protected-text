@@ -9,7 +9,7 @@ export const landing = {
     title: 'Protected Text: Your Notes,',
     titleHighlight: 'Encrypted. Zero-Knowledge.',
     subtitle:
-      'Look, this is simple. Pick any URL like **protected-text.com/anything**, create a password, and start typing. Your stuff gets encrypted in your browser before it ever leaves your device. We literally cannot read it. Not because we\'re nice people (we are), but because it\'s mathematically impossible.',
+      "Look, this is simple. Pick any URL like **protected-text.com/anything**, create a password, and start typing. Your stuff gets encrypted in your browser before it ever leaves your device. We literally cannot read it. Not because we're nice people (we are), but because it's mathematically impossible.",
   },
 
   // Create site form
@@ -54,7 +54,7 @@ export const landing = {
     whatMakesDifferent: {
       heading: 'What Makes Protected Text Different?',
       paragraph1:
-        'Protected Text is a **free online notepad with end-to-end encryption**. But here\'s what makes it different: We use **AES-256-GCM encryption**—the same standard the NSA uses to protect Top Secret government documents, the same tech Google Cloud uses by default, and the same encryption that major banks rely on.',
+        "Protected Text is a **free online notepad with end-to-end encryption**. But here's what makes it different: We use **AES-256-GCM encryption**—the same standard the NSA uses to protect Top Secret government documents, the same tech Google Cloud uses by default, and the same encryption that major banks rely on.",
       paragraph2:
         "Everything happens in your browser. Before your notes ever touch the internet, they're encrypted into gibberish. We store that gibberish. Even if someone steals our entire database tomorrow, all they get is useless encrypted data. No password, no decryption. It's that simple.",
     },
@@ -64,28 +64,33 @@ export const landing = {
       paragraph1:
         "You pick any URL you want—let's say `protected-text.com/my-secret-ideas`. Nobody's using it? It's yours. You create a password. That password never leaves your computer. Ever.",
       paragraph2:
-        'When you type your notes, your browser uses that password to scramble everything into encrypted code using PBKDF2 (310,000 iterations, if you care about the technical stuff—that\'s more than the industry standard). Only then does the encrypted version go to our servers. We literally cannot read what you write, even if we wanted to, even if the government asked us to, even if hackers broke in.',
+        "When you type your notes, your browser uses that password to scramble everything into encrypted code using PBKDF2 (310,000 iterations, if you care about the technical stuff—that's more than the industry standard). Only then does the encrypted version go to our servers. We literally cannot read what you write, even if we wanted to, even if the government asked us to, even if hackers broke in.",
     },
 
     realTalk: {
-      heading: 'Real Talk: The Numbers Don\'t Lie',
-      stat1: '**36 billion data records** exposed in just 4 months (Jan-Apr 2024)',
+      heading: "Real Talk: The Numbers Don't Lie",
+      stat1:
+        '**36 billion data records** exposed in just 4 months (Jan-Apr 2024)',
       stat2: 'Average **758,288 records breached per day** in 2024',
       stat3: 'Six mega-breaches in 2024 each exposed **100+ million records**',
-      stat4: 'The encryption market is exploding: from **$16.7B in 2024 to $60.7B by 2033**',
-      source: 'Sources: HIPAA Journal 2024 Data Breach Report, Statista, SecureFrame 2024 Security Statistics',
+      stat4:
+        'The encryption market is exploding: from **$16.7B in 2024 to $60.7B by 2033**',
+      source:
+        'Sources: HIPAA Journal 2024 Data Breach Report, Statista, SecureFrame 2024 Security Statistics',
     },
 
     zeroKnowledge: {
       badge: 'Zero-Knowledge Architecture = Trustless Security',
-      tagline: "You don't have to trust us. You don't have to trust anyone. The math protects you, not promises.",
+      tagline:
+        "You don't have to trust us. You don't have to trust anyone. The math protects you, not promises.",
     },
   },
 
   // Security section
   security: {
     title: "Why Trust This? (Don't Just Take My Word For It)",
-    subtitle: "Security is actually pretty simple when you don't overcomplicate it. Here's exactly how we do it:",
+    subtitle:
+      "Security is actually pretty simple when you don't overcomplicate it. Here's exactly how we do it:",
 
     items: {
       passwordNeverLeaves: {
@@ -101,7 +106,7 @@ export const landing = {
       zeroTracking: {
         title: 'Zero tracking, zero bullshit',
         description:
-          'No user accounts. No cookies. No analytics. No "anonymous" tracking pixels. We don\'t know who you are, we don\'t want to know, and we can\'t know. That\'s the design.',
+          "No user accounts. No cookies. No analytics. No \"anonymous\" tracking pixels. We don't know who you are, we don't want to know, and we can't know. That's the design.",
       },
       openSource: {
         title: 'Open source (because trust, but verify)',
@@ -121,22 +126,27 @@ export const landing = {
       specs: {
         aes256: {
           title: 'AES-256-GCM',
-          description: 'Same standard used by NSA for Top Secret docs. Adopted by NIST in 2001. Still unbroken.',
+          description:
+            'Same standard used by NSA for Top Secret docs. Adopted by NIST in 2001. Still unbroken.',
         },
         pbkdf2: {
           title: 'PBKDF2 (310k iterations)',
-          description: 'OWASP recommends 100k. We do 310k to make brute-force attacks exponentially harder.',
+          description:
+            'OWASP recommends 100k. We do 310k to make brute-force attacks exponentially harder.',
         },
         uniqueSaltIV: {
           title: 'Unique salt & IV per save',
-          description: 'Fresh cryptographic randomness every time. No reuse, no predictability.',
+          description:
+            'Fresh cryptographic randomness every time. No reuse, no predictability.',
         },
         webCrypto: {
           title: 'Web Crypto API',
-          description: 'Native browser implementation. No sketchy third-party libraries.',
+          description:
+            'Native browser implementation. No sketchy third-party libraries.',
         },
       },
-      verifyNote: 'Want to verify? The code is open source. Check it yourself on GitHub.',
+      verifyNote:
+        'Want to verify? The code is open source. Check it yourself on GitHub.',
     },
   },
 
@@ -156,7 +166,7 @@ export const landing = {
   // Features
   features: {
     title: 'Protected Text Features',
-    subtitle: 'Everything you need. Nothing you don\'t. No premium tiers.',
+    subtitle: "Everything you need. Nothing you don't. No premium tiers.",
     list: [
       'AES-256-GCM encryption',
       'No registration needed',
@@ -187,12 +197,12 @@ export const landing = {
       step1: {
         title: 'Pick a URL',
         description:
-          'Type any URL you want in the box above, like `protected-text.com/myproject`. If nobody\'s using it, it\'s yours. First come, first served.',
+          "Type any URL you want in the box above, like `protected-text.com/myproject`. If nobody's using it, it's yours. First come, first served.",
       },
       step2: {
         title: 'Set a password',
         description:
-          "Choose a strong password. We never see it. It never leaves your browser. If you forget it, your notes are gone forever. Write it down somewhere safe.",
+          'Choose a strong password. We never see it. It never leaves your browser. If you forget it, your notes are gone forever. Write it down somewhere safe.',
       },
       step3: {
         title: 'Start typing',
@@ -246,13 +256,15 @@ export const landing = {
   // Footer
   footer: {
     about: {
-      description: 'Zero-knowledge encrypted notes. Your password never leaves your device. Free forever, no tracking, no BS.',
+      description:
+        'Zero-knowledge encrypted notes. Your password never leaves your device. Free forever, no tracking, no BS.',
       starOnGithub: 'Star on GitHub',
       openSourceOnGithub: 'Open Source on GitHub',
     },
     security: {
       title: 'Found a security issue?',
-      description: 'Please report it responsibly via email. We take security seriously.',
+      description:
+        'Please report it responsibly via email. We take security seriously.',
     },
     contact: {
       email: 'hello@protected-text.com',

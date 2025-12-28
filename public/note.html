@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="title">CloudNote D1</title>
+    <meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; connect-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; font-src 'self'; manifest-src 'self'"
+    />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="stylesheet" href="/app.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="panel">
+        <div class="header">
+          <a class="brand" href="/">CloudNote D1</a>
+          <div id="slug" class="slug-pill">/…</div>
+          <div class="header-actions">
+            <button id="copyLinkBtn" class="btn" type="button">
+              Copy link
+            </button>
+            <button id="lockBtn" class="btn" type="button">Lock</button>
+          </div>
+        </div>
+        <div class="content">
+          <div id="authSection" class="grid">
+            <p class="hint">
+              Zero-knowledge note. Your password never leaves your device. The
+              server only stores encrypted data.
+            </p>
+            <div class="grid">
+              <label for="password">Password</label>
+              <div class="row">
+                <input
+                  id="password"
+                  class="grow"
+                  type="password"
+                  autocomplete="current-password"
+                  placeholder="Enter password"
+                />
+                <button id="accessBtn" class="btn btn-primary" type="button">
+                  Unlock
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="editorSection" class="grid hidden">
+            <div class="toolbar">
+              <div class="toolbar-left">
+                <button id="saveBtn" class="btn btn-primary" type="button">
+                  Save
+                </button>
+                <button id="versionsBtn" class="btn" type="button">
+                  Versions
+                </button>
+              </div>
+              <div class="toolbar-right">
+                <button id="changePasswordBtn" class="btn" type="button">
+                  Change password
+                </button>
+                <button id="exportBtn" class="btn" type="button">Export</button>
+                <label class="btn btn-file" for="importFile">
+                  Import
+                  <input
+                    id="importFile"
+                    type="file"
+                    accept="application/json"
+                    hidden
+                  />
+                </label>
+                <button id="deleteBtn" class="btn btn-danger" type="button">
+                  Delete
+                </button>
+              </div>
+            </div>
+
+            <textarea
+              id="noteContent"
+              spellcheck="false"
+              placeholder="Type here…"
+            ></textarea>
+
+            <div class="statusbar">
+              <div id="status"></div>
+              <div id="lastSaved"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <span>Zero-knowledge encrypted notes on Cloudflare D1.</span>
+          <a href="/_/security">Security</a>
+          <a href="/_/privacy">Privacy</a>
+        </div>
+      </div>
+    </div>
+
+    <dialog id="versionsDialog">
+      <div class="dialog-title">
+        <h3>Version history</h3>
+        <button
+          id="versionsCloseBtn"
+          class="dialog-close"
+          type="button"
+          aria-label="Close"
+        >
+          ✕
+        </button>
+      </div>
+      <div class="dialog-body">
+        <ul id="versionsList" class="list"></ul>
+      </div>
+    </dialog>
+
+    <dialog id="changePasswordDialog">
+      <div class="dialog-title">
+        <h3>Change password</h3>
+        <button
+          id="changePasswordCloseBtn"
+          class="dialog-close"
+          type="button"
+          aria-label="Close"
+        >
+          ✕
+        </button>
+      </div>
+      <div class="dialog-body grid">
+        <p class="hint">
+          This re-encrypts the current content with a new password and a new
+          salt, then saves it to D1.
+        </p>
+        <div class="grid">
+          <label for="newPassword">New password</label>
+          <input id="newPassword" type="password" autocomplete="new-password" />
+        </div>
+        <div class="grid">
+          <label for="confirmPassword">Confirm</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            autocomplete="new-password"
+          />
+        </div>
+        <div class="row justify-end">
+          <button id="applyPasswordBtn" class="btn btn-primary" type="button">
+            Apply
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="/note.js"></script>
+  </body>
+</html>

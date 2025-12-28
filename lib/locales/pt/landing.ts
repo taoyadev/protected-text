@@ -69,23 +69,29 @@ export const landing = {
 
     realTalk: {
       heading: 'Falando Sério: Os Números Não Mentem',
-      stat1: '**36 bilhões de registros de dados** expostos em apenas 4 meses (jan-abr 2024)',
+      stat1:
+        '**36 bilhões de registros de dados** expostos em apenas 4 meses (jan-abr 2024)',
       stat2: 'Média de **758.288 registros violados por dia** em 2024',
-      stat3: 'Seis mega-violações em 2024, cada uma expôs **mais de 100 milhões de registros**',
-      stat4: 'O mercado de criptografia está explodindo: de **US$ 16,7 bilhões em 2024 para US$ 60,7 bilhões até 2033**',
-      source: 'Fontes: Relatório de Violação de Dados 2024 do HIPAA Journal, Statista, Estatísticas de Segurança 2024 da SecureFrame',
+      stat3:
+        'Seis mega-violações em 2024, cada uma expôs **mais de 100 milhões de registros**',
+      stat4:
+        'O mercado de criptografia está explodindo: de **US$ 16,7 bilhões em 2024 para US$ 60,7 bilhões até 2033**',
+      source:
+        'Fontes: Relatório de Violação de Dados 2024 do HIPAA Journal, Statista, Estatísticas de Segurança 2024 da SecureFrame',
     },
 
     zeroKnowledge: {
       badge: 'Arquitetura de Conhecimento Zero = Segurança Sem Confiança',
-      tagline: 'Você não precisa confiar em nós. Você não precisa confiar em ninguém. A matemática te protege, não promessas.',
+      tagline:
+        'Você não precisa confiar em nós. Você não precisa confiar em ninguém. A matemática te protege, não promessas.',
     },
   },
 
   // Seção de segurança
   security: {
     title: 'Por que confiar nisso? (Não apenas acredite na minha palavra)',
-    subtitle: 'A segurança é na verdade bem simples quando você não complica. Aqui está exatamente como fazemos:',
+    subtitle:
+      'A segurança é na verdade bem simples quando você não complica. Aqui está exatamente como fazemos:',
 
     items: {
       passwordNeverLeaves: {
@@ -121,22 +127,27 @@ export const landing = {
       specs: {
         aes256: {
           title: 'AES-256-GCM',
-          description: 'Mesmo padrão usado pela NSA para documentos Top Secret. Adotado pelo NIST em 2001. Ainda não quebrado.',
+          description:
+            'Mesmo padrão usado pela NSA para documentos Top Secret. Adotado pelo NIST em 2001. Ainda não quebrado.',
         },
         pbkdf2: {
           title: 'PBKDF2 (310k iterações)',
-          description: 'OWASP recomenda 100k. Fazemos 310k para tornar os ataques de força bruta exponencialmente mais difíceis.',
+          description:
+            'OWASP recomenda 100k. Fazemos 310k para tornar os ataques de força bruta exponencialmente mais difíceis.',
         },
         uniqueSaltIV: {
           title: 'Salt e IV únicos por salvamento',
-          description: 'Nova aleatoriedade criptográfica toda vez. Sem reutilização, sem previsibilidade.',
+          description:
+            'Nova aleatoriedade criptográfica toda vez. Sem reutilização, sem previsibilidade.',
         },
         webCrypto: {
           title: 'Web Crypto API',
-          description: 'Implementação nativa do navegador. Sem bibliotecas suspeitas de terceiros.',
+          description:
+            'Implementação nativa do navegador. Sem bibliotecas suspeitas de terceiros.',
         },
       },
-      verifyNote: 'Quer verificar? O código é de código aberto. Confira você mesmo no GitHub.',
+      verifyNote:
+        'Quer verificar? O código é de código aberto. Confira você mesmo no GitHub.',
     },
   },
 
@@ -156,7 +167,8 @@ export const landing = {
   // Recursos
   features: {
     title: 'Recursos do Protected Text',
-    subtitle: 'Tudo o que você precisa. Nada que você não precise. Sem níveis premium.',
+    subtitle:
+      'Tudo o que você precisa. Nada que você não precise. Sem níveis premium.',
     list: [
       'Criptografia AES-256-GCM',
       'Sem necessidade de cadastro',
@@ -246,13 +258,15 @@ export const landing = {
   // Rodapé
   footer: {
     about: {
-      description: 'Notas criptografadas de conhecimento zero. Sua senha nunca sai do seu dispositivo. Grátis para sempre, sem rastreamento, sem enrolação.',
+      description:
+        'Notas criptografadas de conhecimento zero. Sua senha nunca sai do seu dispositivo. Grátis para sempre, sem rastreamento, sem enrolação.',
       starOnGithub: 'Dar estrela no GitHub',
       openSourceOnGithub: 'Código Aberto no GitHub',
     },
     security: {
       title: 'Encontrou um problema de segurança?',
-      description: 'Por favor, relate-o de forma responsável por email. Levamos a segurança a sério.',
+      description:
+        'Por favor, relate-o de forma responsável por email. Levamos a segurança a sério.',
     },
     contact: {
       email: 'hello@protected-text.com',

@@ -23,6 +23,9 @@ export const common = {
     add: 'Добавить',
     createNewTab: 'Новая вкладка',
     closeTab: 'Закрыть вкладку',
+    showPassword: 'Показать пароль',
+    hidePassword: 'Скрыть пароль',
+    copyAll: 'Копировать все содержимое',
   },
 
   // Состояния

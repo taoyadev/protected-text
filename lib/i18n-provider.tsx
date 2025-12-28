@@ -1,7 +1,12 @@
 'use client';
 
 import { createContext, useContext, ReactNode } from 'react';
-import { type Locale, type TranslationKey, getTranslations, interpolate } from './i18n';
+import {
+  type Locale,
+  type TranslationKey,
+  getTranslations,
+  interpolate,
+} from './i18n';
 
 // React Context for client components
 const LocaleContext = createContext<{
@@ -24,14 +29,17 @@ function getNestedValue(obj: any, path: string): any {
  */
 export function I18nProvider({
   children,
-  locale
+  locale,
 }: {
   children: ReactNode;
   locale: Locale;
 }) {
   const trans = getTranslations(locale);
 
-  const t = (key: TranslationKey, params?: Record<string, string | number>): string => {
+  const t = (
+    key: TranslationKey,
+    params?: Record<string, string | number>,
+  ): string => {
     const value = getNestedValue(trans, key);
     if (typeof value !== 'string') {
       console.warn(`Translation key not found: ${key}`);

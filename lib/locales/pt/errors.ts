@@ -13,9 +13,11 @@ export const errors = {
     failedToLoadVersionHistory: 'Falha ao carregar o histórico de versões',
     failedToRestoreVersion: 'Falha ao restaurar a versão',
     failedToRecordVote: 'Falha ao registrar o voto',
-    failedToRecordVotePleaseTryAgain: 'Falha ao registrar o voto. Por favor, tente novamente.',
+    failedToRecordVotePleaseTryAgain:
+      'Falha ao registrar o voto. Por favor, tente novamente.',
     failedToSubmitFeedback: 'Falha ao enviar feedback',
-    failedToSubmitFeedbackPleaseTryAgain: 'Falha ao enviar feedback. Por favor, tente novamente.',
+    failedToSubmitFeedbackPleaseTryAgain:
+      'Falha ao enviar feedback. Por favor, tente novamente.',
     clipboardUnavailable: 'Área de transferência indisponível',
     noNoteFoundOnServer: 'Nenhuma nota encontrada no servidor',
   },
@@ -46,6 +48,7 @@ export const errors = {
 
   // Mensagens de confirmação
   confirmations: {
-    unsavedChangesReloadAnyway: 'Você tem alterações não salvas. Recarregar mesmo assim?',
+    unsavedChangesReloadAnyway:
+      'Você tem alterações não salvas. Recarregar mesmo assim?',
   },
 };

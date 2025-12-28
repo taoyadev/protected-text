@@ -19,6 +19,7 @@
 ### 前端技术栈
 
 #### 核心框架
+
 ```typescript
 框架: Next.js 15 (App Router)
 语言: TypeScript 5.x
@@ -27,12 +28,14 @@
 ```
 
 **选择理由**:
+
 - Next.js: SSR + SSG, SEO友好，Vercel原生支持
 - TypeScript: 类型安全，减少bug
 - Tailwind: 快速开发，一致性
 - shadcn/ui: 现代组件，可定制
 
 #### 编辑器
+
 ```typescript
 文本模式: Monaco Editor (VS Code内核)
 Markdown模式: Tiptap (更轻量，更灵活)
@@ -47,6 +50,7 @@ Markdown模式: Tiptap (更轻量，更灵活)
 | CodeMirror | 中等大小，可定制 | 配置复杂 | ❌ |
 
 #### 加密
+
 ```typescript
 库: Web Crypto API (原生)
 算法: AES-256-GCM
@@ -54,12 +58,14 @@ Markdown模式: Tiptap (更轻量，更灵活)
 ```
 
 **为什么不用第三方库**:
+
 - 原生API速度快
 - 浏览器内置，无需下载
 - 安全审计过
 - 支持度好 (96%+ 浏览器)
 
 #### PWA
+
 ```typescript
 框架: next-pwa
 Service Worker: 自动生成
@@ -71,6 +77,7 @@ Service Worker: 自动生成
 ### 后端技术栈
 
 #### 运行时
+
 ```typescript
 平台: Vercel Serverless Functions
 运行时: Node.js 20.x
@@ -78,6 +85,7 @@ Service Worker: 自动生成
 ```
 
 #### 数据库
+
 ```typescript
 主存储: Vercel KV (基于 Upstash Redis)
 结构:
@@ -102,12 +110,14 @@ Pro用户:
 ```
 
 **为什么选择 KV**:
+
 - 简单 (key-value即可)
 - 快速 (Redis性能)
 - 便宜 (Hobby免费)
 - Vercel原生集成
 
 #### 认证
+
 ```typescript
 框架: NextAuth.js v5
 提供商:
@@ -119,6 +129,7 @@ Session: JWT (无状态)
 ```
 
 #### 支付
+
 ```typescript
 平台: Stripe
 模式: Subscription
@@ -135,6 +146,7 @@ Products:
 ### 零知识加密流程
 
 #### 1. 创建/保存笔记
+
 ```typescript
 // 客户端
 async function saveNote(siteName: string, content: string, password: string) {
@@ -148,7 +160,7 @@ async function saveNote(siteName: string, content: string, password: string) {
     new TextEncoder().encode(password),
     'PBKDF2',
     false,
-    ['deriveKey']
+    ['deriveKey'],
   );
 
   const key = await crypto.subtle.deriveKey(
@@ -156,19 +168,19 @@ async function saveNote(siteName: string, content: string, password: string) {
       name: 'PBKDF2',
       salt,
       iterations: 100000,
-      hash: 'SHA-256'
+      hash: 'SHA-256',
     },
     keyMaterial,
     { name: 'AES-GCM', length: 256 },
     false,
-    ['encrypt']
+    ['encrypt'],
   );
 
   // 3. 加密内容
   const encrypted = await crypto.subtle.encrypt(
     { name: 'AES-GCM', iv },
     key,
-    new TextEncoder().encode(content)
+    new TextEncoder().encode(content),
   );
 
   // 4. 发送到服务器
@@ -178,8 +190,8 @@ async function saveNote(siteName: string, content: string, password: string) {
       siteName,
       encrypted: arrayBufferToBase64(encrypted),
       salt: arrayBufferToBase64(salt),
-      iv: arrayBufferToBase64(iv)
-    })
+      iv: arrayBufferToBase64(iv),
+    }),
   });
 }
 
@@ -192,7 +204,7 @@ export async function POST(req: Request) {
     encrypted,
     salt,
     iv,
-    updatedAt: Date.now()
+    updatedAt: Date.now(),
   });
 
   return new Response('OK');
@@ -200,6 +212,7 @@ export async function POST(req: Request) {
 ```
 
 #### 2. 加载/解密笔记
+
 ```typescript
 // 客户端
 async function loadNote(siteName: string, password: string) {
@@ -215,7 +228,7 @@ async function loadNote(siteName: string, password: string) {
     const decrypted = await crypto.subtle.decrypt(
       { name: 'AES-GCM', iv: base64ToArrayBuffer(iv) },
       key,
-      base64ToArrayBuffer(encrypted)
+      base64ToArrayBuffer(encrypted),
     );
 
     return new TextDecoder().decode(decrypted);
@@ -228,6 +241,7 @@ async function loadNote(siteName: string, password: string) {
 ### 安全特性
 
 #### Rate Limiting
+
 ```typescript
 // lib/rate-limit.ts
 import { Ratelimit } from '@upstash/ratelimit';
@@ -247,7 +261,7 @@ export async function checkRateLimit(identifier: string) {
 export async function POST(req: Request) {
   const ip = req.headers.get('x-forwarded-for') || 'unknown';
 
-  if (!await checkRateLimit(ip)) {
+  if (!(await checkRateLimit(ip))) {
     return new Response('Too many requests', { status: 429 });
   }
 
@@ -256,6 +270,7 @@ export async function POST(req: Request) {
 ```
 
 #### CSP Headers
+
 ```typescript
 // next.config.js
 const securityHeaders = [
@@ -269,20 +284,22 @@ const securityHeaders = [
       font-src 'self' data:;
       connect-src 'self' https://api.stripe.com;
       frame-src https://js.stripe.com;
-    `.replace(/\s{2,}/g, ' ').trim()
+    `
+      .replace(/\s{2,}/g, ' ')
+      .trim(),
   },
   {
     key: 'X-Frame-Options',
-    value: 'DENY'
+    value: 'DENY',
   },
   {
     key: 'X-Content-Type-Options',
-    value: 'nosniff'
+    value: 'nosniff',
   },
   {
     key: 'Referrer-Policy',
-    value: 'strict-origin-when-cross-origin'
-  }
+    value: 'strict-origin-when-cross-origin',
+  },
 ];
 
 module.exports = {
@@ -400,17 +417,18 @@ protected-text/
 ## 🗄️ 数据模型
 
 ### 1. 站点数据 (Site)
+
 ```typescript
 interface Site {
-  siteName: string;         // 唯一标识
-  encrypted: string;        // Base64加密内容
-  salt: string;             // Base64 salt
-  iv: string;               // Base64 IV
-  createdAt: number;        // 创建时间戳
-  updatedAt: number;        // 最后更新时间戳
-  accessCount: number;      // 访问次数
-  size: number;             // 字节大小
-  ownerId?: string;         // Pro用户ID (可选)
+  siteName: string; // 唯一标识
+  encrypted: string; // Base64加密内容
+  salt: string; // Base64 salt
+  iv: string; // Base64 IV
+  createdAt: number; // 创建时间戳
+  updatedAt: number; // 最后更新时间戳
+  accessCount: number; // 访问次数
+  size: number; // 字节大小
+  ownerId?: string; // Pro用户ID (可选)
 }
 
 // KV存储
@@ -419,13 +437,14 @@ await kv.expire(`site:${siteName}`, 60 * 60 * 24 * 90); // 90天过期
 ```
 
 ### 2. 版本历史 (Version)
+
 ```typescript
 interface Version {
-  id: string;               // UUID
-  timestamp: number;        // 时间戳
-  encrypted: string;        // 加密内容快照
-  size: number;             // 大小
-  label?: string;           // 用户标签
+  id: string; // UUID
+  timestamp: number; // 时间戳
+  encrypted: string; // 加密内容快照
+  size: number; // 大小
+  label?: string; // 用户标签
 }
 
 // KV存储 (列表)
@@ -434,20 +453,21 @@ await kv.ltrim(`versions:${siteName}`, 0, 2); // 免费版只保留3个
 ```
 
 ### 3. 用户数据 (User) - Pro版本
+
 ```typescript
 interface User {
-  id: string;               // UUID
-  email: string;            // 邮箱
-  name?: string;            // 姓名
-  avatar?: string;          // 头像URL
+  id: string; // UUID
+  email: string; // 邮箱
+  name?: string; // 姓名
+  avatar?: string; // 头像URL
   subscription: {
     plan: 'free' | 'pro' | 'team';
     status: 'active' | 'canceled' | 'past_due';
-    periodEnd: number;      // 订阅结束时间
+    periodEnd: number; // 订阅结束时间
     stripeCustomerId: string;
     stripeSubscriptionId: string;
   };
-  sites: string[];          // 拥有的站点列表
+  sites: string[]; // 拥有的站点列表
   createdAt: number;
 }
 
@@ -456,15 +476,16 @@ await kv.set(`user:${userId}`, userData);
 ```
 
 ### 4. 分享链接 (Share)
+
 ```typescript
 interface ShareLink {
-  id: string;               // 短ID (6位)
-  siteName: string;         // 关联的站点
+  id: string; // 短ID (6位)
+  siteName: string; // 关联的站点
   mode: 'readonly' | 'edit'; // 只读/编辑
-  password?: string;        // 可选的额外密码
-  expiresAt?: number;       // 过期时间
-  maxViews?: number;        // 最大查看次数
-  views: number;            // 当前查看次数
+  password?: string; // 可选的额外密码
+  expiresAt?: number; // 过期时间
+  maxViews?: number; // 最大查看次数
+  views: number; // 当前查看次数
   createdAt: number;
 }
 
@@ -477,6 +498,7 @@ await kv.set(`share:${shareId}`, shareData);
 ## 🚀 性能优化
 
 ### 1. 代码分割
+
 ```typescript
 // 动态导入编辑器 (减少首屏加载)
 const MonacoEditor = dynamic(() => import('@/components/editor/MonacoEditor'), {
@@ -490,6 +512,7 @@ const MarkdownEditor = dynamic(() => import('@/components/editor/MarkdownEditor'
 ```
 
 ### 2. 图片优化
+
 ```typescript
 import Image from 'next/image';
 
@@ -504,6 +527,7 @@ import Image from 'next/image';
 ```
 
 ### 3. 字体优化
+
 ```typescript
 // app/layout.tsx
 import { Inter } from 'next/font/google';
@@ -511,11 +535,12 @@ import { Inter } from 'next/font/google';
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-inter'
+  variable: '--font-inter',
 });
 ```
 
 ### 4. 缓存策略
+
 ```typescript
 // API Response
 export async function GET(req: Request) {
@@ -524,13 +549,14 @@ export async function GET(req: Request) {
   return new Response(JSON.stringify(data), {
     headers: {
       'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   });
 }
 ```
 
 ### 5. 数据库优化
+
 ```typescript
 // 批量操作
 const pipeline = kv.pipeline();
@@ -548,6 +574,7 @@ await kv.zadd('sites:recent', { score: Date.now(), member: siteName });
 ## 📊 监控 & 分析
 
 ### 1. 性能监控
+
 ```typescript
 // Vercel Analytics
 import { Analytics } from '@vercel/analytics/react';
@@ -565,6 +592,7 @@ export default function RootLayout({ children }) {
 ```
 
 ### 2. 错误追踪
+
 ```typescript
 // Sentry (可选)
 import * as Sentry from '@sentry/nextjs';
@@ -577,11 +605,12 @@ Sentry.init({
 ```
 
 ### 3. 自定义分析
+
 ```typescript
 // lib/analytics.ts
 export async function trackEvent(
   event: string,
-  properties?: Record<string, any>
+  properties?: Record<string, any>,
 ) {
   // 记录到KV (简单统计)
   const today = new Date().toISOString().split('T')[0];
@@ -591,7 +620,7 @@ export async function trackEvent(
   if (process.env.NODE_ENV === 'production') {
     await fetch('https://analytics.example.com/track', {
       method: 'POST',
-      body: JSON.stringify({ event, properties })
+      body: JSON.stringify({ event, properties }),
     });
   }
 }
@@ -607,6 +636,7 @@ await trackEvent('upgrade_clicked');
 ## 🧪 测试策略
 
 ### 1. 单元测试
+
 ```typescript
 // tests/crypto.test.ts
 import { encrypt, decrypt } from '@/lib/crypto';
@@ -625,14 +655,13 @@ describe('Encryption', () => {
   it('should fail with wrong password', async () => {
     const { encrypted, salt, iv } = await encrypt('test', 'password1');
 
-    await expect(
-      decrypt(encrypted, 'password2', salt, iv)
-    ).rejects.toThrow();
+    await expect(decrypt(encrypted, 'password2', salt, iv)).rejects.toThrow();
   });
 });
 ```
 
 ### 2. 集成测试
+
 ```typescript
 // tests/api/save.test.ts
 import { POST } from '@/app/api/save/route';
@@ -645,8 +674,8 @@ describe('Save API', () => {
         siteName: 'test',
         encrypted: 'xxx',
         salt: 'yyy',
-        iv: 'zzz'
-      })
+        iv: 'zzz',
+      }),
     });
 
     const res = await POST(req);
@@ -656,6 +685,7 @@ describe('Save API', () => {
 ```
 
 ### 3. E2E测试
+
 ```typescript
 // tests/e2e/editor.spec.ts (Playwright)
 import { test, expect } from '@playwright/test';
@@ -682,7 +712,9 @@ test('create and save note', async ({ page }) => {
   await page.click('[data-testid="unlock-button"]');
 
   // 验证内容
-  await expect(page.locator('[data-testid="editor"]')).toHaveText('Hello, World!');
+  await expect(page.locator('[data-testid="editor"]')).toHaveText(
+    'Hello, World!',
+  );
 });
 ```
 
@@ -691,6 +723,7 @@ test('create and save note', async ({ page }) => {
 ## 🚢 部署流程
 
 ### 1. 环境变量
+
 ```bash
 # .env.local (本地开发)
 KV_URL=redis://localhost:6379
@@ -706,6 +739,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxx
 ```
 
 ### 2. Vercel部署
+
 ```bash
 # 安装 Vercel CLI
 npm i -g vercel
@@ -721,6 +755,7 @@ vercel --prod
 ```
 
 ### 3. KV设置
+
 ```bash
 # Vercel Dashboard
 1. Project Settings → Storage
@@ -730,6 +765,7 @@ vercel --prod
 ```
 
 ### 4. Stripe设置
+
 ```bash
 # Stripe Dashboard
 1. Products → Create Product
@@ -745,6 +781,7 @@ vercel --prod
 ```
 
 ### 5. 自定义域名
+
 ```bash
 # Vercel Dashboard
 1. Domains → Add
@@ -758,6 +795,7 @@ vercel --prod
 ## 📈 扩展性考虑
 
 ### 1. 数据库迁移 (如果KV不够用)
+
 ```
 Vercel KV (Redis)
   ↓
@@ -769,6 +807,7 @@ PostgreSQL (Neon/Supabase)
 ```
 
 ### 2. 文件存储 (大文件支持)
+
 ```typescript
 // 如果未来支持图片/附件
 import { put } from '@vercel/blob';
@@ -779,6 +818,7 @@ const blob = await put('file.jpg', file, {
 ```
 
 ### 3. 搜索功能
+
 ```typescript
 // 使用 Algolia 或 Typesense
 import algoliasearch from 'algoliasearch';
@@ -790,11 +830,12 @@ await index.saveObject({
   objectID: siteName,
   title: extractTitle(content),
   preview: content.substring(0, 200),
-  updatedAt: Date.now()
+  updatedAt: Date.now(),
 });
 ```
 
 ### 4. CDN优化
+
 ```typescript
 // next.config.js
 module.exports = {
@@ -822,6 +863,7 @@ module.exports = {
 ## 🔧 开发工具
 
 ### 推荐VS Code扩展
+
 ```json
 {
   "recommendations": [
@@ -835,6 +877,7 @@ module.exports = {
 ```
 
 ### package.json 脚本
+
 ```json
 {
   "scripts": {
@@ -856,12 +899,14 @@ module.exports = {
 ## 📚 参考资源
 
 ### 官方文档
+
 - [Next.js Docs](https://nextjs.org/docs)
 - [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API)
 - [Vercel KV](https://vercel.com/docs/storage/vercel-kv)
 - [Stripe Docs](https://stripe.com/docs)
 
 ### 安全资源
+
 - [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 - [Web Security Academy](https://portswigger.net/web-security)
 - [Crypto Best Practices](https://www.schneier.com/blog/)

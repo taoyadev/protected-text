@@ -33,7 +33,7 @@ export const landing = {
       noSignup: {
         title: 'Keine Registrierung erforderlich',
         description:
-          'Keine E-Mail. Kein Konto. Keine Tracking-Cookies. Wählen Sie einfach eine URL und fangen Sie an zu tippen. Das war\'s.',
+          "Keine E-Mail. Kein Konto. Keine Tracking-Cookies. Wählen Sie einfach eine URL und fangen Sie an zu tippen. Das war's.",
       },
       freeForever: {
         title: 'Für immer kostenlos',
@@ -69,23 +69,30 @@ export const landing = {
 
     realTalk: {
       heading: 'Klare Worte: Die Zahlen lügen nicht',
-      stat1: '**36 Milliarden Datensätze** in nur 4 Monaten offengelegt (Jan-Apr 2024)',
-      stat2: 'Durchschnittlich **758.288 Datensätze pro Tag** im Jahr 2024 kompromittiert',
-      stat3: 'Sechs Mega-Verstöße im Jahr 2024, jeder offenbarte **über 100 Millionen Datensätze**',
-      stat4: 'Der Verschlüsselungsmarkt explodiert: von **16,7 Milliarden Dollar im Jahr 2024 auf 60,7 Milliarden Dollar bis 2033**',
-      source: 'Quellen: HIPAA Journal 2024 Data Breach Report, Statista, SecureFrame 2024 Security Statistics',
+      stat1:
+        '**36 Milliarden Datensätze** in nur 4 Monaten offengelegt (Jan-Apr 2024)',
+      stat2:
+        'Durchschnittlich **758.288 Datensätze pro Tag** im Jahr 2024 kompromittiert',
+      stat3:
+        'Sechs Mega-Verstöße im Jahr 2024, jeder offenbarte **über 100 Millionen Datensätze**',
+      stat4:
+        'Der Verschlüsselungsmarkt explodiert: von **16,7 Milliarden Dollar im Jahr 2024 auf 60,7 Milliarden Dollar bis 2033**',
+      source:
+        'Quellen: HIPAA Journal 2024 Data Breach Report, Statista, SecureFrame 2024 Security Statistics',
     },
 
     zeroKnowledge: {
       badge: 'Zero-Knowledge-Architektur = Vertrauenslose Sicherheit',
-      tagline: 'Sie müssen uns nicht vertrauen. Sie müssen niemandem vertrauen. Die Mathematik schützt Sie, nicht Versprechen.',
+      tagline:
+        'Sie müssen uns nicht vertrauen. Sie müssen niemandem vertrauen. Die Mathematik schützt Sie, nicht Versprechen.',
     },
   },
 
   // Sicherheitsbereich
   security: {
     title: 'Warum dem vertrauen? (Glauben Sie mir nicht einfach)',
-    subtitle: 'Sicherheit ist eigentlich ziemlich einfach, wenn man sie nicht verkompliziert. So machen wir es genau:',
+    subtitle:
+      'Sicherheit ist eigentlich ziemlich einfach, wenn man sie nicht verkompliziert. So machen wir es genau:',
 
     items: {
       passwordNeverLeaves: {
@@ -117,26 +124,32 @@ export const landing = {
 
     technical: {
       heading: 'Für die technisch Versierten',
-      subtitle: 'Wenn Sie sich für die tatsächlichen Implementierungsdetails interessieren:',
+      subtitle:
+        'Wenn Sie sich für die tatsächlichen Implementierungsdetails interessieren:',
       specs: {
         aes256: {
           title: 'AES-256-GCM',
-          description: 'Derselbe Standard, den die NSA für streng geheime Dokumente verwendet. Vom NIST im Jahr 2001 übernommen. Immer noch ungebrochen.',
+          description:
+            'Derselbe Standard, den die NSA für streng geheime Dokumente verwendet. Vom NIST im Jahr 2001 übernommen. Immer noch ungebrochen.',
         },
         pbkdf2: {
           title: 'PBKDF2 (310k Iterationen)',
-          description: 'OWASP empfiehlt 100k. Wir machen 310k, um Brute-Force-Angriffe exponentiell schwieriger zu machen.',
+          description:
+            'OWASP empfiehlt 100k. Wir machen 310k, um Brute-Force-Angriffe exponentiell schwieriger zu machen.',
         },
         uniqueSaltIV: {
           title: 'Einzigartiger Salt & IV pro Speicherung',
-          description: 'Neue kryptografische Zufälligkeit jedes Mal. Keine Wiederverwendung, keine Vorhersehbarkeit.',
+          description:
+            'Neue kryptografische Zufälligkeit jedes Mal. Keine Wiederverwendung, keine Vorhersehbarkeit.',
         },
         webCrypto: {
           title: 'Web Crypto API',
-          description: 'Native Browser-Implementierung. Keine zwielichtigen Drittanbieter-Bibliotheken.',
+          description:
+            'Native Browser-Implementierung. Keine zwielichtigen Drittanbieter-Bibliotheken.',
         },
       },
-      verifyNote: 'Möchten Sie überprüfen? Der Code ist Open Source. Überprüfen Sie ihn selbst auf GitHub.',
+      verifyNote:
+        'Möchten Sie überprüfen? Der Code ist Open Source. Überprüfen Sie ihn selbst auf GitHub.',
     },
   },
 
@@ -156,7 +169,8 @@ export const landing = {
   // Funktionen
   features: {
     title: 'Protected Text Funktionen',
-    subtitle: 'Alles, was Sie brauchen. Nichts, was Sie nicht brauchen. Keine Premium-Stufen.',
+    subtitle:
+      'Alles, was Sie brauchen. Nichts, was Sie nicht brauchen. Keine Premium-Stufen.',
     list: [
       'AES-256-GCM-Verschlüsselung',
       'Keine Registrierung erforderlich',
@@ -182,7 +196,7 @@ export const landing = {
   // Erste Schritte
   gettingStarted: {
     title: 'Erste Schritte mit Protected Text',
-    subtitle: 'Es ist lächerlich einfach. Drei Schritte. Das war\'s.',
+    subtitle: "Es ist lächerlich einfach. Drei Schritte. Das war's.",
     steps: {
       step1: {
         title: 'Wählen Sie eine URL',
@@ -197,7 +211,7 @@ export const landing = {
       step3: {
         title: 'Fangen Sie an zu tippen',
         description:
-          'Das war\'s. Ihre Notizen werden alle 2 Sekunden automatisch gespeichert. Kommen Sie später von einem beliebigen Gerät zurück, dieselbe URL, dasselbe Passwort, und alles ist da.',
+          "Das war's. Ihre Notizen werden alle 2 Sekunden automatisch gespeichert. Kommen Sie später von einem beliebigen Gerät zurück, dieselbe URL, dasselbe Passwort, und alles ist da.",
       },
     },
   },
@@ -229,7 +243,7 @@ export const landing = {
       },
       governmentRequest: {
         q: 'Was ist, wenn die Regierung nach meinen Daten fragt?',
-        a: '**Sie bekommen verschlüsselte Daten.** Das war\'s. Wir haben Ihr Passwort nicht. Wir haben Ihre E-Mail nicht. Wir wissen nicht einmal, wer Sie sind. Selbst wenn eine Regierungsbehörde mit einem Durchsuchungsbefehl auftaucht, ist alles, was wir ihnen geben können, Kauderwelsch. Man kann nicht entschlüsseln, wofür man keinen Schlüssel hat. Das ist keine politische Haltung—so funktioniert einfach die Mathematik.',
+        a: "**Sie bekommen verschlüsselte Daten.** Das war's. Wir haben Ihr Passwort nicht. Wir haben Ihre E-Mail nicht. Wir wissen nicht einmal, wer Sie sind. Selbst wenn eine Regierungsbehörde mit einem Durchsuchungsbefehl auftaucht, ist alles, was wir ihnen geben können, Kauderwelsch. Man kann nicht entschlüsseln, wofür man keinen Schlüssel hat. Das ist keine politische Haltung—so funktioniert einfach die Mathematik.",
       },
       whyTrust: {
         q: 'Warum sollte ich Protected Text vertrauen?',
@@ -238,7 +252,8 @@ export const landing = {
       protectedTextPro: {
         q: 'Was ist Protected Text Pro?',
         a: '**Wir bauen es basierend auf Ihrem Feedback.** Protected Text wird immer kostenlos sein, aber wir erkunden Pro-Funktionen für Power-User—Dinge wie benutzerdefinierte Domains, größere Datei-Uploads, erweiterten Versionsverlauf und Team-Management-Tools.',
-        linkText: 'Stimmen Sie für Funktionen und helfen Sie, die Roadmap zu gestalten →',
+        linkText:
+          'Stimmen Sie für Funktionen und helfen Sie, die Roadmap zu gestalten →',
       },
     },
   },
@@ -246,13 +261,15 @@ export const landing = {
   // Footer
   footer: {
     about: {
-      description: 'Zero-Knowledge verschlüsselte Notizen. Ihr Passwort verlässt niemals Ihr Gerät. Für immer kostenlos, kein Tracking, kein Unsinn.',
+      description:
+        'Zero-Knowledge verschlüsselte Notizen. Ihr Passwort verlässt niemals Ihr Gerät. Für immer kostenlos, kein Tracking, kein Unsinn.',
       starOnGithub: 'Auf GitHub markieren',
       openSourceOnGithub: 'Open Source auf GitHub',
     },
     security: {
       title: 'Ein Sicherheitsproblem gefunden?',
-      description: 'Bitte melden Sie es verantwortungsvoll per E-Mail. Wir nehmen Sicherheit ernst.',
+      description:
+        'Bitte melden Sie es verantwortungsvoll per E-Mail. Wir nehmen Sicherheit ernst.',
     },
     contact: {
       email: 'hello@protected-text.com',

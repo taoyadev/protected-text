@@ -13,9 +13,11 @@ export const errors = {
     failedToLoadVersionHistory: 'バージョン履歴の読み込みに失敗しました',
     failedToRestoreVersion: 'バージョンの復元に失敗しました',
     failedToRecordVote: '投票の記録に失敗しました',
-    failedToRecordVotePleaseTryAgain: '投票の記録に失敗しました。もう一度お試しください。',
+    failedToRecordVotePleaseTryAgain:
+      '投票の記録に失敗しました。もう一度お試しください。',
     failedToSubmitFeedback: 'フィードバックの送信に失敗しました',
-    failedToSubmitFeedbackPleaseTryAgain: 'フィードバックの送信に失敗しました。もう一度お試しください。',
+    failedToSubmitFeedbackPleaseTryAgain:
+      'フィードバックの送信に失敗しました。もう一度お試しください。',
     clipboardUnavailable: 'クリップボードが利用できません',
     noNoteFoundOnServer: 'サーバーにノートが見つかりません',
   },
@@ -34,7 +36,8 @@ export const errors = {
 
   // 検証エラー
   validation: {
-    siteNameInvalid: '3〜32文字の小文字、数字、またはダッシュを使用してください。',
+    siteNameInvalid:
+      '3〜32文字の小文字、数字、またはダッシュを使用してください。',
     pleaseEnterMessage: 'メッセージを入力してください',
     pleaseTypeToConfirm: '確認のため"{siteName}"と入力してください',
   },
@@ -46,6 +49,7 @@ export const errors = {
 
   // 確認プロンプト
   confirmations: {
-    unsavedChangesReloadAnyway: '未保存の変更があります。とにかく再読み込みしますか？',
+    unsavedChangesReloadAnyway:
+      '未保存の変更があります。とにかく再読み込みしますか？',
   },
 };

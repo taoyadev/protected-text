@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Redis from 'ioredis';
+import { getRedisClient } from '@/lib/redis';
 
 // Valid feature IDs (optional for feedback)
 const VALID_FEATURES = [
@@ -10,25 +10,7 @@ const VALID_FEATURES = [
   'longer-retention',
   'priority-support',
   'other',
-];
-
-// Create Redis client singleton
-let redis: Redis | null = null;
-
-function getRedisClient(): Redis {
-  if (!redis) {
-    const redisUrl = process.env.REDIS_URL || process.env.KV_URL;
-    if (!redisUrl) {
-      throw new Error('REDIS_URL or KV_URL environment variable is not set');
-    }
-    redis = new Redis(redisUrl, {
-      maxRetriesPerRequest: 3,
-      enableReadyCheck: true,
-      lazyConnect: false,
-    });
-  }
-  return redis;
-}
+] as const;
 
 function getClientIP(request: NextRequest): string {
   const forwarded = request.headers.get('x-forwarded-for');
@@ -38,7 +20,7 @@ function getClientIP(request: NextRequest): string {
 
 async function checkFeedbackRateLimit(ip: string): Promise<boolean> {
   const client = getRedisClient();
-  const key = `feedback_rl:${ip}`;
+  const key = 'feedback_rl:' + ip;
   const count = await client.incr(key);
 
   if (count === 1) {
@@ -56,17 +38,21 @@ export async function POST(request: NextRequest) {
     const { message, email, featureId } = body;
 
     // Validate message
-    if (!message || typeof message !== 'string' || message.trim().length === 0) {
+    if (
+      !message ||
+      typeof message !== 'string' ||
+      message.trim().length === 0
+    ) {
       return NextResponse.json(
         { error: 'Message is required' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (message.length > 2000) {
       return NextResponse.json(
         { error: 'Message is too long (max 2000 characters)' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -76,16 +62,19 @@ export async function POST(request: NextRequest) {
       if (!emailRegex.test(email)) {
         return NextResponse.json(
           { error: 'Invalid email address' },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
 
     // Validate feature ID if provided
-    if (featureId && !VALID_FEATURES.includes(featureId)) {
+    if (
+      featureId &&
+      !VALID_FEATURES.includes(featureId as (typeof VALID_FEATURES)[number])
+    ) {
       return NextResponse.json(
         { error: 'Invalid feature ID' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -95,15 +84,19 @@ export async function POST(request: NextRequest) {
 
     if (!allowed) {
       return NextResponse.json(
-        { error: 'Rate limit exceeded. You can submit up to 3 feedback messages per day.' },
-        { status: 429 }
+        {
+          error:
+            'Rate limit exceeded. You can submit up to 3 feedback messages per day.',
+        },
+        { status: 429 },
       );
     }
 
     // Store feedback
     const client = getRedisClient();
     const timestamp = Date.now();
-    const feedbackKey = `feedback:${timestamp}:${Math.random().toString(36).substring(7)}`;
+    const feedbackKey =
+      'feedback:' + timestamp + ':' + Math.random().toString(36).substring(7);
 
     const feedbackData = {
       message: message.trim(),
@@ -126,7 +119,7 @@ export async function POST(request: NextRequest) {
     console.error('Feedback submission error:', error);
     return NextResponse.json(
       { error: 'Failed to submit feedback' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

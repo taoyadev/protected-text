@@ -1,11 +1,11 @@
 /**
- * Editor-Oberfläche - Symbolleiste, Platzhalter, Statistiken, Tastenkombinationen
+ * Editor-Oberfläche - Symbolleiste, Platzhalter, Statistiken, Tastenkürzel
  */
 
 export const editor = {
   // Symbolleiste
   toolbar: {
-    site: 'Site',
+    site: 'Seite',
     saving: 'Speichern…',
     lastSaved: 'Zuletzt gespeichert',
     switchToLightMode: 'Zum hellen Modus wechseln',
@@ -23,18 +23,20 @@ export const editor = {
 
   // Suche
   search: {
-    placeholder: 'In Notiz suchen... (Esc zum Schließen drücken)',
+    placeholder: 'In Notiz suchen... (Esc zum Schließen)',
     clear: 'Löschen',
   },
 
   // Editor
   editor: {
-    placeholder: 'Fangen Sie an zu tippen… Passwort verlässt niemals diesen Browser-Tab.',
+    placeholder:
+      'Fangen Sie an zu schreiben… Das Passwort verlässt nie diesen Browser-Tab.',
   },
 
   // Markdown-Vorschau
   markdownPreview: {
-    emptyPlaceholder: '*Fangen Sie an zu tippen, um die Vorschau zu sehen...*',
+    emptyPlaceholder:
+      '*Fangen Sie an zu schreiben, um die Vorschau zu sehen...*',
   },
 
   // Statistiken
@@ -42,13 +44,13 @@ export const editor = {
     words: 'Wörter',
     characters: 'Zeichen',
     lines: 'Zeilen',
-    unsavedChanges: 'Nicht gespeicherte Änderungen',
+    unsavedChanges: 'Ungespeicherte Änderungen',
   },
 
   // Passwortstärke
   passwordStrength: {
     weak: 'Schwach',
-    fair: 'Akzeptabel',
+    fair: 'Ausreichend',
     okay: 'Okay',
     good: 'Gut',
     strong: 'Stark',
@@ -56,12 +58,32 @@ export const editor = {
 
   // Themenwechsel
   theme: {
-    switchedToLight: 'Zum hellen Modus gewechselt',
-    switchedToDark: 'Zum dunklen Modus gewechselt',
+    switchedToLight: 'Zu hellem Modus gewechselt',
+    switchedToDark: 'Zu dunklem Modus gewechselt',
   },
 
-  // Dateiimport
+  // Datei-Import
   fileImport: {
     acceptedFormats: '.txt,.md,.text',
+  },
+
+  // Keyboard shortcuts
+  shortcuts: {
+    title: 'Tastenkürzel',
+    description: 'Drücken Sie ? um diesen Dialog zu öffnen',
+    save: 'Notiz speichern',
+    search: 'In Notiz suchen',
+    closeDialogs: 'Dialoge schließen',
+    showShortcuts: 'Tastenkürzel anzeigen',
+    export: 'Notiz exportieren',
+    import: 'Datei importieren',
+    changePassword: 'Passwort ändern',
+  },
+
+  // Autosave status
+  autosave: {
+    allChangesSaved: 'Alle Änderungen gespeichert',
+    saving: 'Speichern...',
+    unsavedChanges: 'Ungespeicherte Änderungen',
   },
 };

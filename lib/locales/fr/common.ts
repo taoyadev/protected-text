@@ -22,7 +22,10 @@ export const common = {
     sending: 'Envoi...',
     add: 'Ajouter',
     createNewTab: 'Nouvel onglet',
-    closeTab: 'Fermer l\'onglet',
+    closeTab: "Fermer l'onglet",
+    showPassword: 'Afficher le mot de passe',
+    hidePassword: 'Masquer le mot de passe',
+    copyAll: 'Copier tout le contenu',
   },
 
   // États
@@ -56,7 +59,8 @@ export const common = {
     securityAndPrivacy: 'Sécurité et Confidentialité',
     faq: 'FAQ',
     roadmap: 'Feuille de Route',
-    roadmapAndFeatureRequests: 'Feuille de Route et Demandes de Fonctionnalités',
+    roadmapAndFeatureRequests:
+      'Feuille de Route et Demandes de Fonctionnalités',
     quickLinks: 'Liens Rapides',
     getInTouch: 'Nous Contacter',
     openNavigation: 'Ouvrir la navigation',

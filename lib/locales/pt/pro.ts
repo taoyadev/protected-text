@@ -17,19 +17,23 @@ export const pro = {
     sectionLabel: 'Recursos do Protected Text PRO',
     customDomains: {
       title: 'Domínios Personalizados',
-      description: 'Use seu próprio domínio como notes.suaempresa.com em vez de protectedtext.com/seusite',
+      description:
+        'Use seu próprio domínio como notes.suaempresa.com em vez de protectedtext.com/seusite',
     },
     teamSharing: {
       title: 'Compartilhamento em Equipe',
-      description: 'Compartilhe notas criptografadas com sua equipe. Todos recebem sua própria senha.',
+      description:
+        'Compartilhe notas criptografadas com sua equipe. Todos recebem sua própria senha.',
     },
     apiAccess: {
       title: 'Acesso à API',
-      description: 'Integre com seus aplicativos. Leia/escreva notas programaticamente.',
+      description:
+        'Integre com seus aplicativos. Leia/escreva notas programaticamente.',
     },
     fileAttachments: {
       title: 'Anexos de Arquivo',
-      description: 'Faça upload de arquivos criptografados, imagens e documentos para suas notas.',
+      description:
+        'Faça upload de arquivos criptografados, imagens e documentos para suas notas.',
     },
     unlimitedRetention: {
       title: 'Retenção Ilimitada',
@@ -53,7 +57,8 @@ export const pro = {
   // Formulário de feedback
   feedbackForm: {
     title: 'Solicitar Recursos Personalizados do Protected Text PRO',
-    subtitle: 'Compartilhe seus pensamentos, sugestões ou solicitações de recursos para o Protected Text PRO abaixo.',
+    subtitle:
+      'Compartilhe seus pensamentos, sugestões ou solicitações de recursos para o Protected Text PRO abaixo.',
     messageLabel: 'Sua Mensagem',
     messagePlaceholder: 'Diga-nos o que você gostaria de ver...',
     messageRequired: '*',

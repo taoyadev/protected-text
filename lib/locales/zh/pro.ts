@@ -17,7 +17,8 @@ export const pro = {
     sectionLabel: 'Protected Text PRO功能',
     customDomains: {
       title: '自定义域名',
-      description: '使用您自己的域名，如notes.yourcompany.com，而不是protectedtext.com/yoursite',
+      description:
+        '使用您自己的域名，如notes.yourcompany.com，而不是protectedtext.com/yoursite',
     },
     teamSharing: {
       title: '团队共享',

@@ -6,13 +6,15 @@ export const metadata = {
   // ルートレイアウトメタデータ
   root: {
     title: 'Protected Text – 実際に機能する暗号化ノート',
-    description: '無料の暗号化メモ帳。あなたのパスワードはあなたのデバイスを決して離れません。広告なし、トラッキングなし、くだらないものなし。ただ機能します。',
+    description:
+      '無料の暗号化メモ帳。あなたのパスワードはあなたのデバイスを決して離れません。広告なし、トラッキングなし、くだらないものなし。ただ機能します。',
     siteName: 'Protected Text',
 
     // Open Graph
     og: {
       title: 'Protected Text',
-      description: '暗号化されたノート。誰もそれらを読むことができません。私たちでさえも。',
+      description:
+        '暗号化されたノート。誰もそれらを読むことができません。私たちでさえも。',
       siteName: 'Protected Text',
     },
 

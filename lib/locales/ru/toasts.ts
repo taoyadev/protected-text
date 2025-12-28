@@ -12,9 +12,11 @@ export const toasts = {
     fileImportedSuccessfully: 'Файл успешно импортирован',
     saved: 'Сохранено!',
     versionRestored: 'Версия восстановлена',
-    versionRestoredSaveToConfirm: 'Версия восстановлена. Сохраните для подтверждения.',
+    versionRestoredSaveToConfirm:
+      'Версия восстановлена. Сохраните для подтверждения.',
     voteRecorded: 'Голос записан! Спасибо за отзыв.',
     thankYouForFeedback: 'Спасибо за ваш отзыв!',
+    contentCopied: 'Содержимое скопировано в буфер обмена',
   },
 
   // Информационные сообщения

@@ -17,23 +17,28 @@ export const pro = {
     sectionLabel: 'Protected Text PRO Funktionen',
     customDomains: {
       title: 'Benutzerdefinierte Domains',
-      description: 'Verwenden Sie Ihre eigene Domain wie notes.ihrfirma.com statt protectedtext.com/ihreseite',
+      description:
+        'Verwenden Sie Ihre eigene Domain wie notes.ihrfirma.com statt protectedtext.com/ihreseite',
     },
     teamSharing: {
       title: 'Team-Freigabe',
-      description: 'Teilen Sie verschlüsselte Notizen mit Ihrem Team. Jeder erhält sein eigenes Passwort.',
+      description:
+        'Teilen Sie verschlüsselte Notizen mit Ihrem Team. Jeder erhält sein eigenes Passwort.',
     },
     apiAccess: {
       title: 'API-Zugriff',
-      description: 'Integrieren Sie mit Ihren Apps. Lesen/Schreiben Sie Notizen programmatisch.',
+      description:
+        'Integrieren Sie mit Ihren Apps. Lesen/Schreiben Sie Notizen programmatisch.',
     },
     fileAttachments: {
       title: 'Dateianhänge',
-      description: 'Laden Sie verschlüsselte Dateien, Bilder und Dokumente in Ihre Notizen hoch.',
+      description:
+        'Laden Sie verschlüsselte Dateien, Bilder und Dokumente in Ihre Notizen hoch.',
     },
     unlimitedRetention: {
       title: 'Unbegrenzte Aufbewahrung',
-      description: 'Behalten Sie Ihre Notizen für immer. Keine automatische Löschung.',
+      description:
+        'Behalten Sie Ihre Notizen für immer. Keine automatische Löschung.',
     },
     prioritySupport: {
       title: 'Prioritäts-Support',
@@ -53,14 +58,16 @@ export const pro = {
   // Feedback-Formular
   feedbackForm: {
     title: 'Benutzerdefinierte Protected Text PRO-Funktionen anfordern',
-    subtitle: 'Teilen Sie unten Ihre Gedanken, Vorschläge oder Funktionsanfragen für Protected Text PRO mit.',
+    subtitle:
+      'Teilen Sie unten Ihre Gedanken, Vorschläge oder Funktionsanfragen für Protected Text PRO mit.',
     messageLabel: 'Ihre Nachricht',
     messagePlaceholder: 'Sagen Sie uns, was Sie gerne sehen würden...',
     messageRequired: '*',
     messageCounter: '{count}/2000 Zeichen',
     emailLabel: 'E-Mail (optional)',
     emailPlaceholder: 'ihre@email.com',
-    emailHelp: 'Hinterlassen Sie Ihre E-Mail, wenn wir uns bei Ihnen melden sollen',
+    emailHelp:
+      'Hinterlassen Sie Ihre E-Mail, wenn wir uns bei Ihnen melden sollen',
     featureLabel: 'Verwandte Funktion (optional)',
     featurePlaceholder: 'Wählen Sie eine Funktion...',
     featureOther: 'Etwas anderes',

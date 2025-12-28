@@ -1,0 +1,18 @@
+# Keep local dev + deploy fast by ignoring the legacy Next.js app and large folders.
+
+.git
+.next
+.vercel
+node_modules
+
+app
+components
+hooks
+lib
+styles
+task
+tests
+types
+
+*.tsbuildinfo
+

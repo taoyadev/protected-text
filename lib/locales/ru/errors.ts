@@ -13,9 +13,11 @@ export const errors = {
     failedToLoadVersionHistory: 'Не удалось загрузить историю версий',
     failedToRestoreVersion: 'Не удалось восстановить версию',
     failedToRecordVote: 'Не удалось записать голос',
-    failedToRecordVotePleaseTryAgain: 'Не удалось записать голос. Пожалуйста, попробуйте снова.',
+    failedToRecordVotePleaseTryAgain:
+      'Не удалось записать голос. Пожалуйста, попробуйте снова.',
     failedToSubmitFeedback: 'Не удалось отправить отзыв',
-    failedToSubmitFeedbackPleaseTryAgain: 'Не удалось отправить отзыв. Пожалуйста, попробуйте снова.',
+    failedToSubmitFeedbackPleaseTryAgain:
+      'Не удалось отправить отзыв. Пожалуйста, попробуйте снова.',
     clipboardUnavailable: 'Буфер обмена недоступен',
     noNoteFoundOnServer: 'Заметка не найдена на сервере',
   },
@@ -46,6 +48,7 @@ export const errors = {
 
   // Подтверждения
   confirmations: {
-    unsavedChangesReloadAnyway: 'У вас есть несохранённые изменения. Всё равно перезагрузить?',
+    unsavedChangesReloadAnyway:
+      'У вас есть несохранённые изменения. Всё равно перезагрузить?',
   },
 };

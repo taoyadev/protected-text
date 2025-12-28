@@ -1,21 +1,20 @@
 'use client';
 
-import { useEffect, useState, useRef, useMemo } from 'react';
-import { useTheme } from 'next-themes';
+import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import { toast } from 'sonner';
-import { Download, Link2, ShieldCheck, Key, Trash2, RefreshCw, Type, Upload, Search, Eye, Edit3, History, Sun, Moon } from 'lucide-react';
 import { PasswordGate } from '@/components/editor/password-gate';
-import { Textarea } from '@/components/ui/textarea';
 import { useDebounce } from '@/hooks/use-debounce';
+import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import { decryptContent, encryptContent, EncryptedPayload } from '@/lib/crypto';
 import { loadEncryptedNote, saveEncryptedNote, deleteNote } from '@/lib/api';
-import { Button } from '@/components/ui/button';
 import { ChangePasswordDialog } from '@/components/editor/change-password-dialog';
 import { DeleteNoteDialog } from '@/components/editor/delete-note-dialog';
-import { MarkdownPreview } from '@/components/editor/markdown-preview';
 import { VersionHistoryDialog } from '@/components/editor/version-history-dialog';
 import { useTranslation } from '@/lib/i18n-provider';
-import { formatTime } from '@/lib/i18n';
+import { EditorToolbar } from './editor-toolbar';
+import { EditorStatsBar, type AutosaveStatus } from './editor-stats';
+import { EditorContent, SearchBar, FileImportInput } from './editor-content';
+import { KeyboardShortcutsDialog } from './keyboard-shortcuts-dialog';
 
 interface Props {
   siteName: string;
@@ -24,7 +23,7 @@ interface Props {
 type Status = 'loading' | 'locked' | 'ready';
 
 export function EncryptedEditor({ siteName }: Props) {
-  const { locale, t } = useTranslation();
+  const { t } = useTranslation();
   const [status, setStatus] = useState<Status>('loading');
   const [mode, setMode] = useState<'create' | 'unlock'>('create');
   const [payload, setPayload] = useState<EncryptedPayload | null>(null);
@@ -32,7 +31,6 @@ export function EncryptedEditor({ siteName }: Props) {
   const [content, setContent] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
-  const [lastSaved, setLastSaved] = useState<number | null>(null);
   const [isDirty, setIsDirty] = useState(false);
   const [initializing, setInitializing] = useState(true);
   const [showChangePassword, setShowChangePassword] = useState(false);
@@ -42,12 +40,20 @@ export function EncryptedEditor({ siteName }: Props) {
   const [showSearch, setShowSearch] = useState(false);
   const [showMarkdownPreview, setShowMarkdownPreview] = useState(false);
   const [showVersionHistory, setShowVersionHistory] = useState(false);
+  const [showKeyboardShortcuts, setShowKeyboardShortcuts] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const [copySuccess, setCopySuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const debouncedContent = useDebounce(content, 1500);
+
+  // Autosave status calculation
+  const autosaveStatus: AutosaveStatus = isSaving
+    ? 'saving'
+    : isDirty
+      ? 'unsaved'
+      : 'saved';
 
   // Hydration protection
   useEffect(() => {
@@ -82,7 +88,7 @@ export function EncryptedEditor({ siteName }: Props) {
     }
 
     bootstrap();
-  }, [siteName]);
+  }, [siteName, t]);
 
   const handlePassword = async (pwd: string) => {
     if (!pwd) return;
@@ -110,6 +116,7 @@ export function EncryptedEditor({ siteName }: Props) {
     setStatus('ready');
   };
 
+  // Autosave effect
   useEffect(() => {
     if (status !== 'ready' || !password) return;
     if (!isDirty) return;
@@ -125,7 +132,6 @@ export function EncryptedEditor({ siteName }: Props) {
           size: Math.max(0, debouncedContent.length),
         });
         if (!cancelled) {
-          setLastSaved(Date.now());
           setIsDirty(false);
         }
       } catch (err) {
@@ -140,19 +146,14 @@ export function EncryptedEditor({ siteName }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [debouncedContent, isDirty, password, siteName, status]);
+  }, [debouncedContent, isDirty, password, siteName, status, t]);
 
-  const handleChange = (value: string) => {
+  const handleChange = useCallback((value: string) => {
     setContent(value);
     setIsDirty(true);
-  };
+  }, []);
 
-  const formattedTimestamp = useMemo(() => {
-    if (!lastSaved) return t('common.states.notSavedYet');
-    return formatTime(new Date(lastSaved), locale);
-  }, [lastSaved, locale, t]);
-
-  const handleExport = () => {
+  const handleExport = useCallback(() => {
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -162,9 +163,9 @@ export function EncryptedEditor({ siteName }: Props) {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-  };
+  }, [content, siteName]);
 
-  const handleShare = async () => {
+  const handleShare = useCallback(async () => {
     const url = `${window.location.origin}/${siteName}`;
     if (!navigator?.clipboard) {
       toast.error(t('errors.network.clipboardUnavailable'));
@@ -172,10 +173,28 @@ export function EncryptedEditor({ siteName }: Props) {
     }
     await navigator.clipboard.writeText(url);
     toast.success(t('toasts.success.shareLinkCopied'));
-  };
+  }, [siteName, t]);
 
-  const handleReload = async () => {
-    if (isDirty && !confirm(t('errors.confirmations.unsavedChangesReloadAnyway'))) {
+  const handleCopyAll = useCallback(async () => {
+    if (!navigator?.clipboard) {
+      toast.error(t('errors.network.clipboardUnavailable'));
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopySuccess(true);
+      toast.success(t('toasts.success.contentCopied'));
+      setTimeout(() => setCopySuccess(false), 2000);
+    } catch {
+      toast.error(t('errors.network.clipboardUnavailable'));
+    }
+  }, [content, t]);
+
+  const handleReload = useCallback(async () => {
+    if (
+      isDirty &&
+      !confirm(t('errors.confirmations.unsavedChangesReloadAnyway'))
+    ) {
       return;
     }
 
@@ -197,38 +216,44 @@ export function EncryptedEditor({ siteName }: Props) {
     } finally {
       setIsReloading(false);
     }
-  };
+  }, [isDirty, password, siteName, t]);
 
-  const handleChangePassword = async (oldPassword: string, newPassword: string) => {
-    try {
-      // Verify old password by decrypting current content
-      if (payload) {
-        await decryptContent(payload, oldPassword);
+  const handleChangePassword = useCallback(
+    async (oldPassword: string, newPassword: string) => {
+      try {
+        // Verify old password by decrypting current content
+        if (payload) {
+          await decryptContent(payload, oldPassword);
+        }
+
+        // Re-encrypt with new password
+        const encrypted = await encryptContent(content, newPassword);
+        await saveEncryptedNote({
+          siteName,
+          ...encrypted,
+          size: Math.max(0, content.length),
+        });
+
+        setPassword(newPassword);
+        setPayload(encrypted);
+        toast.success(t('toasts.success.passwordChangedSuccessfully'));
+        setShowChangePassword(false);
+      } catch (err) {
+        console.error(err);
+        throw new Error(t('errors.password.incorrectOldPassword'));
       }
+    },
+    [content, payload, siteName, t],
+  );
 
-      // Re-encrypt with new password
-      const encrypted = await encryptContent(content, newPassword);
-      await saveEncryptedNote({
-        siteName,
-        ...encrypted,
-        size: Math.max(0, content.length),
-      });
-
-      setPassword(newPassword);
-      setPayload(encrypted);
-      toast.success(t('toasts.success.passwordChangedSuccessfully'));
-      setShowChangePassword(false);
-    } catch (err) {
-      console.error(err);
-      throw new Error(t('errors.password.incorrectOldPassword'));
-    }
-  };
-
-  const handleDelete = async () => {
+  const handleDelete = useCallback(async () => {
     try {
-      await deleteNote(siteName);
+      if (!payload) {
+        toast.error(t('errors.network.failedToDeleteNote'));
+        return;
+      }
+      await deleteNote(siteName, payload.encrypted);
       toast.success(t('toasts.success.noteDeleted'));
-      // Redirect to home after a short delay
       setTimeout(() => {
         window.location.href = '/';
       }, 1500);
@@ -236,29 +261,31 @@ export function EncryptedEditor({ siteName }: Props) {
       console.error(err);
       toast.error(t('errors.network.failedToDeleteNote'));
     }
-  };
+  }, [payload, siteName, t]);
 
-  const handleImport = () => {
+  const handleImport = useCallback(() => {
     fileInputRef.current?.click();
-  };
+  }, []);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const text = event.target?.result as string;
-      setContent(text);
-      setIsDirty(true);
-      toast.success(t('toasts.success.fileImportedSuccessfully'));
-    };
-    reader.readAsText(file);
-    // Reset input
-    e.target.value = '';
-  };
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const text = event.target?.result as string;
+        setContent(text);
+        setIsDirty(true);
+        toast.success(t('toasts.success.fileImportedSuccessfully'));
+      };
+      reader.readAsText(file);
+      e.target.value = '';
+    },
+    [t],
+  );
 
-  const handleManualSave = async () => {
+  const handleManualSave = useCallback(async () => {
     if (!isDirty) {
       toast.info(t('toasts.info.noChangesToSave'));
       return;
@@ -271,7 +298,6 @@ export function EncryptedEditor({ siteName }: Props) {
         ...encrypted,
         size: Math.max(0, content.length),
       });
-      setLastSaved(Date.now());
       setIsDirty(false);
       toast.success(t('toasts.success.saved'));
     } catch (err) {
@@ -280,61 +306,62 @@ export function EncryptedEditor({ siteName }: Props) {
     } finally {
       setIsSaving(false);
     }
-  };
+  }, [content, isDirty, password, siteName, t]);
+
+  // Toggle handlers (defined before useKeyboardShortcuts that uses them)
+  const toggleMarkdownPreview = useCallback(() => {
+    setShowMarkdownPreview((prev) => !prev);
+  }, []);
+
+  const toggleSearch = useCallback(() => {
+    setShowSearch((prev) => !prev);
+  }, []);
+
+  const clearSearch = useCallback(() => {
+    setSearchQuery('');
+  }, []);
 
   // Keyboard shortcuts
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Ctrl/Cmd + S: Save
-      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-        e.preventDefault();
-        handleManualSave();
-      }
-      // Ctrl/Cmd + F: Search
-      if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
-        e.preventDefault();
-        setShowSearch((prev) => !prev);
-      }
-      // Ctrl/Cmd + K: Change Password
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        setShowChangePassword(true);
-      }
-      // Ctrl/Cmd + E: Export
-      if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
-        e.preventDefault();
-        handleExport();
-      }
-      // Ctrl/Cmd + I: Import
-      if ((e.ctrlKey || e.metaKey) && e.key === 'i') {
-        e.preventDefault();
-        handleImport();
-      }
-      // Esc: Close search
-      if (e.key === 'Escape' && showSearch) {
-        setShowSearch(false);
-        setSearchQuery('');
-      }
-    };
+  const closeSearch = useCallback(() => {
+    setShowSearch(false);
+    setSearchQuery('');
+  }, []);
 
-    if (status === 'ready') {
-      window.addEventListener('keydown', handleKeyDown);
-      return () => window.removeEventListener('keydown', handleKeyDown);
-    }
-  }, [status, isDirty, showSearch]);
+  useKeyboardShortcuts({
+    enabled: status === 'ready',
+    showSearch,
+    showKeyboardShortcuts,
+    onManualSave: handleManualSave,
+    onToggleSearch: toggleSearch,
+    onShowChangePassword: useCallback(() => setShowChangePassword(true), []),
+    onExport: handleExport,
+    onImport: handleImport,
+    onShowKeyboardShortcuts: useCallback(
+      () => setShowKeyboardShortcuts(true),
+      [],
+    ),
+    onCloseSearch: closeSearch,
+    onCloseKeyboardShortcuts: useCallback(
+      () => setShowKeyboardShortcuts(false),
+      [],
+    ),
+  });
 
-  const handleRestoreVersion = async (version: any) => {
-    try {
-      const decrypted = await decryptContent(version, password);
-      setContent(decrypted);
-      setPayload(version);
-      setIsDirty(true);
-      toast.success(t('toasts.success.versionRestoredSaveToConfirm'));
-    } catch (err) {
-      console.error(err);
-      throw new Error(t('errors.password.failedToDecryptVersion'));
-    }
-  };
+  const handleRestoreVersion = useCallback(
+    async (version: EncryptedPayload) => {
+      try {
+        const decrypted = await decryptContent(version, password);
+        setContent(decrypted);
+        setPayload(version);
+        setIsDirty(true);
+        toast.success(t('toasts.success.versionRestoredSaveToConfirm'));
+      } catch (err) {
+        console.error(err);
+        throw new Error(t('errors.password.failedToDecryptVersion'));
+      }
+    },
+    [password, t],
+  );
 
   if (status === 'loading') {
     return (
@@ -347,7 +374,12 @@ export function EncryptedEditor({ siteName }: Props) {
   if (status !== 'ready') {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <PasswordGate type={mode} loading={initializing} error={error} onSubmit={handlePassword} />
+        <PasswordGate
+          type={mode}
+          loading={initializing}
+          error={error}
+          onSubmit={handlePassword}
+        />
       </div>
     );
   }
@@ -355,135 +387,55 @@ export function EncryptedEditor({ siteName }: Props) {
   return (
     <div className="space-y-6">
       {/* Top toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-gray-200 dark:border-white/20 bg-gradient-to-r from-gray-50 via-white to-gray-50 dark:from-slate-900/60 dark:via-slate-900/50 dark:to-slate-900/60 px-6 py-4 text-sm text-gray-600 dark:text-white/70 shadow-xl shadow-black/10 dark:shadow-black/20 backdrop-blur-xl">
-        <div className="flex items-center gap-3">
-          <div className="rounded-lg bg-primary-500/10 p-2 ring-1 ring-primary-400/20">
-            <ShieldCheck className="h-4 w-4 text-primary-400" />
-          </div>
-          <p className="flex items-center gap-2">
-            <span className="text-gray-500 dark:text-white/60">{t('editor.toolbar.site')}</span>
-            <span className="font-bold text-gray-900 dark:text-white bg-gradient-to-r from-primary-300 to-indigo-300 bg-clip-text text-transparent">/{siteName}</span>
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <p className="text-xs hidden md:block">{isSaving ? t('common.actions.saving') : `${t('editor.toolbar.lastSaved')} ${formattedTimestamp}`}</p>
-          {mounted && (
-            <Button
-              type="button"
-              size="sm"
-              variant="ghost"
-              onClick={() => {
-                const newTheme = theme === 'dark' ? 'light' : 'dark';
-                setTheme(newTheme);
-                toast.success(newTheme === 'light' ? t('editor.theme.switchedToLight') : t('editor.theme.switchedToDark'));
-              }}
-              title={theme === 'dark' ? t('editor.toolbar.switchToLightMode') : t('editor.toolbar.switchToDarkMode')}
-            >
-              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </Button>
-          )}
-          <Button type="button" size="sm" variant="ghost" onClick={() => setShowMarkdownPreview(!showMarkdownPreview)} title={t('editor.toolbar.toggleMarkdownPreview')}>
-            {showMarkdownPreview ? <Edit3 className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-          </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={() => setShowSearch(!showSearch)} title={t('editor.toolbar.search')}>
-            <Search className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={() => setShowVersionHistory(true)} title={t('editor.toolbar.versionHistory')}>
-            <History className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={handleReload} disabled={isReloading} title={t('editor.toolbar.reload')}>
-            <RefreshCw className={`h-4 w-4 ${isReloading ? 'animate-spin' : ''}`} />
-          </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={handleImport} title={t('editor.toolbar.import')}>
-            <Upload className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={handleExport} title={t('editor.toolbar.export')}>
-            <Download className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" variant="secondary" onClick={handleShare} title={t('common.actions.share')}>
-            <Link2 className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" variant="ghost" onClick={() => setShowChangePassword(true)} title={t('editor.toolbar.changePassword')}>
-            <Key className="h-4 w-4" />
-          </Button>
-          <Button type="button" size="sm" variant="ghost" className="text-red-400 hover:text-red-300" onClick={() => setShowDeleteDialog(true)} title={t('common.actions.delete')}>
-            <Trash2 className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
+      <EditorToolbar
+        siteName={siteName}
+        autosaveStatus={autosaveStatus}
+        showMarkdownPreview={showMarkdownPreview}
+        showSearch={showSearch}
+        isReloading={isReloading}
+        copySuccess={copySuccess}
+        mounted={mounted}
+        onToggleMarkdownPreview={toggleMarkdownPreview}
+        onToggleSearch={toggleSearch}
+        onShowKeyboardShortcuts={() => setShowKeyboardShortcuts(true)}
+        onShowVersionHistory={() => setShowVersionHistory(true)}
+        onReload={handleReload}
+        onImport={handleImport}
+        onExport={handleExport}
+        onCopyAll={handleCopyAll}
+        onShare={handleShare}
+        onChangePassword={() => setShowChangePassword(true)}
+        onDelete={() => setShowDeleteDialog(true)}
+      />
 
       {/* Search bar */}
       {showSearch && (
-        <div className="rounded-2xl border border-primary-400/30 dark:border-primary-500/40 bg-gradient-to-r from-gray-50 to-white dark:from-slate-900/80 dark:to-slate-950/80 px-6 py-4 shadow-lg shadow-primary-500/10 dark:shadow-primary-900/20 backdrop-blur-xl animate-fade-in-down">
-          <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-primary-500/10 p-2 ring-1 ring-primary-400/20">
-              <Search className="h-4 w-4 text-primary-400" />
-            </div>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t('editor.search.placeholder')}
-              className="flex-1 bg-transparent text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-white/50 focus:outline-none"
-              autoFocus
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="px-3 py-1.5 text-xs font-medium text-primary-600 dark:text-primary-300 hover:text-primary-500 dark:hover:text-primary-200 rounded-lg bg-primary-500/10 hover:bg-primary-500/20 transition-all duration-200"
-              >
-                {t('common.actions.clear')}
-              </button>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Hidden file input */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept=".txt,.md,.text"
-        onChange={handleFileChange}
-        className="hidden"
-      />
-
-      {/* Editor / Preview */}
-      {showMarkdownPreview ? (
-        <MarkdownPreview content={content} />
-      ) : (
-        <Textarea
-          ref={textareaRef}
-          value={content}
-          onChange={(event) => handleChange(event.target.value)}
-          placeholder={t('editor.editor.placeholder')}
-          className="min-h-[60vh] resize-none rounded-3xl border border-gray-200 dark:border-white/20 bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-slate-950/90 dark:via-slate-950/80 dark:to-slate-900/90 text-base leading-relaxed text-gray-900 dark:text-white shadow-2xl shadow-black/10 dark:shadow-black/40 backdrop-blur-sm focus:border-primary-400/40 focus:ring-2 focus:ring-primary-400/20 transition-all duration-300"
+        <SearchBar
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          onClear={clearSearch}
         />
       )}
 
+      {/* Hidden file input */}
+      <FileImportInput
+        inputRef={fileInputRef}
+        onFileChange={handleFileChange}
+      />
+
+      {/* Editor / Preview */}
+      <EditorContent
+        content={content}
+        showMarkdownPreview={showMarkdownPreview}
+        onChange={handleChange}
+        textareaRef={textareaRef}
+      />
+
       {/* Stats bar */}
-      <div className="flex items-center justify-between rounded-2xl border border-gray-200 dark:border-white/20 bg-gradient-to-r from-gray-50 via-white to-gray-50 dark:from-slate-900/60 dark:via-slate-900/50 dark:to-slate-900/60 px-6 py-3 text-xs text-gray-500 dark:text-white/60 shadow-lg shadow-black/10 dark:shadow-black/20 backdrop-blur-xl">
-        <div className="flex items-center gap-6">
-          <span className="flex items-center gap-2 font-medium">
-            <Type className="h-3.5 w-3.5 text-primary-400" />
-            <span className="text-gray-900 dark:text-white">{stats.words}</span> {t('editor.stats.words')}
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="text-gray-900 dark:text-white">{stats.chars}</span> {t('editor.stats.characters')}
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="text-gray-900 dark:text-white">{stats.lines}</span> {t('editor.stats.lines')}
-          </span>
-        </div>
-        <div>
-          {isDirty && (
-            <span className="flex items-center gap-2 text-yellow-500 dark:text-yellow-400 font-medium animate-pulse">
-              <span className="h-2 w-2 rounded-full bg-yellow-500 dark:bg-yellow-400" />
-              {t('editor.stats.unsavedChanges')}
-            </span>
-          )}
-        </div>
-      </div>
+      <EditorStatsBar
+        stats={stats}
+        onShowShortcuts={() => setShowKeyboardShortcuts(true)}
+      />
 
       {/* Dialogs */}
       <ChangePasswordDialog
@@ -502,6 +454,10 @@ export function EncryptedEditor({ siteName }: Props) {
         siteName={siteName}
         onClose={() => setShowVersionHistory(false)}
         onRestore={handleRestoreVersion}
+      />
+      <KeyboardShortcutsDialog
+        open={showKeyboardShortcuts}
+        onClose={() => setShowKeyboardShortcuts(false)}
       />
     </div>
   );

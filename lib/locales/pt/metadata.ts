@@ -6,7 +6,8 @@ export const metadata = {
   // Metadados do layout raiz
   root: {
     title: 'Protected Text – Notas Criptografadas que Realmente Funcionam',
-    description: 'Bloco de notas criptografado gratuito. Sua senha nunca sai do seu dispositivo. Sem anúncios, sem rastreamento, sem enrolação. Simplesmente funciona.',
+    description:
+      'Bloco de notas criptografado gratuito. Sua senha nunca sai do seu dispositivo. Sem anúncios, sem rastreamento, sem enrolação. Simplesmente funciona.',
     siteName: 'Protected Text',
 
     // Open Graph

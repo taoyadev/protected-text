@@ -13,9 +13,11 @@ export const errors = {
     failedToLoadVersionHistory: 'Error al cargar el historial de versiones',
     failedToRestoreVersion: 'Error al restaurar la versión',
     failedToRecordVote: 'Error al registrar el voto',
-    failedToRecordVotePleaseTryAgain: 'Error al registrar el voto. Por favor, inténtalo de nuevo.',
+    failedToRecordVotePleaseTryAgain:
+      'Error al registrar el voto. Por favor, inténtalo de nuevo.',
     failedToSubmitFeedback: 'Error al enviar comentarios',
-    failedToSubmitFeedbackPleaseTryAgain: 'Error al enviar comentarios. Por favor, inténtalo de nuevo.',
+    failedToSubmitFeedbackPleaseTryAgain:
+      'Error al enviar comentarios. Por favor, inténtalo de nuevo.',
     clipboardUnavailable: 'Portapapeles no disponible',
     noNoteFoundOnServer: 'No se encontró nota en el servidor',
   },
@@ -46,6 +48,7 @@ export const errors = {
 
   // Mensajes de confirmación
   confirmations: {
-    unsavedChangesReloadAnyway: 'Tienes cambios sin guardar. ¿Recargar de todos modos?',
+    unsavedChangesReloadAnyway:
+      'Tienes cambios sin guardar. ¿Recargar de todos modos?',
   },
 };

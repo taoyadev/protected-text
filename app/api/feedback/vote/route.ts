@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Redis from 'ioredis';
+import { getRedisClient } from '@/lib/redis';
 
 // Valid feature IDs
 const VALID_FEATURES = [
@@ -9,25 +9,7 @@ const VALID_FEATURES = [
   'file-attachments',
   'longer-retention',
   'priority-support',
-];
-
-// Create Redis client singleton
-let redis: Redis | null = null;
-
-function getRedisClient(): Redis {
-  if (!redis) {
-    const redisUrl = process.env.REDIS_URL || process.env.KV_URL;
-    if (!redisUrl) {
-      throw new Error('REDIS_URL or KV_URL environment variable is not set');
-    }
-    redis = new Redis(redisUrl, {
-      maxRetriesPerRequest: 3,
-      enableReadyCheck: true,
-      lazyConnect: false,
-    });
-  }
-  return redis;
-}
+] as const;
 
 function getClientIP(request: NextRequest): string {
   const forwarded = request.headers.get('x-forwarded-for');
@@ -35,9 +17,12 @@ function getClientIP(request: NextRequest): string {
   return forwarded?.split(',')[0] || realIP || 'unknown';
 }
 
-async function checkVoteRateLimit(ip: string, featureId: string): Promise<boolean> {
+async function checkVoteRateLimit(
+  ip: string,
+  featureId: string,
+): Promise<boolean> {
   const client = getRedisClient();
-  const key = `vote_rl:${ip}:${featureId}`;
+  const key = 'vote_rl:' + ip + ':' + featureId;
   const existing = await client.get(key);
 
   if (existing) {
@@ -55,10 +40,13 @@ export async function POST(request: NextRequest) {
     const { featureId } = body;
 
     // Validate feature ID
-    if (!featureId || !VALID_FEATURES.includes(featureId)) {
+    if (
+      !featureId ||
+      !VALID_FEATURES.includes(featureId as (typeof VALID_FEATURES)[number])
+    ) {
       return NextResponse.json(
         { error: 'Invalid feature ID' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -69,13 +57,13 @@ export async function POST(request: NextRequest) {
     if (!allowed) {
       return NextResponse.json(
         { error: 'You have already voted for this feature today' },
-        { status: 429 }
+        { status: 429 },
       );
     }
 
     // Increment vote count
     const client = getRedisClient();
-    const voteKey = `votes:${featureId}`;
+    const voteKey = 'votes:' + featureId;
     const newCount = await client.incr(voteKey);
 
     return NextResponse.json({
@@ -87,7 +75,7 @@ export async function POST(request: NextRequest) {
     console.error('Vote error:', error);
     return NextResponse.json(
       { error: 'Failed to record vote' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

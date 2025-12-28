@@ -15,7 +15,16 @@ import { pt } from './locales/pt';
 import { ru } from './locales/ru';
 
 // Supported locales
-export const locales = ['en', 'zh', 'es', 'fr', 'de', 'ja', 'pt', 'ru'] as const;
+export const locales = [
+  'en',
+  'zh',
+  'es',
+  'fr',
+  'de',
+  'ja',
+  'pt',
+  'ru',
+] as const;
 export type Locale = (typeof locales)[number];
 
 // Default locale
@@ -94,7 +103,11 @@ export function isValidLocale(locale: string): locale is Locale {
 /**
  * Format date according to locale
  */
-export function formatDate(date: Date, locale: Locale, options?: Intl.DateTimeFormatOptions): string {
+export function formatDate(
+  date: Date,
+  locale: Locale,
+  options?: Intl.DateTimeFormatOptions,
+): string {
   return new Intl.DateTimeFormat(locale, options).format(date);
 }
 
@@ -112,7 +125,11 @@ export function formatTime(date: Date, locale: Locale): string {
 /**
  * Format number according to locale
  */
-export function formatNumber(num: number, locale: Locale, options?: Intl.NumberFormatOptions): string {
+export function formatNumber(
+  num: number,
+  locale: Locale,
+  options?: Intl.NumberFormatOptions,
+): string {
   return new Intl.NumberFormat(locale, options).format(num);
 }
 
@@ -120,7 +137,10 @@ export function formatNumber(num: number, locale: Locale, options?: Intl.NumberF
  * Simple string interpolation
  * Replaces {key} with values from params object
  */
-export function interpolate(str: string, params?: Record<string, string | number>): string {
+export function interpolate(
+  str: string,
+  params?: Record<string, string | number>,
+): string {
   if (!params) return str;
 
   return Object.entries(params).reduce((result, [key, value]) => {
@@ -158,7 +178,10 @@ function getNestedValue(obj: any, path: string): any {
 export function getT(locale: Locale) {
   const trans = getTranslations(locale);
 
-  return (key: TranslationKey, params?: Record<string, string | number>): string => {
+  return (
+    key: TranslationKey,
+    params?: Record<string, string | number>,
+  ): string => {
     const value = getNestedValue(trans, key);
     if (typeof value !== 'string') {
       console.warn(`Translation key not found: ${key}`);
@@ -171,11 +194,14 @@ export function getT(locale: Locale) {
 /**
  * Get alternate language URLs for SEO
  */
-export function getAlternateUrls(pathname: string): Array<{ locale: Locale; href: string }> {
+export function getAlternateUrls(
+  pathname: string,
+): Array<{ locale: Locale; href: string }> {
   // Remove leading locale if present
-  const pathWithoutLocale = pathname.replace(/^\/(en|zh|es|fr|de|ja|pt|ru)/, '') || '/';
+  const pathWithoutLocale =
+    pathname.replace(/^\/(en|zh|es|fr|de|ja|pt|ru)/, '') || '/';
 
-  return locales.map(locale => ({
+  return locales.map((locale) => ({
     locale,
     href: `/${locale}${pathWithoutLocale}`,
   }));

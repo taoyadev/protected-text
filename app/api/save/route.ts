@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { rateLimit } from '@/lib/rate-limit';
+import { rateLimit, getClientIP } from '@/lib/rate-limit';
 import { saveSite } from '@/lib/storage';
 
 const bodySchema = z.object({
-  siteName: z.string().min(3).max(32).regex(/^[a-z0-9-]+$/),
+  siteName: z
+    .string()
+    .min(3)
+    .max(32)
+    .regex(/^[a-z0-9-]+$/),
   encrypted: z.string().min(1),
   iv: z.string().min(1),
   salt: z.string().min(1),
@@ -13,8 +17,8 @@ const bodySchema = z.object({
 });
 
 export async function POST(req: Request) {
-  const identifier = req.headers.get('x-forwarded-for') ?? 'anonymous';
-  const rl = await rateLimit(identifier);
+  const identifier = getClientIP(req);
+  const rl = await rateLimit(`save:${identifier}`);
 
   if (!rl.success) {
     return NextResponse.json({ message: 'Too many requests' }, { status: 429 });

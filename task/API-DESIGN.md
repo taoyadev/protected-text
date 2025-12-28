@@ -23,11 +23,13 @@ GET /api/check?site={siteName}
 ```
 
 #### 请求参数
-| 参数 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| site | string | ✅ | 站点名称 (3-50字符) |
+
+| 参数 | 类型   | 必填 | 说明                |
+| ---- | ------ | ---- | ------------------- |
+| site | string | ✅   | 站点名称 (3-50字符) |
 
 #### 响应
+
 ```json
 {
   "exists": true,
@@ -36,10 +38,12 @@ GET /api/check?site={siteName}
 ```
 
 #### 状态码
+
 - `200` - 成功
 - `400` - 参数错误
 
 #### 示例
+
 ```bash
 curl https://protected-text.app/api/check?site=mysecret
 ```
@@ -53,11 +57,13 @@ GET /api/load?site={siteName}
 ```
 
 #### 请求参数
-| 参数 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| site | string | ✅ | 站点名称 |
+
+| 参数 | 类型   | 必填 | 说明     |
+| ---- | ------ | ---- | -------- |
+| site | string | ✅   | 站点名称 |
 
 #### 响应
+
 ```json
 {
   "encrypted": "base64_encrypted_content",
@@ -69,6 +75,7 @@ GET /api/load?site={siteName}
 ```
 
 #### 错误响应
+
 ```json
 {
   "error": "Site not found"
@@ -76,12 +83,14 @@ GET /api/load?site={siteName}
 ```
 
 #### 状态码
+
 - `200` - 成功
 - `400` - 参数错误
 - `404` - 站点不存在
 - `429` - 超出限流
 
 #### 示例
+
 ```bash
 curl https://protected-text.app/api/load?site=mysecret
 ```
@@ -96,6 +105,7 @@ Content-Type: application/json
 ```
 
 #### 请求体
+
 ```json
 {
   "siteName": "mysecret",
@@ -106,14 +116,16 @@ Content-Type: application/json
 ```
 
 #### 字段说明
-| 字段 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| siteName | string | ✅ | 站点名称 (3-50字符，字母数字-_) |
-| encrypted | string | ✅ | Base64加密内容 (max 100KB) |
-| salt | string | ✅ | Base64 salt (16字节) |
-| iv | string | ✅ | Base64 IV (12字节) |
+
+| 字段      | 类型   | 必填 | 说明                             |
+| --------- | ------ | ---- | -------------------------------- |
+| siteName  | string | ✅   | 站点名称 (3-50字符，字母数字-\_) |
+| encrypted | string | ✅   | Base64加密内容 (max 100KB)       |
+| salt      | string | ✅   | Base64 salt (16字节)             |
+| iv        | string | ✅   | Base64 IV (12字节)               |
 
 #### 响应
+
 ```json
 {
   "success": true,
@@ -122,6 +134,7 @@ Content-Type: application/json
 ```
 
 #### 错误响应
+
 ```json
 {
   "error": "Content too large (max 100KB)"
@@ -129,12 +142,14 @@ Content-Type: application/json
 ```
 
 #### 状态码
+
 - `200` - 成功
 - `400` - 参数错误
 - `413` - 内容过大
 - `429` - 超出限流
 
 #### 示例
+
 ```bash
 curl -X POST https://protected-text.app/api/save \
   -H "Content-Type: application/json" \
@@ -156,6 +171,7 @@ Content-Type: application/json
 ```
 
 #### 请求体
+
 ```json
 {
   "siteName": "mysecret",
@@ -164,11 +180,13 @@ Content-Type: application/json
 ```
 
 #### 说明
+
 - 需要提供密码验证
 - 客户端先解密验证密码，再发送删除请求
 - 或者生成特殊的删除凭证
 
 #### 响应
+
 ```json
 {
   "success": true
@@ -176,6 +194,7 @@ Content-Type: application/json
 ```
 
 #### 状态码
+
 - `200` - 成功
 - `400` - 参数错误
 - `403` - 验证失败
@@ -193,6 +212,7 @@ Content-Type: application/json
 ```
 
 #### 请求体
+
 ```json
 {
   "event": "note_created",
@@ -204,6 +224,7 @@ Content-Type: application/json
 ```
 
 #### 事件类型
+
 - `note_created` - 笔记创建
 - `note_viewed` - 笔记查看
 - `note_saved` - 笔记保存
@@ -223,6 +244,7 @@ Content-Type: application/json
 ```
 
 #### 请求体
+
 ```json
 {
   "email": "user@example.com",
@@ -231,6 +253,7 @@ Content-Type: application/json
 ```
 
 #### 响应
+
 ```json
 {
   "user": {
@@ -251,6 +274,7 @@ Content-Type: application/json
 ```
 
 #### 请求体
+
 ```json
 {
   "email": "user@example.com",
@@ -259,6 +283,7 @@ Content-Type: application/json
 ```
 
 #### 响应
+
 ```json
 {
   "user": {
@@ -283,6 +308,7 @@ Authorization: Bearer {token}
 ```
 
 #### 响应
+
 ```json
 {
   "id": "usr_xxx",
@@ -312,6 +338,7 @@ Authorization: Bearer {token}
 ```
 
 #### 响应
+
 ```json
 {
   "versions": [
@@ -336,6 +363,7 @@ Content-Type: application/json
 ```
 
 #### 请求体
+
 ```json
 {
   "siteName": "mysecret",
@@ -356,6 +384,7 @@ Content-Type: application/json
 ```
 
 #### 请求体
+
 ```json
 {
   "siteName": "mysecret",
@@ -367,6 +396,7 @@ Content-Type: application/json
 ```
 
 #### 响应
+
 ```json
 {
   "shareId": "abc123",
@@ -384,6 +414,7 @@ GET /api/share/{shareId}
 ```
 
 #### 响应
+
 ```json
 {
   "encrypted": "...",
@@ -409,6 +440,7 @@ Content-Type: application/json
 ```
 
 #### 请求体
+
 ```json
 {
   "plan": "pro_monthly",
@@ -418,6 +450,7 @@ Content-Type: application/json
 ```
 
 #### 响应
+
 ```json
 {
   "sessionId": "cs_xxx",
@@ -435,6 +468,7 @@ Authorization: Bearer {token}
 ```
 
 #### 响应
+
 ```json
 {
   "url": "https://billing.stripe.com/xxx"
@@ -447,15 +481,16 @@ Authorization: Bearer {token}
 
 ### 限流策略
 
-| 端点 | 限制 | 时间窗口 |
-|------|------|----------|
-| /api/check | 30次 | 1分钟 |
-| /api/load | 10次 | 1分钟 |
-| /api/save | 10次 | 1分钟 |
-| /api/delete | 5次 | 1分钟 |
-| /api/auth/* | 5次 | 1分钟 |
+| 端点         | 限制 | 时间窗口 |
+| ------------ | ---- | -------- |
+| /api/check   | 30次 | 1分钟    |
+| /api/load    | 10次 | 1分钟    |
+| /api/save    | 10次 | 1分钟    |
+| /api/delete  | 5次  | 1分钟    |
+| /api/auth/\* | 5次  | 1分钟    |
 
 ### 限流响应
+
 ```json
 {
   "error": "Too many requests",
@@ -464,6 +499,7 @@ Authorization: Bearer {token}
 ```
 
 ### Headers
+
 ```
 X-RateLimit-Limit: 10
 X-RateLimit-Remaining: 5
@@ -475,6 +511,7 @@ X-RateLimit-Reset: 1699999999
 ## ⚠️ 错误处理
 
 ### 标准错误格式
+
 ```json
 {
   "error": "Error message",
@@ -486,17 +523,19 @@ X-RateLimit-Reset: 1699999999
 ```
 
 ### 错误码
-| 状态码 | 说明 |
-|--------|------|
-| 400 | Bad Request - 参数错误 |
-| 401 | Unauthorized - 未认证 |
-| 403 | Forbidden - 无权限 |
-| 404 | Not Found - 资源不存在 |
-| 413 | Payload Too Large - 内容过大 |
-| 429 | Too Many Requests - 限流 |
-| 500 | Internal Server Error - 服务器错误 |
+
+| 状态码 | 说明                               |
+| ------ | ---------------------------------- |
+| 400    | Bad Request - 参数错误             |
+| 401    | Unauthorized - 未认证              |
+| 403    | Forbidden - 无权限                 |
+| 404    | Not Found - 资源不存在             |
+| 413    | Payload Too Large - 内容过大       |
+| 429    | Too Many Requests - 限流           |
+| 500    | Internal Server Error - 服务器错误 |
 
 ### 错误码列表
+
 ```typescript
 enum ErrorCode {
   INVALID_SITE_NAME = 'invalid_site_name',
@@ -515,31 +554,32 @@ enum ErrorCode {
 ## 🔧 客户端SDK (未来)
 
 ### JavaScript SDK示例
+
 ```typescript
 import { ProtectedText } from 'protected-text-sdk';
 
 const client = new ProtectedText({
-  apiKey: 'your_api_key' // Pro only
+  apiKey: 'your_api_key', // Pro only
 });
 
 // 保存笔记
 await client.save({
   siteName: 'mysecret',
   content: 'Hello, World!',
-  password: 'secure_password'
+  password: 'secure_password',
 });
 
 // 加载笔记
 const content = await client.load({
   siteName: 'mysecret',
-  password: 'secure_password'
+  password: 'secure_password',
 });
 
 // 创建分享链接
 const shareUrl = await client.share({
   siteName: 'mysecret',
   mode: 'readonly',
-  expiresIn: 86400
+  expiresIn: 86400,
 });
 ```
 
@@ -548,6 +588,7 @@ const shareUrl = await client.share({
 ## 📊 API版本控制
 
 ### 版本策略
+
 ```
 当前版本: v1
 URL格式: /api/{endpoint}
@@ -557,6 +598,7 @@ URL格式: /api/{endpoint}
 ```
 
 ### 版本变更
+
 - 破坏性更改 → 新版本
 - 新增功能 → 同版本
 - Bug修复 → 同版本
@@ -589,6 +631,7 @@ Stripe-Signature: {signature}
 ```
 
 #### 处理事件
+
 - `checkout.session.completed` - 订阅成功
 - `customer.subscription.updated` - 订阅更新
 - `customer.subscription.deleted` - 订阅取消
@@ -599,6 +642,7 @@ Stripe-Signature: {signature}
 ## 🔐 安全建议
 
 ### 客户端最佳实践
+
 1. **永远不要**在请求中发送明文密码到服务器
 2. 所有加密在客户端完成
 3. 使用HTTPS
@@ -606,6 +650,7 @@ Stripe-Signature: {signature}
 5. 验证所有输入
 
 ### 服务器最佳实践
+
 1. Rate limiting
 2. 输入验证
 3. SQL注入防护 (虽然用KV)
@@ -617,6 +662,7 @@ Stripe-Signature: {signature}
 ## 📈 监控指标
 
 ### 需要跟踪的指标
+
 - API响应时间 (P50, P95, P99)
 - 错误率
 - 限流触发次数

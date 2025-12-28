@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_/
+
+# Block common bot paths
+Disallow: /admin/
+Disallow: /.well-known/
+
+# Sitemap location
+Sitemap: https://protected-text.com/sitemap.xml

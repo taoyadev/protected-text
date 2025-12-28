@@ -1,0 +1,46 @@
+# ============================================================
+# Cloudflare Workers Development Variables
+# ============================================================
+# Copy this file to .dev.vars and fill in your values.
+# This file is used by `wrangler dev` for local development.
+# NEVER commit .dev.vars to version control!
+# ============================================================
+
+# ============================================================
+# D1 Database
+# ============================================================
+# For local development, wrangler uses local D1 emulation.
+# These are only needed if connecting to a remote D1 in dev mode.
+# D1_DATABASE_ID=your-database-id
+
+# ============================================================
+# CORS Configuration
+# ============================================================
+# Comma-separated list of allowed origins, or "*" for all origins.
+# Leave empty or omit for same-origin only (recommended for production).
+CORS_ALLOW_ORIGINS=http://localhost:3000
+
+# ============================================================
+# Rate Limiting
+# ============================================================
+# Maximum requests per minute per IP (default: 60)
+RATE_LIMIT_PER_MINUTE=60
+
+# ============================================================
+# Encryption Settings
+# ============================================================
+# PBKDF2 iterations for key derivation (default: 100000)
+# Higher = more secure but slower
+PBKDF2_ITERATIONS=100000
+
+# ============================================================
+# Version History
+# ============================================================
+# Maximum number of versions to keep per note (default: 10)
+MAX_VERSIONS=10
+
+# ============================================================
+# Debug Mode
+# ============================================================
+# Enable verbose logging (set to "true" for development)
+DEBUG=true

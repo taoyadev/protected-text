@@ -29,7 +29,8 @@ export const editor = {
 
   // Editor
   editor: {
-    placeholder: 'Empieza a escribir… La contraseña nunca sale de esta pestaña del navegador.',
+    placeholder:
+      'Empieza a escribir… La contraseña nunca sale de esta pestaña del navegador.',
   },
 
   // Vista previa de Markdown
@@ -63,5 +64,25 @@ export const editor = {
   // Importación de archivo
   fileImport: {
     acceptedFormats: '.txt,.md,.text',
+  },
+
+  // Keyboard shortcuts
+  shortcuts: {
+    title: 'Atajos de Teclado',
+    description: 'Presiona ? para abrir este diálogo',
+    save: 'Guardar nota',
+    search: 'Buscar en nota',
+    closeDialogs: 'Cerrar diálogos',
+    showShortcuts: 'Mostrar atajos de teclado',
+    export: 'Exportar nota',
+    import: 'Importar archivo',
+    changePassword: 'Cambiar contraseña',
+  },
+
+  // Autosave status
+  autosave: {
+    allChangesSaved: 'Todos los cambios guardados',
+    saving: 'Guardando...',
+    unsavedChanges: 'Cambios sin guardar',
   },
 };

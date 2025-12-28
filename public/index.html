@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CloudNote D1 — Zero‑knowledge encrypted notes</title>
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; connect-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; font-src 'self'; manifest-src 'self'"
+    />
+    <meta
+      name="description"
+      content="Zero-knowledge encrypted notes on Cloudflare Workers + D1. Your password never leaves your device; only ciphertext is stored."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="CloudNote D1" />
+    <meta
+      property="og:description"
+      content="Zero-knowledge encrypted notes on Cloudflare Workers + D1."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="stylesheet" href="/app.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="panel">
+        <div class="header">
+          <a class="brand" href="/">CloudNote D1</a>
+          <div class="slug-pill">Zero‑knowledge encrypted notes</div>
+          <div class="header-actions">
+            <a class="btn" href="/_/security">Security</a>
+            <a class="btn" href="/_/privacy">Privacy</a>
+          </div>
+        </div>
+        <div class="content">
+          <div class="grid">
+            <h1>CloudNote D1</h1>
+            <p class="hint">
+              Create and share notes by URL slug. The browser encrypts/decrypts;
+              the server stores only ciphertext in Cloudflare D1.
+            </p>
+
+            <div class="panel flat">
+              <div class="grid">
+                <label for="slugInput">Pick a slug</label>
+                <div class="row">
+                  <input
+                    id="slugInput"
+                    class="grow"
+                    type="text"
+                    placeholder="my-note"
+                    autocomplete="off"
+                  />
+                  <button id="randomBtn" class="btn" type="button">
+                    Random
+                  </button>
+                  <button id="openBtn" class="btn btn-primary" type="button">
+                    Open
+                  </button>
+                </div>
+                <div id="landingStatus" class="hint tight"></div>
+              </div>
+            </div>
+
+            <div class="tight grid">
+              <h2>How it works</h2>
+              <ul>
+                <li>You choose a slug and a strong password.</li>
+                <li>
+                  Your browser derives a key (PBKDF2) and encrypts content
+                  (AES‑GCM).
+                </li>
+                <li>
+                  The server stores only encrypted data (ciphertext, IV, salt).
+                </li>
+              </ul>
+              <p class="hint tight">
+                Tip: treat the slug as public. The password is what protects
+                your content.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <span>Built on Cloudflare Workers + D1.</span>
+          <a href="/_/security">Security</a>
+          <a href="/_/privacy">Privacy</a>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/landing.js"></script>
+  </body>
+</html>

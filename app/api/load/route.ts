@@ -1,14 +1,18 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getSite } from '@/lib/storage';
-import { rateLimit } from '@/lib/rate-limit';
+import { rateLimit, getClientIP } from '@/lib/rate-limit';
 
 const schema = z.object({
-  siteName: z.string().min(3).max(32).regex(/^[a-z0-9-]+$/),
+  siteName: z
+    .string()
+    .min(3)
+    .max(32)
+    .regex(/^[a-z0-9-]+$/),
 });
 
 export async function POST(req: Request) {
-  const identifier = req.headers.get('x-forwarded-for') ?? 'anonymous';
+  const identifier = getClientIP(req);
   const rl = await rateLimit(`load:${identifier}`);
 
   if (!rl.success) {
