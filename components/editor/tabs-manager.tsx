@@ -5,7 +5,12 @@ import { Plus, X } from 'lucide-react';
 import { EncryptedEditor } from './encrypted-editor';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '@/lib/i18n-provider';
-import type { Tab } from '@/lib/types';
+
+interface Tab {
+  id: string;
+  siteName: string;
+  title: string;
+}
 
 interface Props {
   initialSiteName?: string;

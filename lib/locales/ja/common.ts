@@ -23,9 +23,6 @@ export const common = {
     add: '追加',
     createNewTab: '新しいタブ',
     closeTab: 'タブを閉じる',
-    showPassword: 'パスワードを表示',
-    hidePassword: 'パスワードを非表示',
-    copyAll: 'すべてのコンテンツをコピー',
   },
 
   // 状態

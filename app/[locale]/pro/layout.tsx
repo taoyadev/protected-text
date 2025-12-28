@@ -20,7 +20,7 @@ export async function generateMetadata({
     title: t('pro.header.title'),
     description: t('pro.header.subtitle'),
     alternates: {
-      canonical: `https://protected-text.com/${locale}/pro`,
+      canonical: `/${locale}/pro`,
       languages: Object.fromEntries(
         alternates.map(({ locale: lang, href }) => [
           lang,
@@ -37,10 +37,9 @@ export async function generateMetadata({
       type: 'website',
       images: [
         {
-          url: 'https://protected-text.com/og.svg',
+          url: '/og-pro.png',
           width: 1200,
           height: 630,
-          type: 'image/svg+xml',
           alt: t('pro.header.title'),
         },
       ],
@@ -51,7 +50,7 @@ export async function generateMetadata({
       description: t('pro.header.subtitle'),
       creator: '@protectedtext',
       site: '@protectedtext',
-      images: ['https://protected-text.com/og.svg'],
+      images: ['/og-pro.png'],
     },
     robots: {
       index: true,

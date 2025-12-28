@@ -23,9 +23,6 @@ export const common = {
     add: 'Ajouter',
     createNewTab: 'Nouvel onglet',
     closeTab: "Fermer l'onglet",
-    showPassword: 'Afficher le mot de passe',
-    hidePassword: 'Masquer le mot de passe',
-    copyAll: 'Copier tout le contenu',
   },
 
   // États

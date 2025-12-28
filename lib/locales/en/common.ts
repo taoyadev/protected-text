@@ -23,9 +23,6 @@ export const common = {
     add: 'Add',
     createNewTab: 'New Tab',
     closeTab: 'Close Tab',
-    showPassword: 'Show password',
-    hidePassword: 'Hide password',
-    copyAll: 'Copy all content',
   },
 
   // States

@@ -1,11 +1,14 @@
-import type { EncryptedPayload } from './types';
+export type EncryptedPayload = {
+  encrypted: string;
+  iv: string;
+  salt: string;
+  version: number;
+};
 
 const ENCODER = new TextEncoder();
 const DECODER = new TextDecoder();
 const ITERATIONS = 100_000;
 const KEY_LENGTH = 256;
-
-export type { EncryptedPayload };
 
 export async function generateSalt(size = 16): Promise<Uint8Array> {
   const salt = crypto.getRandomValues(new Uint8Array(size));
@@ -64,9 +67,9 @@ export async function decryptContent(
   const ciphertext = base64ToUint8Array(payload.encrypted);
   const key = await deriveKey(password, salt);
   const decrypted = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv },
+    { name: 'AES-GCM', iv: iv as unknown as BufferSource },
     key,
-    ciphertext,
+    ciphertext as unknown as BufferSource,
   );
   return DECODER.decode(decrypted);
 }

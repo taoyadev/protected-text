@@ -41,8 +41,6 @@ export function middleware(request: NextRequest) {
     const locale = pathname.split('/')[1];
     if (isValidLocale(locale)) {
       const response = NextResponse.next();
-      // Set x-pathname header for locale detection in layout
-      response.headers.set('x-pathname', pathname);
       response.cookies.set('NEXT_LOCALE', locale, {
         maxAge: 60 * 60 * 24 * 365, // 1 year
         path: '/',
@@ -58,8 +56,6 @@ export function middleware(request: NextRequest) {
 
   // Use rewrite instead of redirect to keep the URL clean
   const response = NextResponse.rewrite(url);
-  // Set x-pathname header for locale detection in layout (using /en prefix)
-  response.headers.set('x-pathname', url.pathname);
   response.cookies.set('NEXT_LOCALE', 'en', {
     maxAge: 60 * 60 * 24 * 365,
     path: '/',

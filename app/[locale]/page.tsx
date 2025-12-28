@@ -31,19 +31,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t('metadata.root.title'),
     description: t('metadata.root.description'),
     alternates: {
-      canonical:
-        locale === 'en'
-          ? 'https://protected-text.com'
-          : `https://protected-text.com/${locale}`,
-      languages: {
-        'x-default': 'https://protected-text.com',
-        ...Object.fromEntries(
-          alternates.map(({ locale: lang, href }) => [
-            lang,
-            `https://protected-text.com${href}`,
-          ]),
-        ),
-      },
+      canonical: `/${locale}`,
+      languages: Object.fromEntries(
+        alternates.map(({ locale: lang, href }) => [
+          lang,
+          `https://protected-text.com${href}`,
+        ]),
+      ),
     },
     openGraph: {
       title: t('metadata.root.og.title'),
@@ -52,14 +46,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: t('metadata.root.og.siteName'),
       locale: locale,
       type: 'website',
-      images: [
-        {
-          url: 'https://protected-text.com/og.svg',
-          width: 1200,
-          height: 630,
-          type: 'image/svg+xml',
-        },
-      ],
     },
   };
 }

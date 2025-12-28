@@ -16,7 +16,6 @@ export const toasts = {
       'Version restaurée. Enregistrez pour confirmer.',
     voteRecorded: 'Vote enregistré ! Merci pour vos commentaires.',
     thankYouForFeedback: 'Merci pour vos commentaires !',
-    contentCopied: 'Contenu copié dans le presse-papiers',
   },
 
   // Messages informatifs

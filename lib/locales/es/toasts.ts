@@ -15,7 +15,6 @@ export const toasts = {
     versionRestoredSaveToConfirm: 'Versión restaurada. Guarda para confirmar.',
     voteRecorded: '¡Voto registrado! Gracias por tus comentarios.',
     thankYouForFeedback: '¡Gracias por tus comentarios!',
-    contentCopied: 'Contenido copiado al portapapeles',
   },
 
   // Mensajes informativos

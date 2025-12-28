@@ -14,18 +14,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = getT(locale as Locale);
 
   return {
-    title: `${siteName} - ${t('common.brand.protectedText')}`,
+    title: `${siteName} – ${t('common.brand.protectedText')}`,
     description: t('metadata.root.description'),
-    // Prevent search engines from indexing user-generated encrypted content pages
-    robots: {
-      index: false,
-      follow: false,
-      googleBot: {
-        index: false,
-        follow: false,
-        noimageindex: true,
-      },
-    },
   };
 }
 

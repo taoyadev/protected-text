@@ -1,4 +1,4 @@
-import type { EncryptedPayload } from './types';
+import type { EncryptedPayload } from '@/lib/crypto';
 
 export type SavePayload = EncryptedPayload & {
   siteName: string;
@@ -22,9 +22,7 @@ export async function saveEncryptedNote(payload: SavePayload) {
   return handleResponse(response);
 }
 
-export async function loadEncryptedNote(
-  siteName: string,
-): Promise<{ payload: EncryptedPayload | null; updatedAt?: number }> {
+export async function loadEncryptedNote(siteName: string) {
   const response = await fetch('/api/load', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -36,11 +34,9 @@ export async function loadEncryptedNote(
   }>;
 }
 
-export async function checkSiteExists(
-  siteName: string,
-): Promise<{ exists: boolean; updatedAt?: number }> {
+export async function checkSiteExists(siteName: string) {
   const response = await fetch(
-    '/api/check?site=' + encodeURIComponent(siteName),
+    `/api/check?site=${encodeURIComponent(siteName)}`,
   );
   return handleResponse(response) as Promise<{
     exists: boolean;
@@ -48,14 +44,11 @@ export async function checkSiteExists(
   }>;
 }
 
-export async function deleteNote(
-  siteName: string,
-  verificationToken: string,
-): Promise<void> {
+export async function deleteNote(siteName: string) {
   const response = await fetch('/api/delete', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ siteName, verificationToken }),
+    body: JSON.stringify({ siteName }),
   });
-  await handleResponse(response);
+  return handleResponse(response);
 }

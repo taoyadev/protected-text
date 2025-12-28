@@ -4,15 +4,9 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeSanitize from 'rehype-sanitize';
 import { useTranslation } from '@/lib/i18n-provider';
-import type { HTMLAttributes } from 'react';
 
 interface Props {
   content: string;
-}
-
-interface CodeProps extends HTMLAttributes<HTMLElement> {
-  className?: string;
-  children?: React.ReactNode;
 }
 
 export function MarkdownPreview({ content }: Props) {
@@ -32,7 +26,7 @@ export function MarkdownPreview({ content }: Props) {
               className="text-primary-400 underline hover:text-primary-300"
             />
           ),
-          code: ({ className, children, ...props }: CodeProps) => {
+          code: ({ className, children, ...props }: any) => {
             const isInline = !className || !className.includes('language-');
             return isInline ? (
               <code

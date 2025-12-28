@@ -23,9 +23,6 @@ export const common = {
     add: 'Hinzufügen',
     createNewTab: 'Neuer Tab',
     closeTab: 'Tab schließen',
-    showPassword: 'Passwort anzeigen',
-    hidePassword: 'Passwort ausblenden',
-    copyAll: 'Gesamten Inhalt kopieren',
   },
 
   // Zustände

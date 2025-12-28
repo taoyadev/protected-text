@@ -64,24 +64,4 @@ export const editor = {
   fileImport: {
     acceptedFormats: '.txt,.md,.text',
   },
-
-  // Keyboard shortcuts
-  shortcuts: {
-    title: 'Keyboard Shortcuts',
-    description: 'Press ? to open this dialog',
-    save: 'Save note',
-    search: 'Search in note',
-    closeDialogs: 'Close dialogs',
-    showShortcuts: 'Show keyboard shortcuts',
-    export: 'Export note',
-    import: 'Import file',
-    changePassword: 'Change password',
-  },
-
-  // Autosave status
-  autosave: {
-    allChangesSaved: 'All changes saved',
-    saving: 'Saving...',
-    unsavedChanges: 'Unsaved changes',
-  },
 };

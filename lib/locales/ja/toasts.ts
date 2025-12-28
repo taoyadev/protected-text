@@ -16,7 +16,6 @@ export const toasts = {
       'バージョンを復元しました。保存して確認してください。',
     voteRecorded: '投票を記録しました！フィードバックありがとうございます。',
     thankYouForFeedback: 'フィードバックありがとうございます！',
-    contentCopied: '内容をクリップボードにコピーしました',
   },
 
   // 情報メッセージ

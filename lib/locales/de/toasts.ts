@@ -16,7 +16,6 @@ export const toasts = {
       'Version wiederhergestellt. Speichern zum Bestätigen.',
     voteRecorded: 'Stimme aufgezeichnet! Danke für Ihr Feedback.',
     thankYouForFeedback: 'Vielen Dank für Ihr Feedback!',
-    contentCopied: 'Inhalt in die Zwischenablage kopiert',
   },
 
   // Informationsmeldungen

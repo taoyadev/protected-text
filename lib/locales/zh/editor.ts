@@ -64,24 +64,4 @@ export const editor = {
   fileImport: {
     acceptedFormats: '.txt,.md,.text',
   },
-
-  // Keyboard shortcuts
-  shortcuts: {
-    title: '键盘快捷键',
-    description: '按 ? 打开此对话框',
-    save: '保存笔记',
-    search: '搜索笔记',
-    closeDialogs: '关闭对话框',
-    showShortcuts: '显示键盘快捷键',
-    export: '导出笔记',
-    import: '导入文件',
-    changePassword: '修改密码',
-  },
-
-  // Autosave status
-  autosave: {
-    allChangesSaved: '所有更改已保存',
-    saving: '保存中...',
-    unsavedChanges: '未保存的更改',
-  },
 };
