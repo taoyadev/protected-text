@@ -1,12 +1,7 @@
 -- Migration: Add access_count column and updated_at index
--- Safe for production: uses column existence check pattern
+-- NOTE: This migration is now a no-op because 0001_init.sql was updated
+-- to include access_count column and idx_notes_updated_at index.
+-- The migration file is kept for D1 migration history compatibility.
 
--- Add access_count column if it doesn't exist
--- SQLite doesn't support IF NOT EXISTS for ALTER TABLE ADD COLUMN,
--- so we use a workaround: the migration will fail silently if column exists
--- when run through D1 migration system (which handles this gracefully)
-
-ALTER TABLE notes ADD COLUMN access_count INTEGER NOT NULL DEFAULT 0;
-
--- Add index for conflict detection queries
-CREATE INDEX IF NOT EXISTS idx_notes_updated_at ON notes(updated_at);
+-- No operations needed - all schema is now in 0001_init.sql
+SELECT 1;
