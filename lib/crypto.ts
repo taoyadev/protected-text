@@ -59,12 +59,12 @@ export async function decryptContent(
   payload: EncryptedPayload,
   password: string,
 ): Promise<string> {
-  const salt = base64ToArrayBuffer(payload.salt);
-  const iv = base64ToArrayBuffer(payload.iv);
-  const ciphertext = base64ToArrayBuffer(payload.encrypted);
-  const key = await deriveKey(password, new Uint8Array(salt));
+  const salt = base64ToUint8Array(payload.salt);
+  const iv = base64ToUint8Array(payload.iv);
+  const ciphertext = base64ToUint8Array(payload.encrypted);
+  const key = await deriveKey(password, salt);
   const decrypted = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv: new Uint8Array(iv) },
+    { name: 'AES-GCM', iv },
     key,
     ciphertext,
   );
@@ -85,4 +85,13 @@ export function base64ToArrayBuffer(base64: string): ArrayBuffer {
     bytes[i] = binary.charCodeAt(i);
   }
   return bytes.buffer;
+}
+
+export function base64ToUint8Array(base64: string): Uint8Array {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i += 1) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return bytes;
 }
