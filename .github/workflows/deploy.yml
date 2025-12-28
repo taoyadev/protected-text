@@ -34,6 +34,10 @@ jobs:
 
       - name: Run tests
         run: npm run test
+        env:
+          # Mock values for tests (tests use mocks, but some need env vars defined)
+          REDIS_URL: 'redis://localhost:6379'
+          KV_URL: 'redis://localhost:6379'
 
   deploy:
     runs-on: ubuntu-latest
@@ -54,7 +58,7 @@ jobs:
 
       - name: Generate wrangler.toml
         run: |
-          cat > wrangler.toml << 'EOF'
+          cat > wrangler.toml << EOF
           name = "cloudnote-d1"
           main = "src/index.js"
           compatibility_date = "2025-12-26"
@@ -79,7 +83,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --env production
+          command: deploy
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
